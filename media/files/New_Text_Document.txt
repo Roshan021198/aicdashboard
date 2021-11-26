@@ -1,0 +1,13 @@
+Many people doesnâ€™t know much about the different fabric materials. 
+So manual temperature controlling will become difficult. Here is the solution for our all problems SMART AND INTELLIGENT POWERED IRON BOX will make our lives easier. 
+Decision making is made easier with the help of AI. We didnâ€™t have to worry about setting the temperature for ironing. This iron box makes decision by itself, 
+Which will make ironing processes much easier and faster. It is fully automatic. It has wide varieties of features, which will solve our all worries about ironing. 
+It is energy efficient, and low cost comparing to other smart iron boxes.
+
+When iron box is kept on the cloth, Ultrasonic sensor will get activated. It triggers the high resolution CCD camera. 
+AI based image processing technique is used for detecting the type of fabric. Required temperature will be set after fabric detection. 
+The produced heat will be transferred to the sole plate of iron box. Temperature sensor is used for setting the required temperature for ironing.
+it controls the temperature needed for the ironing variety of clothes. It reduces the temperature automatically, when it reaches the temperature limit. 
+Sensor get activated when temperature reach the limit. Supply will be disconnected after reaching the required temperature. This will save energy consumption.
+ When the temperature drops below the moderate value, the get activated again and the temperature will be set. Through this, damages due to ironing can be avoided. 
+If fabric is cotton or linen, steam will be sprayed on the fabric.

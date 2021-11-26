@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <title>IdeaNest</title>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:700|Roboto:400,400i,700&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome JS-->
+    <script defer src="{% static 'sanvriddhi/fontawesome/js/all.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.min.css' %}">
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="{% static 'sanvriddhi/css/theme.css' %}">
+
+    <style>
+        body{
+            background-color: #D6F097;
+            color: black;
+        }
+        @media (max-width: 992px) {
+            #anantyaimg {
+                width: 500px;
+            }
+        }
+
+        @media (max-width: 524px) {
+            #anantyaimg {
+                width: 340px;
+            }
+
+            #startupbtn {
+                margin-top: 10px;
+            }
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <header class="header">
+        <div class="branding">
+            <div class="container-fluid position-relative py-3">
+                <div class="logo-wrapper">
+                    <div class="site-logo"><a class="navbar-brand" href=""><img id="aic" class="logo-icon mr-2"
+                                src="{% static 'sanvriddhi/images/aic.png' %}" alt="logo" width="200"></a></div>
+                </div>
+                <!--//docs-logo-wrapper-->
+
+            </div>
+            <!--//container-->
+        </div>
+        <!--//branding-->
+    </header>
+    <!--//header-->
+
+    <!-- <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-7 pt-2 mb-2 align-self-center">
+                    <div class="promo">
+                        
+
+                        <img class="logo-icon pl-4 mr-2" src="{% static 'sanvriddhi/images/ideanest.png' %}" alt="logo"
+                            width="300">
+                        <div class="subheadline pl-2 m-3" style="text-align: justify; font-size: 1rem">
+                            <h4>About IdeaNest</h4>
+                            AIC-NITF announces Pre-Incubation Program for Idea and Early Stage Startups. This program
+                            provides deep-dive learning aimed at empowering a startup beginner with an entrepreneurial
+                            mindset and business skills necessary to create their venture from fundamental level and
+                            develop intrapreneurship skills, and get you started on your venture journey. The scouted
+                            ideas will get help & support from leading corporate, mentors, angel investors, government
+                            agencies, etc. to translate their ideas into a profitable business model.<br>
+                            <div class="mt-2"> The ideation level startups will be provided all possible support by
+                                AIC-NITF in terms of mentorship, networking, lab facilities, and access to domain
+                                expertise to reach to a level where they can validate their product/service. After
+                                validation, the successful ideas that will be able to reach the POC level, will be put
+                                to a next level incubation program of 3 months where they will be provided market
+                                connects & investor connect.</div>
+
+                            
+
+                            <div>
+                                <h4>Benefits of the Programme</h4>
+                                <ul>
+                                    <li>Idea Validation</li>
+                                    <li>Problem Solution Modeling</li>
+                                    <li>Product Designing</li>
+                                    <li>Rapid Prototyping</li>
+                                    <li>Market Research</li>
+                                    <li>Financial Modeling</li>
+                                    <li>Team Building</li>
+                                    <li>Presentation Skills</li>
+                                    <li>IP and Legal Compliances</li>
+                                    <li>Pitch Perfection</li>
+                                    <li>Demo Day</li>
+                                    
+                                </ul>
+
+                            </div>
+                            
+
+                            <div>
+                                <h4>Who Can Apply?</h4>
+                                <ul>
+                                    <li>Idea and early stage startups aspiring to venture out in any industry sector.</li>
+                                </ul>
+
+                            </div>
+                            
+
+                            <div>
+                                <h4>Duration</h4>
+                                <p>12 Weeks of Experiential Learning Programme starting from May 2021 <br>Last date of application: <b>30th April, 2021</b> </p>
+                            </div>
+                            
+                            <div>
+                                <h4>Program fee</h4>
+                                <p>No course fees applicable. Certificates will be provided on successful completion of the program.</p>
+                            </div>
+                       
+                        </div>
+                     
+
+                    </div>
+                  
+                </div>
+           
+                <div class="col-12 col-md-5 mb-5">
+                    <div class="book-cover-holder mt-5">
+                        <div class="cta-holder text-center mb-2">
+                            <a id="apply" class="btn btn-primary mr-lg-2"
+                                style="background-color: #5E4429; color: #F4D242;"
+                               target=" _blank" href="{% url 'ideanest_form_iframe' %}">CLICK TO APPLY</a>
+                        </div>
+                        
+                        <img class="img-fluid book-cover mt-4" src="{% static 'sanvriddhi/images/idea.jpeg' %}"
+                            alt="book cover">
+                    </div>
+                  
+                </div>
+            
+            </div>
+            
+        </div>
+      
+    </section> -->
+    
+    <header class="masthead">
+        <div class="container d-flex h-100 align-items-center">
+            <div class="mx-auto text-center">
+
+
+                <img class="mx-auto my-0" id="anantyaimg" src="{% static 'sanvriddhi/images/ideanest.png' %}" alt=""
+                    width="1000">
+                <!-- <a class="btn btn-primary js-scroll-trigger" href="{% url 'entrepreneur_form' %}">Entrepreneur</a> -->
+
+                {% if user.is_authenticated %}
+                <!-- <span style=" font-weight: bold; padding: 10px 20px;">{{user.username}}</span> -->
+                <a class="btn btn-primary mr-lg-2 mt-4" style="margin-right:10px;background-color: #5E4429; color: #F4D242;"
+                    href="{% url 'dashboard' %}">Dashboard</a>
+                <a class="btn btn-primary mr-lg-2 mt-4" style="background-color: #5E4429; color: #F4D242;" href="{% url 'logout2' %}">Logout</a>
+                {% else %}
+                <a id="apply" class="btn btn-primary mr-lg-2 mt-4" style="background-color: #5E4429; color: #F4D242;" data-toggle="modal" data-target="#exampleModalCenter"
+                    href="">LOGIN</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <hr>
+    <center>
+        <!-- <div class="partner">
+            <p class="patheading">Associate Partner</p>
+            <img src="{% static 'sanvriddhi/images/startupodisha.png' %}" height="100" width="250" alt="" />
+        </div> -->
+
+        <div class="partner">
+            <p class="patheading">Knowledge Partner</p>
+            <img src="{% static 'wform/assets/img/csl.png' %}" height="100" width="250" alt="" />
+        </div>
+        <div class="partner">
+            <p class="patheading">Ecosystem Partner</p>
+            <img src="{% static 'sanvriddhi/images/sodisha.png' %}" height="100" width="250" alt="" />
+        </div>
+    </center>
+    <hr>
+
+    <footer class="footer">
+
+        <div class="footer-bottom text-center py-5">
+
+            <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+            <small class="copyright">© 2020 . All Rights Reserved By <a class="theme-link"
+                    href="http://www.aicnalanda.com" target="_blank">NIT</a></small>
+
+        </div>
+
+    </footer>
+    <!--login Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Login With Your</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{% url 'login' %}" name="login_form" id="login_form">{% csrf_token %}
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                            </div>
+                            <input type="text" id="uname_input" class="form-control" name="username"
+                                placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
+                        </div>
+                        <span id="uname_error" style="font-weight: bold;color: red;"></span>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>
+                            </div>
+                            <input type="password" id="pw_input" class="form-control" name="password"
+                                placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                            <span id="pwd_error"></span>
+                            <div class="input-group-append">
+                                <span class="input-group-text" onclick="myFunction()">
+                                    <i id="hide1" style="display: none;" class="fa fa-eye"></i>
+                                    <i id="hide2" class="fa fa-eye-slash"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <span id="error_check"></span>
+                    <div class="modal-footer">
+                        <div class="hero-btn">
+                            <button type="button" style="margin : 0 10px;background-color: #5E4429; color: #F4D242;" class="btn" id="login_submit">Log
+                                in</button><br>
+                            <a href="#" id="forget_pwd" style="color: #5E4429;">Forgot password !!</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--model end-->
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: #5E4429;">Invalid Username or Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="forget_uname_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Forgot Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="forget_uname_input" class="form-control" placeholder="Username"
+                        aria-label="Username" aria-describedby="basic-addon1" required>
+                </div>
+                <h6 style="text-align: center;color: chocolate;" id="forget_username_msg"></h6>
+
+                <h6 style="text-align:center;">An OTP will be send to the email associated with this username..</h6>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="send_email_btn" class="btn btn-primary" disabled>Send E-mail</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="otp_input_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">OTP </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="forget_otp_input" class="form-control" placeholder="Enter 4 digit OTP"
+                        aria-label="Username" aria-describedby="basic-addon1" required>
+                </div>
+
+                <h6 id="otp_error_msg" style="text-align: center;"></h6>
+                <input type="hidden" id="correct_otp_hidden">
+                <h6 style="text-align:center;">Enter the OTP you have received on your mail <span id="otp_email"
+                        style="font-weight: bold;color: green;"></span></h6>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="reset_pwd_btn" class="btn btn-primary" disabled>Reset Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="password_set_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reset Password </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="password" id="reset_forget_password" class="form-control"
+                        placeholder="Enter new password" aria-label="Username" aria-describedby="basic-addon1" required>
+                    <br>
+                    <input type="password" id="reset_confirm_forget_password" class="form-control"
+                        placeholder="Enter confirm password" aria-label="Username" aria-describedby="basic-addon1"
+                        required>
+                </div>
+                <input type="hidden" id="username_hidden_field">
+
+                <h6 id="password_match_msg" style="text-align: center;"></h6>
+
+                <!-- <h6 style="text-align:center;">Enter the OTP you have received on your mail <span id="otp_email" style="font-weight: bold;color: green;"></span></h6> -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="update_pwd_btn" style="background-color: #5E4429; color: #F4D242;" class="btn btn-primary" disabled>Update Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="password_success_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Password Updated Successfylly !!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascript -->
+    <script src="{% static 'sanvriddhi/plugins/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'sanvriddhi/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'sanvriddhi/plugins/back-to-top.js' %}"></script>
+
+    <script src="{% static 'sanvriddhi/js/main.js' %}"></script>
+    <!-- <script type="text/javascript">
+        function myFunction() {
+            var dots = document.getElementById("dots");
+            var moreText = document.getElementById("more");
+            var btnText = document.getElementById("myBtn");
+            console.log(dots);
+            if (dots.style.display === "none") {
+                dots.style.display = "inline";
+                btnText.innerHTML = "Read more";
+                moreText.style.display = "none";
+            } else {
+                dots.style.display = "none";
+                btnText.innerHTML = "Read less";
+                moreText.style.display = "inline";
+            }
+        }
+    </script> -->
+    <script>
+        function myFunction() {
+            var x = document.getElementById("pw_input");
+            var y = document.getElementById("hide1");
+            var z = document.getElementById("hide2");
+
+            if (x.type === "password") {
+                x.type = "text";
+                y.style.display = 'block';
+                z.style.display = 'none';
+            }
+            else {
+                x.type = "password";
+                y.style.display = 'none';
+                z.style.display = 'block';
+            }
+        }
+    </script>
+    <script>
+        $('#uname_input').change(function () {
+            uname = this.value;
+            $.ajax({
+                url: "{% url 'verify_uname' %}",
+                data: {
+                    'uname': uname,
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.exist) {
+
+                        document.getElementById('uname_error').innerText = " ";
+
+
+                    }
+                    else {
+
+
+                        document.getElementById('uname_error').innerText = "Username doesn't exist...";
+                    }
+                }
+            })
+        });
+
+
+        $('#login_submit').on('click', function (e) {
+            uname = document.getElementById('uname_input').value;
+            password = document.getElementById('pw_input').value;
+            setTimeout(location.reload.bind(location), 60000);
+            $.ajax({
+
+                url: "{% url 'uname_pwd_check' %}",
+                data: {
+                    'uname': uname,
+                    'pwd': password
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.exist) {
+                        $('#login_form').submit();
+                    }
+                    else {
+
+                        $("#exampleModal").modal('show');
+
+                    }
+                },
+            })
+
+        });
+
+    </script>
+    <script>
+
+        $('#forget_uname_input').keyup(function () {
+            uname = $('#forget_uname_input').val();
+            document.getElementById('username_hidden_field').innerText = uname;
+
+            $.ajax({
+                url: "{% url 'forget_username' %}",
+                data: {
+                    'uname': uname
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.is_exist) {
+                        document.getElementById('forget_username_msg').style.color = 'green';
+                        document.getElementById('forget_username_msg').innerText = data.email;
+                        document.getElementById('otp_email').innerText = data.email;
+                        $('#send_email_btn').prop('disabled', false);
+                        $.ajax({
+                            url: "{% url 'forget_email_sending' %}",
+                            data: {
+                                'email': data.email
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                document.getElementById('correct_otp_hidden').innerText = data.correct_otp
+
+                            }
+                        })
+                    }
+                    else {
+                        document.getElementById('forget_username_msg').innerText = "Username doesn't exist !!";
+                        $('#send_email_btn').prop('disabled', true);
+                    }
+                }
+            })
+
+        });
+
+
+        $('#forget_pwd').on('click', function () {
+            $('#exampleModalCenter').modal('hide');
+            $('#forget_uname_modal').modal('show');
+        });
+
+
+        $('#send_email_btn').on('click', function () {
+            $('#forget_uname_modal').modal('hide');
+            $('#otp_input_modal').modal('show');
+        });
+
+        $('#forget_otp_input').keyup(function () {
+            correct_otp = document.getElementById('correct_otp_hidden').innerText;
+            current_otp = $('#forget_otp_input').val();
+
+            if (current_otp === correct_otp) {
+                document.getElementById('otp_error_msg').style.color = 'green';
+                document.getElementById('otp_error_msg').innerText = 'OTP Matched';
+                $('#reset_pwd_btn').prop('disabled', false);
+            }
+            else {
+                document.getElementById('otp_error_msg').style.color = 'red';
+                document.getElementById('otp_error_msg').innerText = 'OTP not Matched';
+                $('#reset_pwd_btn').prop('disabled', true);
+
+            }
+        });
+
+        $('#reset_pwd_btn').on('click', function () {
+            $('#otp_input_modal').modal('hide');
+            $('#password_set_modal').modal('show');
+        });
+
+        $('#reset_confirm_forget_password').keyup(function () {
+            password = $('#reset_forget_password').val();
+            cpassword = $('#reset_confirm_forget_password').val();
+            if (password === cpassword) {
+                document.getElementById('password_match_msg').style.color = 'green';
+                document.getElementById('password_match_msg').innerText = 'Password Matched';
+                $('#update_pwd_btn').prop('disabled', false);
+            }
+            else {
+                document.getElementById('password_match_msg').style.color = 'red';
+                document.getElementById('password_match_msg').innerText = "Password Doesn't Matched";
+                $('#update_pwd_btn').prop('disabled', true);
+            }
+        });
+
+
+        $('#update_pwd_btn').on('click', function () {
+            password = $('#reset_forget_password').val();
+            uname = document.getElementById('username_hidden_field').innerText;
+
+            $.ajax({
+                url: "{% url 'set_password' %}",
+                data: {
+                    'password': password,
+                    'username': uname
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $('#password_success_modal').modal('show');
+                    $('#password_set_modal').modal('hide');
+                }
+            })
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,227 @@
+{% extends 'dashboard.html' %}
+
+{% block css %}
+<style>
+    .startup-image{
+    width: 150px; 
+    height: 150px;
+    }
+    @media only screen and (max-width: 768px) {
+    .startup-image{
+    width: 100px; 
+    height: 100px;
+    }
+    .startup-name{
+        font-size: 1.5rem;
+    }
+    }
+</style>
+{% endblock %}
+{% block content %}
+{% load static %}
+<section id="team">
+    <div class="container my-3 py-5 text-center">
+        <div class="row mb-5 startup">
+            <div class="col mb-4">
+                <h1 class="startup-name">StartUps</h1>
+            </div>
+        </div>
+
+        <div class="row">
+
+            {% for account in accounts %}
+            {% if account.is_startup == True %}
+            <div class="col-lg-4 col-md-6 startup-card">
+                <div class="card">
+                    <div class="card-body">
+                        {% for val in account.startup_set.all %}
+                        <img src="{{val.startup_img.url}}" alt="#"
+                            class="img-fluid mb-3 startup-image">
+                        <h3>{{val.startup_name}}</h3>
+                        {% endfor %}
+                        <div class="d-flex flex-row justify-content-center">
+                            <div class="btn-container">
+                                <!-- button -->
+                                <a href="{% url 'profile' pk=account.pk %}" class="btn btn-danger" role="button">Get
+                                    Report</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+
+
+
+        </div>
+    </div>
+</section>
+<hr>
+<section>
+    <h1 class="section-head">Our Employee</h1>
+    <div class="table-responsive-lg">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">SLNO.</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">DESIGNATION</th>
+                    <th scope="col">EMPLOYEE ID</th>
+                    <th scope="col">EMAIL</th>
+                    <th scope="col">CONTACT</th>
+                    <th scope="col">CL</th>
+                    <th scope="col">SL</th>
+                    <th scope="col">PROFILE</th>
+                    {% if user.is_superadmin %}
+                    <th scope="col">EDIT/DELETE</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for account in lists %}
+                {% for evalue in account.admin_set.all %}
+                <tr>
+                    <th scope="row">{{forloop.parentloop.counter}}</th>
+                    <td><span id="fullname{{account.pk}}" >{{account.fullname}}</span></td>
+                    <td><span id="designation{{evalue.pk}}" >{{evalue.designation}}</span></td>
+                    <td><span id="employee_id{{evalue.pk}}" >{{evalue.employee_id}}</span></td>
+                    <td><span id="email{{evalue.pk}}" >{{evalue.email}}</span></td>
+                    <td><span id="contact_no{{evalue.pk}}" >{{evalue.contact_no}}</span></td>
+                    <td><span id="cl{{evalue.pk}}" >{{evalue.cl}}</span></td>
+                    <td><span id="sl{{evalue.pk}}" >{{evalue.sl}}</span></td>
+                    <td><span id="profile{{evalue.pk}}"><img class="rounded-circle" src="{{evalue.admin_img.url}}" width="50" height="50" alt=""></span></td>
+                    {% if user.is_superadmin %}
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <a data-url="#" style="color:blue;" class="btn btn-light open-modal edit_admin" id="edit{{evalue.pk}}"
+                                data-toggle="modal" data-target="#exampleModalCenter"><i
+                                    class="fas fa-edit fa-lg"></i></a>
+                            <a href=" " id="delete{{evalue.pk}}" class="btn btn-light delete_btn" data-toggle="modal" style="color:red;" data-target="#deleteModal"><i
+                                    class="fas fa-trash fa-lg"></i></a>
+                        </div>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight:bold;color:tomato;">Edit Employee Form</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="{% url 'edit_emp_form' %}">{% csrf_token %}
+                <input type="hidden" class="" name="" id="">
+                <div class="modal-body">
+                <input type="hidden" id="pk_val" name="pk_val" value="">
+                     <div class="form-group">
+                        <label for="inputDesignation4">Designation</label>
+                        <input type="text" name="designation" class="form-control" id="inputDesignation4" placeholder="Designation">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail4">Email</label>
+                        <input type="text" name="email" class="form-control"  id="inputEmp4" placeholder="Employee Id">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputContactNo4">Contact No.</label>
+                        <input type="text" name="contact" class="form-control"  id="inputContactNo4" placeholder="Contact No.">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputCl">CL</label>
+                        <input type="text" name="cl" class="form-control" id="inputCl" placeholder="cl"
+                          required>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputSl">SL</label>
+                        <input type="text" name="sl" class="form-control" id="inputSl" placeholder="sl"
+                          required>
+                      </div> 
+                </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Delete Employee Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="{% url 'delete_employee' %}">{% csrf_token %}
+                <div class="modal-body">
+                    <input type="hidden" id="foo" name="foo" />
+                    <center><label for="inputDelete">Are You Sure You Want To Delete The Details ? ? ?</label><br>
+                    <button type="submit"  class="btn btn-danger">Delete</button></center>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+$('.delete_btn').on('click', function(){
+        
+        var idstr = this.id.slice(6,);
+        
+        $('#foo').val(idstr)
+    });
+</script>
+
+<script>
+    $(".edit_admin").on("click",function(){
+        
+        id = this.id;
+        pk = id.slice(4,);
+        des_id = "#designation" + pk;
+        designation = $(des_id).text();
+        $("#inputDesignation4").val(designation);
+        
+        email_id = "#email" + pk;
+        email = $(email_id).text();
+        $("#inputEmp4").val(email);
+        
+        contact_id = "#contact_no" + pk;
+        contact = $(contact_id).text();
+        $("#inputContactNo4").val(contact);
+
+        cl_id = "#cl" + pk;
+        cl = $(cl_id).text();
+        $("#inputCl").val(cl);
+
+        sl_id = "#sl" + pk;
+        sl = $(sl_id).text();
+        $("#inputSl").val(sl);
+
+        $("#pk_val").val(pk);
+        
+       
+        
+    });
+</script>
+
+{% endblock %}

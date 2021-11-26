@@ -1,0 +1,102 @@
+{% extends 'dashboard.html' %}
+
+
+
+{% block content %}
+{% load static %}
+<div class="table-responsive-lg">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">SLNO</th>
+                <th scope="col">Name</th>
+                <th scope="col">About</th>
+                <th scope="col">Email</th>
+                <th scope="col">Submitted Date</th>
+                <th scope="col">Delete</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for value in values %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td class="new_work">
+                    <a class="work_link" href="" data-toggle="modal" data-target="#MessageModel{{value.pk}}"
+                        style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{value.name}}</a>
+                <td>{{value.about}}</td>
+                <td>{{value.email}}</td>
+                <td>{{value.submitted_date}}</td>
+                <td>
+                    <div class="d-flex justify-content-center">
+                        <a href=" " id="delete{{value.pk}}" class="btn btn-light delete_btn" data-toggle="modal"
+                            style="color:red;" data-target="#deletemodal1"><i class="fas fa-trash fa-lg"></i></a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% for value in values %}
+<!-- display blog model Model-->
+<div class="modal fade" id="MessageModel{{value.pk}}" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="display: inline-block; padding-bottom: 0; ">
+                <h5 class="modal-title" id="staticBackdropLabel">Query message</h5>
+                <button type="button" style="position: absolute; top: 15px; right: 15px;" class="close"
+                    data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="inputWorkDescription">Message</label>
+                    <textarea disabled id="description{{post.pk}}" class="form-control" name="description" rows="10"
+                        placeholder="Description">{{value.message}}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+<!--delete-->
+<div class="modal fade" id="deletemodal1" tabindex="-1" aria-labelledby="exampleModalCenterTitle" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Delete Query
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="{% url 'delete_query' %}">{% csrf_token %}
+                <div class="modal-body">
+                    <input type="hidden" id="foo" name="foo" />
+                    <center><label for="inputDelete">Are You Sure You Want To Delete The
+                            query ? ? ?</label><br>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </center>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block js %}
+<script>
+    $('.delete_btn').on('click', function () {
+
+        var idstr = this.id.slice(6,);
+        console.log(idstr)
+        $('#foo').val(idstr)
+    });
+</script>
+{% endblock %}

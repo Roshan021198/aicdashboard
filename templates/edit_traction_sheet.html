@@ -1,0 +1,87 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traction Form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        .heading {
+            width: 100%;
+            height: 50px;
+            background: #5A5C69;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .heading p {
+            padding: 10px;
+            font-size: 17px;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Traction Form</h1>
+    <div class="container-fluid container">
+        <div class="heading">
+            <p class="font-weight-bold">Traction sheet</p>
+        </div>
+        <form method="POST">{% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputtotal_order">Total no. of orders in a month</label>
+                    {{ form.total_order }}
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputaverage_packet_size">Average packet size of the order</label>
+                    {{ form.average_packet_size }}
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputtotal_revenue_of_month">Total revenue in a month ( In rs.)</label>
+                    {{ form.total_revenue_of_month }}
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputtotal_customers_served">Total No. of customers served till date</label>
+                    {{ form.total_customers_served }}
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputtotal_expense">Total expense in a month (In rs.)</label>
+                    {{ form.total_expense }}
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputmarket_outreach">Market outreach through social media in a month</label>
+                    {{ form.market_outreach }}
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="inputrepeate_customers">Number/% of the repeat customers in a month</label>
+                    {{ form.repeate_customers }}
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputtotal_revenue">Total revenue generated till date</label>
+                    {{ form.total_revenue }}
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputdirect_job_created">Number of job created till date (Direct)</label>
+                    {{ form.direct_job_created }}
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputindirect_job_created">Number of job created till date (Indirect)</label>
+                    {{ form.indirect_job_created }}
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputprofit">Profit if any</label>
+                    {{ form.profit }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'profile/css/style.css' %}"/>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="home-five-style">
+    <!-- Header section start -->
+    <header class="header-section">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="site-logo">
+                        <h2><a href="#">Profile</a></h2>
+                    </div>
+                </div>
+               <!--  <div class="col-md-5 offset-md-2">
+                    <a class="float-right" href="{% url 'startup_profile_edit' pk=value.pk %}"><i class="fas fa-edit fa-lg"></i></a>
+                </div> -->
+            </div>
+        </div>
+    </header>
+    <!-- Header section end -->
+
+    <!-- Hero section start -->
+    <section class="hero-section">
+        <div class="container-fluid text-center">
+            <img class="rounded-circle" width="250" height="250" src="{{value.admin_img.url}}" alt="">
+            <div class="hero-text">
+                <h2>{{value.account.fullname}}</h2>
+            </div>
+        </div>
+    </section>
+    <!-- Hero section end -->
+
+    <!-- Resume section start -->
+<section class="resume-section with-bg spad">
+    <div class="container-fluid">
+        <center><h2 style="margin-bottom: 50px;">General Info</h2></center>
+        <div class="row">
+
+            <div class="col-md-5" style="margin:auto">
+
+                    <div class="hero-info">
+                            <ul>
+                                <li><span>Username : </span>{{value.account.username}}</li>
+                                <li><span>Designation : </span>{{value.designation}}</li>
+                                <li><span>Employee ID : </span>{{value.employee_id}}</li>
+                                <li><span>E-mail : </span>{{value.email}}</li>
+                                <li><span>Phone : </span>{{value.contact_no}}</li>
+                                <li><span>AdharCard/PAN Card : </span>{{value.identity_proof}}</li>
+                            </ul>
+                        </div>
+                
+            </div>
+            <!-- <div class="col-md-5 offset-sm-2">
+                    <div class="hero-info">
+                            <ul>
+                                <li><span>Sector : </span>{{value.sector}}</li>
+                                <li><span>Current level of Incubatee :</span>{{value.inubatee_level}}</li>
+                                <li><span>Date of Joining : </span>{{value.account.date_joined}}</li>
+                                <li><span>Type of Incubatee : </span>{{value.type_of_incubatee}}</li>
+                                <li><span>Team Members & roles : </span>{{value.team_members}}</li>
+                                <li><span>DSPP registered : </span>{{value.dspp_registered}}</li>
+                                <li><span>Startup working towards any of the flagship government programmes :</span>{{value.gov_program}}</li>
+                                <li><span>City : </span>{{value.city}}</li>
+                                <li><span>Current Location(working) : </span>{{value.location}}</li>
+                            </ul>
+                        </div>
+                
+            </div> -->
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block js %}
+    <script src="{% static 'profile/js/main.js' %}"></script>
+    <script src="{% static 'profile/js/owl.carousel.min.js' %}"></script>
+{% endblock %}

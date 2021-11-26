@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard</title>
+    <!-- <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'blog/blog_css.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'dashboard/css/startup.css' %}">
+    <link rel="stylesheet" href="{% static 'profile/css/style.css' %}" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'assets/images/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'monitor/css/cardstyle.css' %}" />
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'dashboard/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'dashboard/css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+
+
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'ideanest' %}">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">AIC-NITF</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+            {% if user.is_superadmin %}
+            <!-- Nav Item - Dashboard -->
+            <li id="dashboard" class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+            {% endif %}
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item check">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    {% if user.is_ideanest_check %}
+                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+                        aria-controls="v-pills-profile" aria-selected="true"><i class="fas fa-fw fa-user-circle"></i>
+                        Profile</a>
+                    <hr class="sidebar-divider">
+                    {% endif %}
+                    <div class="sidebar-heading">
+                        IDEANEST
+                    </div>
+
+                    <a class="nav-link active" id="v-pills-monitor-tab" data-toggle="pill" href="#v-pills-monitor"
+                        role="tab" aria-controls="v-pills-monitor" aria-selected="false"><i
+                            class="fas fa-fw fa-paste"></i> Programme</a>
+                    <!-- <a class="nav-link" id="v-pills-traction-tab" data-toggle="pill" href="#v-pills-traction" role="tab"
+                        aria-controls="v-pills-traction" aria-selected="false"><i class="fas fa-fw fa-sticky-note"></i>
+                        Traction Sheet</a> -->
+                    {% if user.is_adminstrator or user.is_ideanest_viewer %}
+
+                    <a class="nav-link" id="v-pills-user-tab" data-toggle="pill" href="#v-pills-user" role="tab"
+                        aria-controls="v-pills-user" aria-selected="false"><i class="fas fa-fw fa-blog"></i>
+                        Users</a>
+
+                    {% else %}
+                    <!-- <a class="nav-link" id="v-pills-minute-tab" data-toggle="pill" href="#v-pills-minute" role="tab"
+                        aria-controls="v-pills-minute" aria-selected="false"><i class="fas fa-fw fa-handshake"></i>
+                        Query/Help Required</a> -->
+
+                    <a class="nav-link" id="v-pills-blogPost-tab" data-toggle="pill" href="#v-pills-blogPost" role="tab"
+                        aria-controls="v-pills-blogPost" aria-selected="false"><i class="fas fa-fw fa-blog"></i>
+                        Uploads</a>
+                    {% endif %}
+
+
+                </div>
+            </li>
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow float-right">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.username}}</span>
+                                {% if user.is_admin %}
+                                {% for imgsrc in user.admin_set.all %}
+                                <img class="img-profile rounded-circle" src="{{imgsrc.admin_img.url}}">
+                                {% endfor %}
+                                {% else %}
+                                {% for imgsrc in user.ideanestcheck_set.all %}
+                                <img class="img-profile rounded-circle" src="{{imgsrc.founder_img.url}}">
+                                {% endfor %}
+                                {% endif %}
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <!-- <a class="dropdown-item" href="{% url 'userprofile' pk=user.pk %}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a> 
+                                <div class="dropdown-divider"></div>-->
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                            aria-labelledby="v-pills-profile-tab">
+
+                            <div class="home-five-style">
+                                <!-- Header section start -->
+
+                                {% for message in messages %}
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>{{message}}</strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                {% endfor %}
+
+                                <header class="header-section">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="site-logo">
+                                                    <h2><a href="#">Profile</a></h2>
+                                                </div>
+                                            </div>
+                                           {% if user.is_ideanest_check %}
+                                            <div class="col-md-5 offset-md-2">
+                                                <a class="float-right" title="edit employee"
+                                                    href="{% url 'ideanest_edit_form' pk=ideanest_account.pk %}"><i
+                                                        class="fas fa-edit fa-lg"></i></a>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </header>
+                                <!-- Header section end -->
+
+                                <!-- Hero section start -->
+                                <section class="hero-section">
+                                    <div class="container-fluid text-center">
+                                        <img class="specific-img" src="{{ideanest_account.startup_img.url}}" alt="" width="200">
+                                        <div class="hero-text">
+                                            <h2>{{ideanest_account.startup_name}}</h2>
+                                        </div>
+                                    </div>
+                                </section>
+                                <!-- Hero section end -->
+
+                                <!-- Resume section start -->
+                                <section class="resume-section with-bg spad">
+                                    <div class="container-fluid">
+                                        <center>
+                                            <h2 style="margin-bottom: 50px;">General Info</h2>
+                                        </center>
+                                        <div class="row">
+
+                                            <div class="col-md-5">
+
+                                                <div class="hero-info">
+                                                    <ul>
+                                                        <li><span>Name of Legal Entity : </span>{{ideanest_account.legal_entity}}
+                                                        </li>
+                                                        <li><span>Team Head Or Founder : </span>{{ideanest_account.team_head}}
+                                                        </li>
+                                                        <li><span>Founder's Designation :
+                                                            </span>{{ideanest_account.founders_designation}}</li>
+                                                        <li><span>Company Identification Number (CIN) :
+                                                            </span>{{ideanest_account.comp_identification_no}}</li>
+                                                        <li><span>Operational Model :</span>{{ideanest_account.operational_model}}
+                                                        </li>
+                                                        <li><span>Women Led Startup : </span>{{ideanest_account.women_led_startup}}
+                                                        </li>
+                                                        <li><span>MSME registered : </span>{{ideanest_account.msme_registered}}
+                                                        </li>
+                                                        <li><span>E-mail : </span>{{ideanest_account.email}}</li>
+                                                        <li><span>Phone : </span>{{ideanest_account.contact_no}}</li>
+                                                        <li><span>Web Address : </span>{{ideanest_account.website}}</li>
+                                                        <li><span>City : </span>{{ideanest_account.city}}</li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-5 offset-sm-2">
+                                                <div class="hero-info">
+                                                    <ul>
+                                                        <li><span>Date of Registration of the legal entity of the
+                                                                startup :
+                                                            </span>{{ideanest_account.legal_entity_register}}</li>
+                                                        <li><span>Sector : </span>{{ideanest_account.sector}}</li>
+                                                        <li><span>Current level of Incubatee
+                                                                :</span>{{ideanest_account.inubatee_level}}</li>
+                                                        <li><span>Start Date of the Incubation :
+                                                            </span>{{ideanest_account.start_date_incubation}}
+                                                        </li>
+                                                        <li><span>Type of Incubatee : </span>{{ideanest_account.type_of_incubatee}}
+                                                        </li>
+                                                        <li><span>Team Members & roles : </span>{{ideanest_account.team_members}}
+                                                        </li>
+                                                        <li><span>DIPP registered : </span>{{ideanest_account.dspp_registered}}
+                                                        </li>
+                                                        <li><span>Startup working towards any of the flagship government
+                                                                programmes :</span>{{ideanest_account.gov_program}}</li>
+                                                        <li><span>Current Location(working) : </span>{{ideanest_account.location}}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                            <div style="width: 100%; border-bottom: 3px solid black; margin: 10px 0;">
+                                            </div>
+                                        </div>
+                                </section>
+
+                            </div>
+
+
+                        </div>
+                        <!--Session Info -->
+                        <div class="tab-pane fade show active" id="v-pills-monitor" role="tabpanel"
+                            aria-labelledby="v-pills-monitor-tab">
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <h3 style="text-align: center;font-weight: bold;">Programme</h3>
+
+                                {% if user.is_adminstrator %}
+                                <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                                    data-bs-toggle="modal" data-bs-target="#createsubmissionModal"><i
+                                        class="fas fa-download fa-sm text-white-50"></i>Create Session</a>
+                                <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm "
+                                        data-bs-toggle="modal" data-bs-target="#uploadrecordingsModal"><i
+                                            class="fas fa-download fa-sm text-white-50"></i>Upload Session Recordings</a>
+                                {% endif %}
+
+
+                            </div>
+
+                            <div style="margin-bottom: 100px;">
+                                {% for week in weeks %}
+                                <nav class="navbar navbar-expand-lg navbar-dark bg-dark mt-4">
+                                    <div class="container-md">
+                                      <a class="navbar-brand" href="#">{{week.sessionideanest_set.all}}</a>
+                                    </div>
+                                  </nav>
+                                    {% for session in week.sessionideanest_set.all %}
+                                    <div class="accordion" id="accordionExample{{session.pk}}">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="heading{{session.pk}}">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapse{{session.pk}}"
+                                                    aria-expanded="true" aria-controls="collapse{{session.pk}}">
+                                                    SESSION {{forloop.counter}}  :   Date:- {{session.session_date|date:"M d, Y" }} | Time:{{session.time}}{{session.pm_am1}} to {{session.time_out}}{{session.pm_am2}}
+                                                    {% if session.assignment %}
+                                                    <span class="badge rounded-pill bg-primary ml-2">Assignment</span>
+                                                    {% endif %}
+                                                    
+                                                    {% if session.completed %}
+                                                    <span class="badge rounded-pill bg-success ml-2">Completed</span>
+                                                    {% endif %}
+                                                </button>
+                                            </h2>
+                                            <div id="collapse{{session.pk}}" class="accordion-collapse collapse"
+                                                aria-labelledby="heading{{session.pk}}"
+                                                data-bs-parent="#accordionExample{{session.pk}}">
+                                                <div class="accordion-body">
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="inputEmail4" class="form-label"><b>Session Topic</b></label>
+                                                        <input disabled value="{{session.session_name}}" style="color:#000;" class="form-control">
+                                                    </div>
+
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="inputEmail4" class="form-label"><b>Session Details</b></label>
+                                                        
+                                                        <textarea disabled class="form-control" style="color:#000;" id="exampleFormControlTextarea1" rows="3">{{session.session_details}}</textarea>
+                                                    </div>
+
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="inputEmail4" class="form-label"><b>Pre-Read</b></label>
+                                                        {% if session.pre_read %}
+                                                        <span><a href="{{session.pre_read.url}}"
+                                                                download><input disabled style="cursor: pointer; color:blue;" value="{{session.pre_read}}" class="form-control"></a></span>
+                                                        {% else %}
+                                                        <span><a href="#"><input disabled style="color:#000;" value="-----" class="form-control"></a></span>
+                                                        {% endif %}
+                                                    </div>
+                                                    
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="inputEmail4" class="form-label"><b>Meeting Link</b></label>
+                                                        <a
+                                                                href="{{session.meeting_link}}"
+                                                                target="_blank"><input disabled style="cursor: pointer; color:blue;" value="{{session.meeting_link}}" class="form-control"></a>
+                                                    </div>
+
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="inputEmail4" class="form-label"><b>Assignment</b></label>
+                                                        {% if session.assignment %}
+                                                        <span><a href="{{session.assignment.url}}"
+                                                                download><input disabled style="cursor: pointer; color:blue;" value="{{session.assignment}}" class="form-control"></a></span>
+                                                        {% else %}
+                                                        <span><a href="#"><input disabled style="color:#000;" value="No Assignment" class="form-control"></a></span>
+                                                        {% endif %}
+                                                    </div>
+
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="inputEmail4" class="form-label"><b>Submission Link</b></label>
+                                                        {% if session.submission_link %}
+                                                        <a href="{{session.submission_link}}" target="_blank">
+                                                        <input disabled style="cursor: pointer; color:blue;" value="{{session.submission_link}}" class="form-control">
+                                                        </a>
+                                                        {% else %}
+                                                        <a href="#"><input disabled style="color:#000;" value="-----" class="form-control"></a>
+                                                        {% endif %}
+                                                    </div>
+                                                    {% if session.recording_link %}
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="inputEmail4" class="form-label"><b>Session Recording</b></label>
+                                                        
+                                                        <span><a href="{{session.recording_link}}"
+                                                                download><input disabled style="cursor: pointer; color:blue;" value="{{session.recording_link}}" class="form-control"></a></span>
+                                                    </div>
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="inputEmail4" class="form-label"><b>Recording Password</b></label>
+                                                        <input disabled value="{{session.recording_pw}}" style="color:#000;" class="form-control">
+                                                    </div>
+                                                    {% endif %}
+
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    {% endfor %}
+                                    {% for fed in week.ideanestfeedback_set.all %}
+                                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                                        <div class="accordion-item">
+                                          <h2 class="accordion-header" id="flush-headingOne">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                              {{week.week_no}} FeedBack Link
+                                            </button>
+                                          </h2>
+                                          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="inputEmail4" class="form-label"><b>Feedback Link</b></label>
+                                                    <a href="{{fed.feedback}}" target="_blank">
+                                                    <input disabled value="{{fed.feedback}}" style="cursor: pointer; color:blue;" class="form-control"></a>
+                                                </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <!-- Session info End -->
+
+                        <div class="tab-pane fade" id="v-pills-minute" role="tabpanel"
+                            aria-labelledby="v-pills-minute-tab">
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <h3>Minute Of Meeting</h3>
+                                <!-- {% if user.is_superadmin == True or user.is_startup %}
+                                <a href="#"
+                                    class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
+                                    data-target="#sendMoM"><i class="fas fa-download fa-sm text-white-50"></i> Send
+                                    MoM</a>
+                                {% endif %} -->
+                            </div>
+
+                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-receved-tab" data-toggle="pill"
+                                        href="#pills-receved" role="tab" aria-controls="pills-receved"
+                                        aria-selected="true">Receved</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-send-tab" data-toggle="pill" href="#pills-send"
+                                        role="tab" aria-controls="pills-send" aria-selected="false">Send</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-receved" role="tabpanel"
+                                    aria-labelledby="pills-receved-tab">
+
+                                    <div class="table-responsive-lg">
+                                        <table class="table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">SlNo</th>
+                                                    <th scope="col">Title</th>
+                                                    <th scope="col">From</th>
+                                                    <th scope="col">To</th>
+                                                    <th scope="col">Receved Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- {% for receve in receving %}
+                                                <tr>
+                                                    <th scope="row">{{forloop.counter}}</th>
+                                                    <td><a href="" data-toggle="modal"
+                                                            data-target="#receveDisplay{{receve.pk}}"
+                                                            style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{receve.title}}</a>
+                                                    </td>
+                                                    <td>{{receve.from_user}}</td>
+                                                    <td>{{receve.to.fullname}}</td>
+                                                    <td>{{receve.date_of_creation}}</td>
+                                                </tr>
+                                                {% endfor %} -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+                                <div class="tab-pane fade" id="pills-send" role="tabpanel"
+                                    aria-labelledby="pills-send-tab">
+
+                                    <div class="table-responsive-lg">
+                                        <table class="table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">SlNo</th>
+                                                    <th scope="col">Title</th>
+                                                    <th scope="col">From</th>
+                                                    <th scope="col">To</th>
+                                                    <th scope="col">Send Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- {% for send in sendings %}
+                                                <tr>
+                                                    <th scope="row">{{forloop.counter}}</th>
+                                                    <td>
+                                                        <a href="" data-toggle="modal"
+                                                            data-target="#sendDisplay{{send.pk}}"
+                                                            style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{send.title}}</a>
+                                                    </td>
+                                                    <td>{{send.from_user}}</td>
+                                                    <td>{{send.to.fullname}}</td>
+                                                    <td>{{send.date_of_creation}}</td>
+                                                </tr>
+                                                {% endfor %} -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="v-pills-blogPost" role="tabpanel"
+                            aria-labelledby="v-pills-blogPost-tab">
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <h3 style="text-align: center;font-weight: bold;">Uploads</h3>
+                                <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                                    data-bs-toggle="modal" data-bs-target="#submissionModal"><i
+                                        class="fas fa-download fa-sm text-white-50"></i>Submit</a>
+                            </div>
+
+                            
+
+                            <section>
+
+                                <div class="table-responsive-lg">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">SLNO.</th>
+                                                <th scope="col">Session Topic</th>
+                                                <th scope="col">File NAME</th>
+                                                <th scope="col">Submitted Date</th>
+                                                <th scope="col">Download</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            {% for attach in attachements %}
+                                            <tr>
+                                                <th scope="row">{{forloop.counter}}</th>
+                                                <td><span
+                                                        id="fullname{{attach.pk}}">{{attach.session_topic}}</span>
+                                                </td>
+                                                <td><span id="email{{attach.pk}}">{{attach.attachment}}</span>
+                                                </td>
+                                                <td><span
+                                                        id="fullname{{attach.pk}}">{{attach.submitted_date}}</span>
+                                                </td>
+                                                <td><span id="profile{{attach.pk}}"><a
+                                                    href="{{attach.attachment.url}}"
+                                                    download>Download</a></span></td>
+                                            </tr>
+                                            {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="v-pills-user" role="tabpanel" aria-labelledby="v-pills-user-tab">
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <h3 style="text-align: center;font-weight: bold;">Users</h3>
+                                <a href="{% url 'ideanest_excel' %}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                                        ><i
+                                        class="fas fa-download fa-sm text-white-50"></i>Download Startup Details</a>
+                            </div>
+
+                            <section>
+
+                                <div class="table-responsive-lg">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">SLNO.</th>
+                                                <th scope="col">Startup Name</th>
+                                                <th scope="col">Founder Name</th>
+                                                <th scope="col">Total Uploads</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Contact No</th>
+                                                <th scope="col">IMG</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            {% for participaint in participaints %}
+                                            <tr>
+                                                <th scope="row">{{forloop.counter}}</th>
+                                                <td>
+                                                        <a class="pending_link" id="fullname{{participaint.pk}}" href=""
+                                                        data-toggle="modal"
+                                                        data-target="#userprofilModal{{participaint.pk}}"
+                                                        style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{participaint.startup_name}}
+                                                    </a>
+
+                                                </td>
+                                                <td><span id="ceo{{participaint.pk}}">{{participaint.team_head}}</span>
+                                                    
+                                                </td>
+                                                <td><a class="pending_link" id="fullname{{participaint.pk}}" href=""
+                                                    data-toggle="modal"
+                                                    data-target="#submittedModal{{participaint.pk}}"
+                                                    ><span class="badge bg-danger">{{participaint.submissionideanest_set.all|length}}</a></span>
+                                                </td>
+                                                <td><span id="email{{participaint.pk}}">{{participaint.email}}</span>
+                                                </td>
+                                                <td><span
+                                                        id="contact{{participaint.pk}}">{{participaint.contact_no}}</span>
+                                                </td>
+                                                <td><span id="profile{{participaint.pk}}"><img class="rounded-circle"
+                                                            src="{{participaint.founder_img.url}}" width="50"
+                                                            height="50" alt=""></span></td>
+                                            </tr>
+                                            {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+
+                        </div>
+                        <!-- End of Sanvriddhi user -->
+
+
+
+                    </div>
+                </div>
+                <!-- End of Content Wrapper -->
+            </div>
+            <!-- End of Page Wrapper -->
+
+
+
+            <!-- file submmition Modal -->
+            <div class="modal fade" id="submissionModal" tabindex="-1" aria-labelledby="submissionModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Upload File</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="{% url 'ideanest_submission' %}" enctype="multipart/form-data">{% csrf_token %}
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon4">Session Name</span>
+                                    <input type="text" class="form-control" name="session_topic"
+                                        placeholder="Session Name" aria-label="topic" aria-describedby="basic-addon1">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="inputGroupFile02">Attachment</label>
+                                    <input type="file" class="form-control" name="attachment" id="inputGroupFile02">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Create session Modal -->
+            <div class="modal fade" id="createsubmissionModal" tabindex="-1"
+                aria-labelledby="createsubmissionModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Create Session</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="{% url 'create_ideanest_session' %}" enctype="multipart/form-data">{% csrf_token %}
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Select WEEK</span>
+                                    <select name="weekselect" id="inputSelect" class="form-select">
+                                        <option selected disabled>Choose...</option>
+                                        {% for week in weeks %}
+                                        <option value="{{week.week_no}}">{{week.week_no}}</option>
+                                        {% endfor %}
+                                      </select>
+                                  </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon4">Session Topic</span>
+                                    <input type="text" class="form-control" name="session_name"
+                                        placeholder="Session Topic" aria-label="topic" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Session Details</span>
+                                    <textarea class="form-control" name="session_details"
+                                        aria-label="With textarea"></textarea>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon4">Session Date</span>
+                                    <input type="date" class="form-control" name="session_date"
+                                        aria-label="datetime" aria-describedby="basic-addon5">
+                                </div>
+                                
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Session TimeIn</span>
+                                    <input type="time" class="form-control" name="time"
+                                        aria-label="time" aria-describedby="basic-addon5">
+                                    <span class="input-group-text">AM/PM</span>
+                                    <select name="pm_am1" id="inputState" class="form-select">
+                                        <option selected disabled>Choose...</option>
+                                        <option value="AM">AM</option>
+                                        <option value="PM">PM</option>
+                                      </select>
+                                  </div>
+                                  <div class="input-group mb-3">
+                                    <span class="input-group-text">Session TimeOut</span>
+                                    <input type="time" class="form-control" name="time_out"
+                                        aria-label="time_out" aria-describedby="basic-addon5">
+                                    <span class="input-group-text">AM/PM</span>
+                                    <select name="pm_am2" id="inputState2" class="form-select">
+                                        <option selected>Choose...</option>
+                                        <option value="AM">AM</option>
+                                        <option value="PM">PM</option>
+                                      </select>
+                                  </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon4">Meeting Link</span>
+                                    <input type="text" class="form-control" name="meeting_link"
+                                        placeholder="Meeting Link" aria-label="link" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="inputGroupFile01">Pre-Read</label>
+                                    <input type="file" class="form-control" value="None" name="pre_read" id="inputGroupFile01">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="inputGroupFile01">Assignment</label>
+                                    <input type="file" class="form-control" value="None" name="assignment" id="inputGroupFile01">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon4">Submission Link</span>
+                                    <input type="text" class="form-control" name="submission_link"
+                                        placeholder="Submission Link" aria-label="link" aria-describedby="basic-addon1">
+                                </div>
+                                
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--upload session recordings-->
+            <div class="modal fade" id="uploadrecordingsModal" tabindex="-1"
+                aria-labelledby="uploadrecordingsModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Upload Session Recordings</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="{% url 'ideanest_recording' %}" enctype="multipart/form-data">{% csrf_token %}
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Select WEEK</span>
+                                    <select name="sessionname" id="inputSelect" class="form-select">
+                                        <option selected disabled>Choose...</option>
+                                        {% for week in weeks %}
+                                            {% for session in week.sessionideanest_set.all  %}
+                                            <option value="{{session.pk}}">{{week.week_no}} {{session.session_name}}</option>
+                                            {% endfor %}
+                                        {% endfor %}
+                                      </select>
+                                  </div>
+                                
+                                  <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon4">Session Recording Link</span>
+                                    <input type="text" class="form-control" name="recording_link"
+                                        placeholder="Recording Link" aria-label="topic" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon4">Session Recording Password</span>
+                                    <input type="text" class="form-control" name="recording_pw"
+                                        placeholder="Recording Password" aria-label="topic" aria-describedby="basic-addon1">
+                                </div>
+                  
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Each Individual file submission -->
+           <!-- {% for participaint in participaints %}
+            <div class="modal fade" id="submittedModal{{participaint.pk}}" data-backdrop="static" data-keyboard="false"
+            tabindex="-2" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Submitted Files</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                             <section>
+
+                                <div class="table-responsive-lg">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">SLNO.</th>
+                                                <th scope="col">Session Topic</th>
+                                                <th scope="col">File Name</th>
+                                                <th scope="col">Submitted Date</th>
+                                                <th scope="col">Download</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            {% for sub in participaint.submission_set.all %}
+                                            <tr>
+                                                <th scope="row">{{forloop.counter}}</th>
+                                                <td><span
+                                                        id="fullname{{sub.pk}}">{{sub.session_topic}}</span>
+                                                </td>
+                                                <td><span id="email{{sub.pk}}">{{sub.attachment}}</span>
+                                                </td>
+                                                <td><span
+                                                        id="fullname{{sub.pk}}">{{sub.submitted_date}}</span>
+                                                </td>
+                                                <td><span id="profile{{sub.pk}}"><a href="{{sub.attachment.url}}" download>Download</a></span></td>
+                                            </tr>
+                                            {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section> 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %} -->
+            <!--User Profile Modal-->
+            {% for participaint in participaints %}
+            <div class="modal fade" id="userprofilModal{{participaint.pk}}" data-backdrop="static" data-keyboard="false"
+        tabindex="-2" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="display: inline-block; padding-bottom: 0;">
+                    <h5 style="margin-bottom: 0; font-weight:bold;color:tomato;" id="staticBackdropLabel">User Profile</h5>
+                    
+                    <button type="button"  class="close"
+                        data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <section class="hero-section">
+                        <div class="container-fluid text-center">
+                            <img class="specific-img" src="{{participaint.startup_img.url}}" alt="" width="100">
+                            <div class="hero-text">
+                                <h4>{{participaint.startup_name}}</h4>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="resume-section with-bg spad">
+                        <div class="container-fluid">
+                            <center>
+                                <h2 style="margin-bottom: 50px;">General Info</h2>
+                            </center>
+                            <div class="row">
+
+                                <div class="col-md-12">
+
+                                    <div class="hero-info">
+                                        <ul>
+                                            <li><span>Name of Legal Entity : </span>{{participaint.legal_entity}}
+                                            </li>
+                                            <li><span>Team Head Or Founder : </span>{{participaint.team_head}}
+                                            </li>
+                                            <li><span>Founder's Designation :
+                                                </span>{{participaint.founders_designation}}</li>
+                                            <li><span>Company Identification Number (CIN) :
+                                                </span>{{participaint.comp_identification_no}}</li>
+                                            <li><span>Operational Model :</span>{{participaint.operational_model}}
+                                            </li>
+                                            <li><span>Women Led Startup : </span>{{participaint.women_led_startup}}
+                                            </li>
+                                            <li><span>MSME registered : </span>{{participaint.msme_registered}}
+                                            </li>
+                                            <li><span>E-mail : </span>{{participaint.email}}</li>
+                                            <li><span>Phone : </span>{{participaint.contact_no}}</li>
+                                            <li><span>Web Address : </span>{{participaint.website}}</li>
+                                            <li><span>City : </span>{{participaint.city}}</li>
+                                            <li><span>Date of Registration of the legal entity of the
+                                                startup :
+                                            </span>{{participaint.legal_entity_register}}</li>
+                                        <li><span>Sector : </span>{{participaint.sector}}</li>
+                                        <li><span>Current level of Incubatee
+                                                :</span>{{participaint.inubatee_level}}</li>
+                                        <li><span>Start Date of the Incubation :
+                                            </span>{{participaint.start_date_incubation}}
+                                        </li>
+                                        <li><span>Type of Incubatee : </span>{{participaint.type_of_incubatee}}
+                                        </li>
+                                        <li><span>Team Members & roles : </span>{{participaint.team_members}}
+                                        </li>
+                                        <li><span>DIPP registered : </span>{{participaint.dspp_registered}}
+                                        </li>
+                                        <li><span>Startup working towards any of the flagship government
+                                                programmes :</span>{{participaint.gov_program}}</li>
+                                        <li><span>Current Location(working) : </span>{{participaint.location}}
+                                        </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+                    </section>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+              {% endfor %}
+
+            <!--upload files Modal -->
+             {% for participaint in participaints %}
+            <div class="modal fade" id="submittedModal{{participaint.pk}}" data-backdrop="static" data-keyboard="false"
+        tabindex="-2" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header" style="display: inline-block; padding-bottom: 0;">
+                    <h5 style="margin-bottom: 0; font-weight:bold;color:tomato;" id="staticBackdropLabel">Submitted File</h5>
+                    
+                    <button type="button"  class="close"
+                        data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <section>
+
+                        <div class="table-responsive-lg">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">SLNO.</th>
+                                        <th scope="col">Session Topic</th>
+                                        <th scope="col">File Name</th>
+                                        <th scope="col">Submitted Date</th>
+                                        <th scope="col">Download</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for sub in participaint.submissionideanest_set.all %}
+                                    <tr>
+                                        <th scope="row">{{forloop.counter}}</th>
+                                        <td><span
+                                                id="fullname{{sub.pk}}">{{sub.session_topic}}</span>
+                                        </td>
+                                        <td><span id="email{{sub.pk}}">{{sub.attachment}}</span>
+                                        </td>
+                                        <td><span
+                                                id="fullname{{sub.pk}}">{{sub.submitted_date}}</span>
+                                        </td>
+                                        <td>
+                                            {% if sub.attachment %}
+                                            <span id="profile{{sub.pk}}"><a href="{{sub.attachment.url}}" download>Download</a></span>
+                                            {% else %}
+                                            <span id="profile"><a href="#" download>Download</a></span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+              {% endfor %}
+
+            <!-- <div class="submittedModal{{participaint.pk}} fade" id="submittedModal{{participaint.pk}}" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="submittedModalLabel{{participaint.pk}}">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="submittedModal{{participaint.pk}}" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    ...
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="submittedModal{{participaint.pk}}">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+                </div>
+            </div> -->
+            
+
+            <!-- send mom Modal -->
+            <!-- <div class="modal fade" id="sendMoM" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Send MoM</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form method="POST" action="{% url 'send_mom' %}" enctype="multipart/form-data">{% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="inputFrom">From</label>
+                                    <select id="inputFrom" name="from" class="form-control">
+                                        <option selected value="{{user.pk}}">{{user.fullname}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputTo">To</label>
+                                    <select id="inputTo" name="to" class="form-control">
+                                        {% if user.is_superadmin %}
+                                        <option selected value="{{value.account.pk}}">{{value.account.fullname}}
+                                        </option>
+                                        {% else %}
+                                        <option selected value="{{account.pk}}">{{account.fullname}}</option>
+                                        {% endif %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputTitle4">Title</label>
+                                    <input required type="text" name="title" class="form-control" id="inputTitle4"
+                                        placeholder="Work title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputWorkDescription">Description</label>
+                                    <textarea required class="form-control" name="description" id="inputWorkDescription"
+                                        rows="3" placeholder="Description"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormDocument">Upload File</label>
+                                    <input required type="file" name="document" class="form-control-file"
+                                        id="exampleFormDocument">
+                                </div>
+
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">send</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div> -->
+            <!--end of send mom-->
+
+            <!--display receved mom-->
+            <!-- {% for receve in receving %}
+            <div class="modal fade" id="receveDisplay{{receve.pk}}" data-backdrop="static" data-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header" style="display: inline-block; padding-bottom: 0; ">
+                            <h5 style="margin-bottom: 0; font-weight:bold;color:tomato;" id="staticBackdropLabel">
+                                Receved MoM</h5>
+                            <button type="button" style="position: absolute; top: 15px; right: 15px;" class="close"
+                                data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="inputTitle4">Title</label>
+                                <label hidden id="title{{receve.pk}}">{{receve.title}}</label>
+                                <input type="text" disabled value="{{receve.title}}" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputWorkDescription">Description</label>
+                                <textarea class="form-control" name="work_description" disabled
+                                    id="Description{{receve.pk}}" rows="3">{{receve.description}}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormDocument">{{receve.document}}</label><br>
+                                <a href="{{receve.document.url}}" class="btn btn-primary"
+                                    download="{{receve.document.url}}">download</a>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %} -->
+            <!--end of Display Receved mom -->
+
+            <!--Display of send mom -->
+            <!-- {% for send in sendings %}
+            <div class="modal fade" id="sendDisplay{{send.pk}}" data-backdrop="static" data-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header" style="display: inline-block; padding-bottom: 0; ">
+                            <h5 style="margin-bottom: 0; font-weight:bold;color:tomato;" id="staticBackdropLabel">Send
+                                MoM</h5>
+                            <button type="button" style="position: absolute; top: 15px; right: 15px;" class="close"
+                                data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="inputTitle4">Title</label>
+                                <label hidden id="title1{{send.pk}}">{{send.title}}</label>
+                                <input type="text" disabled value="{{send.title}}" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputDescription">Description</label>
+                                <textarea class="form-control" name="description" disabled id="Description1{{send.pk}}"
+                                    rows="3">{{send.description}}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormDocument">{{send.document}}</label><br>
+                                <a href="{{send.document.url}}" class="btn btn-primary"
+                                    download="{{send.document.url}}">download</a>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %} -->
+            <!--end of Display send MoM -->
+
+
+            <!-- Scroll to Top Button-->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
+            <!-- Logout Modal-->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <a class="btn btn-primary" href="{% url 'logout2' %}">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bootstrap core JavaScript-->
+            <!-- <script src="{% static 'dashboard/vendor/jquery/jquery.min.js' %}"></script> -->
+            <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+                integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+            <!-- <script src="{% static 'assets/js/bootstrap/js/bootstrap.min.js' %}"></script> -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+                crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+                integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+                crossorigin="anonymous"></script>
+            <!-- <script src="{% static 'dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script> -->
+
+
+            <!-- Core plugin JavaScript-->
+            <!-- <script src="{% static 'dashboard/vendor/jquery-easing/jquery.easing.min.js' %}"></script> -->
+
+            <!-- Custom scripts for all pages-->
+            <script src="{% static 'dashboard/js/sb-admin-2.min.js' %}"></script>
+
+
+            <script src="{% static 'profile/js/main.js' %}"></script>
+            <!-- <script>
+
+                $(".edit_team").on("click", function () {
+
+                    id = this.id;
+                    pk = id.slice(4,);
+
+                    des_id = "#designation" + pk;
+                    designation = $(des_id).text();
+                    
+                    $("#inputDesignation14").val(designation);
+                    email_id = "#email" + pk;
+                    email = $(email_id).text();
+                    $("#inputEmail14").val(email);
+                    contact_id = "#contact_no" + pk;
+                    contact = $(contact_id).text();
+                    $("#inputContactNo14").val(contact);
+
+                    $("#pk_val").val(pk);
+                });
+                $('.delete_btn').on('click', function () {
+                    
+                    var idstr = this.id.slice(6,);
+                    
+                    $('#foo').val(idstr)
+                });
+            </script> -->
+
+            <!-- <script>
+                function closeModal(e) {
+                    // $(e).modal('toggle');
+                    let i = e.className.slice(10,);
+                    let val = "submittedModal" + i
+                    console.log(val);
+                    $('#val').css("display", "none");
+                }
+            </script> -->
+
+
+</body>
+
+</html>

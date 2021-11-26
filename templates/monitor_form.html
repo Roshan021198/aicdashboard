@@ -1,0 +1,160 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>monitor_form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        .heading{
+            width: 100%;
+            height: 50px;
+            background: #5A5C69;
+            border-radius: 10px;
+            margin: 20px 0 ;
+        }
+        .heading p{
+            padding:10px; 
+            font-size: 17px; 
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1
+        style="text-align: center;font-weight: bold;color: bold;color:rgb(28, 17, 17);text-shadow: 3px 2px rgb(76, 113, 221);margin-top: 10px;">
+        <i>Monitor Sheet</i></h1>
+    <hr>
+    <div class="container-fluid container">
+        <form method="POST" action="{% url 'monitor_form' %}">{% csrf_token %}
+            {% if empty_or_not == '0' %}
+            <div class="heading">
+                <p class="font-weight-bold">Past History</p>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputips_till_date">Total Numbers of IPs filed/obtained till date</label>
+                    <input type="text" class="form-control" name="ips_till_date" id="inputips_till_date" placeholder="Total Numbers of IPs filed/obtained till date">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputrecognisation_till_date">Any special recognition or award till date</label>
+                    <input type="text" class="form-control" name="recognisation_till_date" id="inputrecognisation_till_date"
+                        placeholder="recognition or award till date">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputfunds_till_date">Any funds/grants received till date</label>
+                    <input type="text" class="form-control" name="funds_till_date" id="inputfunds_till_date" placeholder="Any funds/grants received till date">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputjobs_created_till_date">Number of Jobs created till date</label>
+                    <input type="text" class="form-control" name="jobs_created_till_date" id="inputjobs_created_till_date" placeholder="Number of Jobs created till date">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputsales_till_date">Sales(units) till date in FY (2021)</label>
+                    <input type="text" class="form-control" name="sales_till_date" id="inputsales_till_date" placeholder="Sales(units) till date in FY (2021)">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputrevenew_till_date">Revenue(INR) till date during FY 2021</label>
+                    <input type="text" class="form-control" name="revenew_till_date" id="inputrevenew_till_date" placeholder="Revenue(INR) till date during FY 2021">
+                </div>
+        
+                <div class="form-group col-md-6">
+                    <label for="inputexpendicture_till_date">Expenditure(INR) during FY 2021</label>
+                    <input type="text" class="form-control" name="expendicture_till_date" id="inputexpendicture_till_date" placeholder="Expenditure(INR) during FY 2021">
+                </div>
+            </div>
+            {% endif %}
+
+                <div class="heading">
+                    <p class="font-weight-bold">Monthly Review Sheet</p>
+                </div>
+                
+        
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputips_last_month">Total Numbers of IPs filed/obtained last month</label>
+                        <input type="text" class="form-control" name="ips_last_month" id="inputips_last_month" placeholder="Total Numbers of IPs filed/obtained last month">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputrecognisation_last_month">Any special recognition or award last month</label>
+                        <input type="text" class="form-control" name="recognisation_last_month" id="inputrecognisation_last_month"
+                            placeholder="Any special recognition or award last month">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputfunds_last_month">Any funds/grants received last month</label>
+                        <input type="text" class="form-control" name="funds_last_month" id="inputfunds_last_month" placeholder="Any funds/grants received last month">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputjobs_created_last_month">Number of Jobs created last month</label>
+                        <input type="text" class="form-control" name="jobs_created_last_month" id="inputjobs_created_last_month" placeholder="Number of Jobs created last month">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputsales_last_month">Sales(units) of last month</label>
+                        <input type="text" class="form-control" name="sales_last_month" id="inputsales_last_month" placeholder="Sales(units) of last month">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputrevenew_last_month">Revenue(INR) of last month</label>
+                        <input type="text" class="form-control" name="revenew_last_month" id="inputrevenew_last_month" placeholder="Revenue(INR) of last month">
+                    </div>
+            
+                    <div class="form-group col-md-6">
+                        <label for="inputexpendicture_last_month">Expenditure(INR) of last month</label>
+                        <input type="text" class="form-control" name="expendicture_last_month" id="inputexpendicture_last_month" placeholder="Expenditure(INR) of last month">
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="inputAction">Problems faced last month</label>
+                        <textarea class="form-control" name="problems" id="inputAction" rows="3"
+                            placeholder="Problems faced last month"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="inputFuturePlan">Any special Gain/Opportunities/Connection last month</label>
+                        <textarea class="form-control" name="oppertunities" id="inputFuturePlan" rows="3"
+                            placeholder="Any special Gain/Opportunities/Connection last month"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="inputAction">Any new outreach efforts made last month</label>
+                        <textarea class="form-control" name="out_reach" id="inputAction" rows="3"
+                            placeholder="Any new outreach efforts made last month"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="inputRequiredHelp">Any Partnership or MOU signed last month</label>
+                        <textarea class="form-control" name="partnership_mou" id="inputRequiredHelp" rows="3"
+                            placeholder="Any Partnership or MOU signed last month"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="inputRequiredHelp">Special interventions from incubator made last month</label>
+                        <textarea class="form-control" name="intervention" id="inputRequiredHelp" rows="3"
+                            placeholder="Special interventions from incubator made last month"></textarea>
+                    </div>
+                </div>
+        
+                <div class="heading">
+                    <p class="font-weight-bold">Mentor Meetings</p>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputAction">Number of mentor meetings held last month</label>
+                        <textarea class="form-control" name="monitor_meeting" id="inputAction" rows="3"
+                            placeholder="Number of mentor meetings held last month"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="inputRequiredHelp">Action Plan for next month</label>
+                        <textarea class="form-control" name="action_plan" id="inputRequiredHelp" rows="3"
+                            placeholder="Action Plan for next month"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="inputRequiredHelp">Any help required from incubator for next month</label>
+                        <textarea class="form-control" name="help_required" id="inputRequiredHelp" rows="3"
+                            placeholder="Any help required from incubator for next month"></textarea>
+                    </div>
+                </div>
+        
+                <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
+
+

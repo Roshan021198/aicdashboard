@@ -1,0 +1,115 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<p>EDIT FORM</p>
+<form method="POST" enctype="multipart/form-data">{% csrf_token %}
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label for="inputStartUpName4">Name Of Start-Up</label>
+        {{form.startup_name}}
+      </div>
+      <div class="form-group col-md-6">
+        <label for="exampleFormControlFile1">Choose Image For startup</label>
+        {{form.startup_img}}
+      </div>
+      <div class="form-group col-md-6">
+          <label for="inputTeamHead4">Head Of the Team/Founders</label>
+          {{form.team_head}}
+        </div>
+        <div class="form-group col-md-6">
+          <label for="exampleFormControlFile2">Choose Image For Founder</label>
+          {{form.founder_img}}
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputFoundersDesignation4">Founder's Designation</label>
+          {{form.founders_designation}}
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="inputCIN4">Company Identification Number (CIN) :</label>
+          {{form.comp_identification_no}}
+          </div>
+        <div class="form-group col-md-6">
+          <label for="inputIncubateeLevel4">Current level of Incubatee :</label>
+          {{form.inubatee_level}}
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputOperationalModel4">Operational Model : </label>
+          {{form.operational_model}}
+        </div>
+      <div class="form-group col-md-6">
+        <label for="inputLegalEntity4">Name Of Legal Entity</label>
+        {{form.legal_entity}}
+    </div>
+  
+    <div class="form-group col-md-6">
+      <label for="inputDateofRegistration4">Date of Registration of the legal entity of the startup :</label>
+      {{form.legal_entity_register}}
+    </div>
+      <div class="form-group col-md-6">
+        <label for="inputCity4">Belong to Which City</label>
+        {{form.city}}
+      </div>
+      <div class="form-group col-md-6">
+          <label for="inputWebsiteAddress4">Website Address</label>
+          {{form.website}}
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputSector4">Sector</label>
+          {{form.sector}}
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputDateofJoin4">Start Date of the Incubation :</label>
+          {{form.start_date_incubation}}
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputTypeOfIncubatee4" style="margin-right: 5%;">Type of Incubatee :</label><br>
+          {{form.type_of_incubatee}}
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputTeamMembers4">Current Team Members</label>
+          {{form.team_members}}
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="inputTypeOfIncubatee4" style="margin-right: 5%;">Women Led Startup : (Yes/No) </label><br>
+          {{form.women_led_startup}}
+        </div>
+
+        
+        <div class="form-group col-md-6">
+          <label for="inputLocation4">Geographical Location They are Working</label>
+          {{form.location}}
+        </div>
+  
+      
+  
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">Email</label>
+        {{form.email}}
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputContactNo4">Contact No.</label>
+        {{form.contact_no}}
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputGovtProgram4">Startup working towards any of the flagship government programmes :</label>
+        {{form.gov_program}} 
+      </div>
+  
+      <div class="form-group col-md-6">
+        <label for="inputMSMERegistration4" style="margin-right: 5%;">MSME registered : (Yes/No) </label><br>
+        {{form.msme_registered}}
+      </div>
+  
+      <div class="form-group col-md-6">
+        <label for="inputDIPPRegistration4" style="margin-right: 5%;">DIPP Registered : (Yes/No) </label><br>
+        {{form.dspp_registered}}
+      </div>
+  
+    </div>
+  
+  
+  
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+{% endblock %}

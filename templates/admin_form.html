@@ -1,0 +1,120 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+
+<form id="admin_form" class="admin_form" method="POST" action="{% url 'admin_register' %}" enctype="multipart/form-data">{% csrf_token %}
+  <div class="row">
+    <div class="form-group col-md-12">
+      <label for="inputFullName4">Full Name</label>
+      <input type="text" name="full_name" class="form-control" id="inputFullName4" pattern="[a-zA-Z]+[a-zA-Z ]+" title="Enter name with only alphabets" placeholder="full name" required>
+    </div>
+    <!-- <div class="form-group col-md-6">
+      <label for="inputLastName4">Last Name</label>
+      <input type="text" name="last_name" class="form-control" id="inputLastName4" placeholder="last name">
+    </div> -->
+
+    <div class="form-group col-md-6">
+      <label for="inputDesignation4">Designation</label>
+      <input type="text" name="designation" class="form-control" id="inputDesignation4" placeholder="Designation"
+        required>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputEmp4">Employee Id</label>
+      <input type="text" name="employee_id" class="form-control" id="inputEmp4" placeholder="Employee Id">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Email</label>
+      <input type="email" name="email" class="form-control" id="inputEmail4" pattern='[/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/]'' placeholder="Email" required>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputContactNo4">Contact No.</label>
+      <input type="text" name="contact" class="form-control" id="inputContactNo4" pattern="[1-9]{1}[0-9]{9}" title="Enter 10 digit mobile number" placeholder="Contact No." required>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputIdentity4">Adhar Card/Pan Card No.</label>
+      <input type="text" name="identity" class="form-control" id="inputIdentity4" placeholder="Adhar Card/Pan Card No."
+        required>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="inputCl">CL</label>
+      <input type="text" name="cl" class="form-control" id="inputCl" placeholder="cl"
+        required>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputSl">SL</label>
+      <input type="text" name="sl" class="form-control" id="inputSl" placeholder="sl"
+        required>
+    </div>
+
+
+    <div class="form-group col-md-6">
+      <label for="inputUsername4">Username</label>
+      <input type="text" name="username" class="form-control" id="inputUsername4" placeholder="username" required>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Password</label>
+      <input type="password" name="password1" class="form-control demoInputBox" onKeyUp="checkPasswordStrength();" id="inputPassword4" placeholder="Password" required autocomplete="on">
+      <div id="password-strength-status"></div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword41">Confirm Password</label>
+      <input type="password" name="password2" class="form-control" id="inputPasswordCheck4"
+        placeholder="Confirm Password" required autocomplete="on">
+        <div id="showError"></div>
+    </div>
+    
+
+    <div class="form-group col-md-6">
+      <label for="exampleFormControlFile1">Choose Image file</label>
+      <input type="file" name="admin_img" class="form-control-file" id="exampleFormControlFile1" required>
+    </div>
+
+
+  </div>
+
+
+
+  <button type="submit" class="btn btn-primary">Create Admin</button>
+</form>
+
+{% endblock %}
+
+{% block js %}
+  <script>
+    $(document).ready(function(){
+      $('#inputPasswordCheck4').keyup(function(){
+        var pwd = $('#inputPassword4').val()
+        var cpwd = $('#inputPasswordCheck4').val()
+
+        if(cpwd!=pwd){
+          $('#showError').html('!! password and check password are not same !!');
+          $('#showError').css('color','red');
+          return false;
+        }
+        else{
+          $('#showError').html('!! Matched !!');
+          $('#showError').css('color','green');
+          return true;
+        }
+      });
+    });
+
+    function checkPasswordStrength() {
+        var number = /([0-9])/;
+        var alphabets = /([a-zA-Z])/;
+        var special_characters = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
+        if($('#inputPassword4').val().length<6) {
+        $('#password-strength-status').html("Weak (should be atleast 6 characters with special symbol and number.)");
+        $('#password-strength-status').css('color','red');
+        } else {  	
+        if($('#inputPassword4').val().match(number) && $('#inputPassword4').val().match(alphabets) && $('#inputPassword4').val().match(special_characters)) {            
+        $('#password-strength-status').html("Strong");
+        $('#password-strength-status').css('color','green');
+        } else {
+        $('#password-strength-status').html("Medium (should include alphabets, numbers and special characters.)");
+        $('#password-strength-status').css('color','orange');
+        }}}
+  </script>
+{% endblock %}

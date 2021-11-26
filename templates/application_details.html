@@ -1,0 +1,146 @@
+{% extends 'base_app.html' %}
+{% block head %}Form Details{% endblock %}
+{% block content %}
+        
+    <h1 class="mt-2" style="text-align: center; font-size: 3rem">Form Details</h1>
+    <section>
+        <div class="container table-responsive-lg">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">SLNO.</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">No. Of Application Submitted</th>
+                        <th scope="col">Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Entrepreneur</td>
+                        <td>{{ent_len}}</td>
+                        <td><a href="{% url 'entrepreneur_excel' %}" class="btn btn-primary">Download Excel</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Startup</td>
+                        <td>{{str_len}}</td>
+                        <td><a href="{% url 'startup_excel' %}" class="btn btn-primary">Download Excel</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+
+    <div class="container table-responsive">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                    aria-controls="pills-home" aria-selected="true">Entrepreneurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+                    aria-controls="pills-profile" aria-selected="false">Startups</a>
+            </li>
+        </ul>
+        <div class="tab-content table-responsive-lg" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <table class="table table-responsive-lg">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">SLNO.</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Contact No.</th>
+                            <th scope="col">District</th>
+                            <th scope="col">CompanyName</th>
+                            <th scope="col">Designation</th>
+                            <th scope="col">Sector</th>
+                            <th scope="col">Date of Incorporation</th>
+                            <th scope="col">Location of Company</th>
+                            <th scope="col">Annual Turnover of last 3 years</th>
+                            <th scope="col">Brief Description of Entrepreneurial Journey</th>
+                            <th scope="col">Major achievements as an entrepreneur</th>
+                            <th scope="col">Awards & Recognition, if any</th>
+                            <th scope="col">Impact Created in Society</th>
+                            <th scope="col">Vision for the Journey ahead</th>
+                            <th scope="col">Nomination for Award category</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for val in ent_val %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{val.name}}</td>
+                            <td>{{val.email}}</td>
+                            <td>{{val.contact}}</td>
+                            <td>{{val.district}}</td>
+                            <td>{{val.company_name}}</td>
+                            <td>{{val.designation}}</td>
+                            <td>{{val.sector}}</td>
+                            <td>{{val.date_incorporation}}</td>
+                            <td>{{val.location}}</td>
+                            <td>{{val.turnover}}</td>
+                            <td>{{val.journey}}</td>
+                            <td>{{val.achievements}}</td>
+                            <td>{{val.awards}}</td>
+                            <td>{{val.impact}}</td>
+                            <td>{{val.vision}}</td>
+                            <td>{{val.nomination}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade table-responsive-lg" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">SLNO.</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Contact No.</th>
+                            <th scope="col">District</th>
+                            <th scope="col">CompanyName</th>
+                            <th scope="col">Designation</th>
+                            <th scope="col">Sector</th>
+                            <th scope="col">Date of Incorporation</th>
+                            <th scope="col">Describe the problem you are solving</th>
+                            <th scope="col">Brief description of the solution</th>
+                            <th scope="col">Uniqueness of the solution / product / Services</th>
+                            <th scope="col">Competitive advantages, if any</th>
+                            <th scope="col">Stage of Operation</th>
+                            <th scope="col">Annual Revenue, if any</th>
+                            <th scope="col">Upload Video link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for val in str_val %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{val.name}}</td>
+                            <td>{{val.email}}</td>
+                            <td>{{val.contact}}</td>
+                            <td>{{val.district}}</td>
+                            <td>{{val.company_name}}</td>
+                            <td>{{val.designation}}</td>
+                            <td>{{val.sector}}</td>
+                            <td>{{val.date_incorporation}}</td>
+                            <td>{{val.problem_solving}}</td>
+                            <td>{{val.solution}}</td>
+                            <td>{{val.uniqueness}}</td>
+                            <td>{{val.advantages}}</td>
+                            <td>{{val.operation_stage}}</td>
+                            <td>{{val.revenue}}</td>
+                            <td>{{val.vid_link}}</td>
+                        {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

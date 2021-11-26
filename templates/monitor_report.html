@@ -1,0 +1,347 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>monitor_Sheet Report</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        .heading {
+            width: 100%;
+            height: 50px;
+            background: #5A5C69;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .heading p {
+            padding: 10px;
+            font-size: 17px;
+            color: #fff;
+        }
+
+        .bold_type {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1
+        style="text-align: center;font-weight: bold;color: bold;color:rgb(28, 17, 17);text-shadow: 3px 2px rgb(76, 113, 221);margin-top: 10px;">
+        <i>Monitor Report</i></h1>
+    <hr>
+    <div class="container-fluid container">
+        {% if monitor_report.first_atempt %}
+        <div class="form-row">
+            <div class="heading">
+                <p class="font-weight-bold">Past History</p>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputips_till_date">Total Numbers of IPs filed/obtained till date</label>
+                <input disabled value="{{monitor_report.ips_till_date}}" type="text" class="form-control"
+                    name="ips_till_date" id="inputips_till_date"
+                    placeholder="Total Numbers of IPs filled/obtained till date">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputrecognisation_till_date">Any special recognition or award till date</label>
+                <input disabled value="{{monitor_report.recognisation_till_date}}" type="text" class="form-control"
+                    name="recognisation_till_date" id="inputrecognisation_till_date" placeholder="lead entrepreneur">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputfunds_till_date">Any funds/grants receved till date</label>
+                <input disabled value="{{monitor_report.funds_till_date}}" type="text" class="form-control"
+                    name="funds_till_date" id="inputfunds_till_date" placeholder="Any funds/grands receved till date">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputjobs_created_till_date">Number of Jobs created till date</label>
+                <input disabled value="{{monitor_report.jobs_created_till_date}}" type="text" class="form-control"
+                    name="jobs_created_till_date" id="inputjobs_created_till_date"
+                    placeholder="Number of Jobs created till date">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputsales_till_date">Sales(units) till date in FY (2021)</label>
+                <input disabled value="{{monitor_report.sales_till_date}}" type="text" class="form-control"
+                    name="sales_till_date" id="inputsales_till_date" placeholder="Sales(units) till date in FY (2021)">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputrevenew_till_date">Revenue(INR) till date during FY 2021</label>
+                <input disabled value="{{monitor_report.revenew_till_date}}" type="text" class="form-control"
+                    name="revenew_till_date" id="inputrevenew_till_date"
+                    placeholder="Revenew(INR) till date during FY 2021">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="inputexpendicture_till_date">Expenditure(INR) during FY 2021</label>
+                <input disabled value="{{monitor_report.expendicture_till_date}}" type="text" class="form-control"
+                    name="expendicture_till_date" id="inputexpendicture_till_date"
+                    placeholder="Expendecture(INR) during FY 2021">
+            </div>
+
+        </div>
+        {% endif %}
+
+
+        <div class="heading">
+            <p class="font-weight-bold">Monthly Review Sheet</p>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputips_last_month">Total Numbers of IPs filed/obtained last month</label>
+                <input disabled value="{{monitor_report.ips_last_month}}" type="text" class="form-control"
+                    name="ips_last_month" id="inputips_last_month"
+                    placeholder="Total Numbers of IPs filled/obtained last month">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputrecognisation_last_month">Any special recognition or award last month</label>
+                <input disabled value="{{monitor_report.recognisation_last_month}}" type="text" class="form-control"
+                    name="recognisation_last_month" id="inputrecognisation_last_month"
+                    placeholder="Any special recognition/awarded last month">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputfunds_last_month">Any funds/grants receved last month</label>
+                <input disabled value="{{monitor_report.funds_last_month}}" type="text" class="form-control"
+                    name="funds_last_month" id="inputfunds_last_month"
+                    placeholder="Any funds/grands receved last month">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputjobs_created_last_month">Number of Jobs created last month</label>
+                <input disabled value="{{monitor_report.jobs_created_last_month}}" type="text" class="form-control"
+                    name="jobs_created_last_month" id="inputjobs_created_last_month"
+                    placeholder="Number of Jobs created last month">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputsales_last_month">Sales(units) of last month</label>
+                <input disabled value="{{monitor_report.sales_last_month}}" type="text" class="form-control"
+                    name="sales_last_month" id="inputsales_last_month" placeholder="Sales(units) of last month">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputrevenew_last_month">Revenue(INR) of last month</label>
+                <input disabled value="{{monitor_report.revenew_last_month}}" type="text" class="form-control"
+                    name="revenew_last_month" id="inputrevenew_last_month" placeholder="Revenew(INR) of last month">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="inputexpendicture_last_month">Expenditure(INR) of last month</label>
+                <input disabled value="{{monitor_report.expendicture_last_month}}" type="text" class="form-control"
+                    name="expendicture_last_month" id="inputexpendicture_last_month"
+                    placeholder="Expendecture(INR) of last month">
+            </div>
+
+            <div class="form-group col-md-12">
+                <label for="inputAction">Problems faced last month</label>
+                <textarea class="form-control" disabled name="problems" id="inputAction" rows="3"
+                    placeholder="Problems faced last month">{{monitor_report.problems}}</textarea>
+            </div>
+            <div class="form-group col-md-12">
+                <label for="inputFuturePlan">Any special Gains/Opportunities/Connections last month</label>
+                <textarea disabled class="form-control" name="oppertunities" id="inputFuturePlan" rows="3"
+                    placeholder="Any special gain or Opportunities or connection last month">{{monitor_report.oppertunities}}</textarea>
+            </div>
+            <div class="form-group col-md-12">
+                <label for="inputAction">Any new outreach efforts made last month</label>
+                <textarea disabled class="form-control" name="out_reach" id="inputAction" rows="3"
+                    placeholder="Any new outreach efforts made last month">{{monitor_report.out_reach}}</textarea>
+            </div>
+            <div class="form-group col-md-12">
+                <label for="inputRequiredHelp">Any Partnership or MOU signed last month</label>
+                <textarea disabled class="form-control" name="partnership_mou" id="inputRequiredHelp" rows="3"
+                    placeholder="Any partnership or MOU signed last month">{{monitor_report.partnership_mou}}</textarea>
+            </div>
+            <div class="form-group col-md-12">
+                <label for="inputRequiredHelp">Special interventions from incubator made last month</label>
+                <textarea disabled class="form-control" name="intervention" id="inputRequiredHelp" rows="3"
+                    placeholder="Special interventions from incubator made last month">{{monitor_report.intervention}}</textarea>
+            </div>
+        </div>
+
+
+        <div class="heading">
+            <p class="font-weight-bold">Mentor Meetings</p>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="inputAction">Number of mentor meetings held last month</label>
+                <textarea disabled class="form-control" name="monitor_meeting" id="inputAction" rows="3"
+                    placeholder="Number of mentor meetings held last month">{{monitor_report.monitor_meeting}}</textarea>
+            </div>
+            <div class="form-group col-md-12">
+                <label for="inputRequiredHelp">Action Plan for next month</label>
+                <textarea disabled class="form-control" name="action_plan" id="inputRequiredHelp" rows="3"
+                    placeholder="Action Plan for next month">{{monitor_report.action_plan}}</textarea>
+            </div>
+            <div class="form-group col-md-12">
+                <label for="inputRequiredHelp">Any help required from incubator for next month</label>
+                <textarea disabled class="form-control" name="help_required" id="inputRequiredHelp" rows="3"
+                    placeholder="Any help required from incubator for next month">{{monitor_report.help_required}}</textarea>
+            </div>
+        </div>
+        <button type="submit" onclick="printDiv('priantableArea')" class="btn btn-primary mb-3">Print</button>
+        {% if monitor_report.allow_edit == False and user.is_superadmin %}
+        <a href="{% url 'allowedit' pk=monitor_report.pk %}" class="btn btn-primary mb-3">Allow Edit</a>
+        {% endif %}
+
+        {% if monitor_report.allow_edit == True and user.is_startup %}
+        <a href="{% url 'monitor_sheet_edit' pk=monitor_report.pk %}" class="btn btn-primary mb-3">Edit</a>
+        {% endif %}
+    </div>
+
+
+
+
+    <div class="container" style="display: none;" id="priantableArea">
+
+        
+        {% if monitor_report.first_atempt %}
+        <div class="form-row">
+            <div class="heading">
+                <p class="font-weight-bold">Past History</p>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputComp">Total Numbers of IPs filled/obtained till date</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.ips_till_date}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputentrepreneur">Any special recognition/awarded till date</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.recognisation_till_date}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputDesignation">Any funds/grands receved till date:</label>
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.funds_till_date}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputurl">Number of Jobs created till date:</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.jobs_created_till_date}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputEmail4">Sales(units) till date in FY (2021):</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.sales_till_date}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputphoneno">revenue(INR) till date during FY 2021:</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.revenew_till_date}}</div>
+
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputAddress">Expendecture(INR) during FY 2021:</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.expendicture_till_date}}</div>
+        </div>
+        {% endif %}
+
+        <div class="heading">
+            <p class="font-weight-bold">Monthly Review Sheet</p>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputMOU">Total Numbers of IPs filled/obtained last month:</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.ips_last_month}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputMouDate">Any special recognition/awarded last month:</label>
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.recognisation_last_month}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputIncubationFees">Any funds/grands receved last month:</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.funds_last_month}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputChiefMentorAssign">Number of Jobs created last month:</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.jobs_created_last_month}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputSSHA">Sales(units) of last month:</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.sales_last_month}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputMouDate">Revenue(INR) of last month:</label>
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.revenew_last_month}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputSharesTransferred">Expendecture(INR) of last month:</label>
+
+            </div>
+
+            <div class="form-group col-md-6">{{monitor_report.expendicture_last_month}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputShareCertificate">Problems faced last month:</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.problems}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputNoSeats">Any special gain or Opportunities or connection last
+                    month:</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.oppertunities}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputRentForSeats">Any new outreach efforts made last month:</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.out_reach}}</div>
+
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputCapitalInvested">Any partnership or MOU signed last month:</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.intervention}}</div>
+
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputRegistrationCompany">Special interventions from incubator made last
+                    month:</label>
+
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.partnership_mou}}</div>
+        </div>
+
+
+
+        <div class="heading">
+            <p class="font-weight-bold">Mentor Meetings:</p>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputIPRStatus">Number of mentor meetings held last month:</label>
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.monitor_meeting}}</div>
+            <div class="form-group col-md-6">
+
+                <label class="bold_type" for="inputSales">Action Plan for next month:</label>
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.action_plan}}</div>
+            <div class="form-group col-md-6">
+                <label class="bold_type" for="inputRevenue">Any help required from incubator for next month: </label>
+            </div>
+            <div class="form-group col-md-6">{{monitor_report.help_required}}</div>
+        </div>
+
+    </div>
+
+
+    <script>
+        function printDiv(divName) {
+            var printContent = document.getElementById(divName).innerHTML;
+            var originalcontent = document.body.innerHTML;
+
+            document.body.innerHTML = printContent;
+            window.print();
+            document.body.innerHTML = originalcontent;
+        }
+    </script>
+</body>
+
+</html>

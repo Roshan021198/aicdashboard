@@ -1,0 +1,189 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traction Sheet Report</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        .heading {
+            width: 100%;
+            height: 50px;
+            background: #5A5C69;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .heading p {
+            padding: 10px;
+            font-size: 17px;
+            color: #fff;
+        }
+
+        .bold_type {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center;font-weight: bold;color:rgb(28, 17, 17);text-shadow: 3px 2px rgb(76, 113, 221);margin-top: 10px;"><i>Traction Form</i></h1>
+    
+    <div class="container-fluid container">
+        <div class="heading">
+            <p class="font-weight-bold">Traction sheet</p>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputtotal_order">Total no. of orders in a month</label>
+                <input type="text" class="form-control" name="total_order" disabled
+                    value="{{traction_report.total_order}}" id="inputtotal_order" placeholder="orders in a month">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputaverage_packet_size">Average packet size of the order</label>
+                <input type="text" class="form-control" name="average_packet_size" disabled
+                    value="{{traction_report.average_packet_size}}" id="inputaverage_packet_size"
+                    placeholder="packet size of the order">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputtotal_revenue_of_month">Total revenue in a month ( In rs.)</label>
+                <input type="text" class="form-control" name="total_revenue_of_month" disabled
+                    value="{{traction_report.total_revenue_of_month}}" id="inputtotal_revenue_of_month"
+                    placeholder="revenue in a month ( In rs.)">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputtotal_customers_served">Total No. of customers served till date</label>
+                <input type="text" class="form-control" name="total_customers_served" disabled
+                    value="{{traction_report.total_customers_served}}" id="inputtotal_customers_served"
+                    placeholder="customers served till date">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputtotal_expense">Total expense in a month (In rs.)</label>
+                <input type="text" class="form-control" name="total_expense" disabled
+                    value="{{traction_report.total_expense}}" id="inputtotal_expense"
+                    placeholder="expense in a month (In rs.)">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputmarket_outreach">Market outreach through social media in a month</label>
+                <input type="text" class="form-control" name="market_outreach" disabled
+                    value="{{traction_report.market_outreach}}" id="inputmarket_outreach"
+                    placeholder="Market outreach through social media">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="inputrepeate_customers">Number/% of the repeat customers in a month</label>
+                <input type="text" class="form-control" name="repeate_customers" disabled
+                    value="{{traction_report.repeate_customers}}" id="inputrepeate_customers"
+                    placeholder="repeat customers">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputtotal_revenue">Total revenue generated till date</label>
+                <input type="text" class="form-control" name="total_revenue" disabled
+                    value="{{traction_report.total_revenue}}" id="inputtotal_revenue"
+                    placeholder="revenue generated till date">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputdirect_job_created">Number of job created till date (Direct)</label>
+                <input type="text" class="form-control" name="direct_job_created" disabled
+                    value="{{traction_report.direct_job_created}}" id="inputdirect_job_created"
+                    placeholder="job created(Directly)">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputindirect_job_created">Number of job created till date (Indirect)</label>
+                <input type="text" class="form-control" name="indirect_job_created" disabled
+                    value="{{traction_report.indirect_job_created}}" id="inputindirect_job_created"
+                    placeholder="job created(InDirectly)">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputprofit">Profit if any</label>
+                <input type="text" class="form-control" name="profit" disabled value="{{traction_report.profit}}"
+                    id="inputprofit" placeholder="Profit">
+            </div>
+            <div class="form-group col-md-12">
+                <button type="submit" onclick="printDiv('priantableArea')" class="btn btn-primary">Print</button>
+                {% if traction_report.allow_edit == False and user.is_superadmin %}
+                <a href="{% url 'allow_traction_edit' pk=traction_report.pk %}" class="btn btn-primary">Allow Edit</a>
+                {% endif %}
+
+                {% if traction_report.allow_edit == True and user.is_startup %}
+                <a href="{% url 'edit_traction_sheet' pk=traction_report.pk %}" class="btn btn-primary">Edit</a>
+                {% endif %}
+            </div>
+        </div>
+
+
+        <!--print-->
+        <div class="container" style="display: none;" id="priantableArea">
+            <h1>Traction Form</h1>
+            <div class="heading">
+                <p class="font-weight-bold">Traction Form</p>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="bold_type" for="inputComp">Total no. of orders in a month:</label>
+                </div>
+                <div class="form-group col-md-6">{{traction_report.total_order}}</div>
+
+                <div class="form-group col-md-6">
+                    <label class="bold_type" for="inputentrepreneur">Average packet size of the order:</label>
+                </div>
+                <div class="form-group col-md-6">{{traction_report.average_packet_size}}</div>
+                <div class="form-group col-md-6">
+                    <label class="bold_type" for="inputDesignation">Total revenue in a month ( In rs.):</label>
+                </div>
+                <div class="form-group col-md-6">{{traction_report.total_revenue_of_month}}</div>
+                <div class="form-group col-md-6">
+                    <label class="bold_type" for="inputurl">Total No. of customers served till date:</label>
+
+                </div>
+                <div class="form-group col-md-6">{{traction_report.total_customers_served}}</div>
+                <div class="form-group col-md-6">
+                    <label class="bold_type" for="inputEmail4">Total expense in a month (In rs.):</label>
+
+                </div>
+                <div class="form-group col-md-6">{{traction_report.total_expense}}</div>
+                <div class="form-group col-md-6">
+                    <label class="bold_type" for="inputphoneno">Market outreach through social media in a month:</label>
+
+                </div>
+                <div class="form-group col-md-6">{{traction_report.market_outreach}}</div>
+
+                <div class="form-group col-md-6">
+                    <label class="bold_type" for="inputAddress">Number/% of the repeat customers in a month:</label>
+
+                </div>
+                <div class="form-group col-md-6">{{traction_report.repeate_customers}}</div>
+                <div class="form-group col-md-6">
+                    <label class="bold_type" for="inputprod">Total revenue generated till date:</label>
+                </div>
+                <div class="form-group col-md-6">{{traction_report.total_revenue}}</div>
+                <div class="form-group col-md-6">
+                    <label class="bold_type" for="inputIndustry">Number of job created till date (Direct):</label>
+
+                </div>
+                <div class="form-group col-md-6">{{traction_report.direct_job_created}}</div>
+                <div class="form-group col-md-6">
+                    <label class="bold_type" for="inputCompetitors">Number of job created till date (Indirect):</label>
+                </div>
+                <div class="form-group col-md-6">{{traction_report.indirect_job_created}}</div>
+                <div class="form-group col-md-6">
+                    <label class="bold_type" for="inputCompetitors">Profit if any:</label>
+                </div>
+                <div class="form-group col-md-6">{{traction_report.profit}}</div>
+            </div>
+
+            <script>
+                function printDiv(divName) {
+                    var printContent = document.getElementById(divName).innerHTML;
+                    var originalcontent = document.body.innerHTML;
+
+                    document.body.innerHTML = printContent;
+                    window.print();
+                    document.body.innerHTML = originalcontent;
+                }
+            </script>
+</body>
+
+</html>

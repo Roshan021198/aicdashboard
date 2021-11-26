@@ -1,0 +1,209 @@
+{% extends 'dashboard.html' %}
+
+
+
+{% block content %}
+{% load static %}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h3 style="text-align: center;font-weight: bold;">Blog Post</h3>
+  {% if user.is_superadmin %}
+  <a href="" data-toggle="modal" data-target="#post" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+      class="fas fa-download fa-sm text-white-50"></i> Post </a>
+  {% endif %}
+</div>
+
+<!-- BLOG POST-->
+{% for post in posts %}
+<article class="single-tour"><img src="{{post.blog_img.url}}" alt="Blog Post">
+  <footer>
+    <div class="tour-info">
+      <h4>{{post.title}}</h4>
+      <small>{{post.date_of_creation}}</small>
+    </div>
+    <p>{{post.description|slice:":255"}} ... <a href="" data-toggle="modal" data-target="#post{{post.pk}}"> read
+        more</a></p>
+  </footer>
+</article>
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+<!-- blog upload Model-->
+<div class="modal fade" id="post" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Create Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{% url 'newBlogPost' %}" enctype="multipart/form-data">{% csrf_token %}
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="inputTitle4">Title</label>
+            <input required type="text" name="title" class="form-control" id="inputTitle4" placeholder="title">
+          </div>
+          <div class="form-group">
+            <label for="inputWorkDescription">Description</label>
+            <textarea required class="form-control" name="description" id="inputWorkDescription" rows="3"
+              placeholder="Description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="inputWorkblog_img">Upload Image</label>
+            <input required type="file" name="blog_img" class="form-control-file" id="inputWorkblog_img">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Post</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end blog upload Model-->
+
+{% for post in posts %}
+<!-- display blog model Model-->
+<div class="modal fade" id="post{{post.pk}}" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="display: inline-block; padding-bottom: 0; ">
+        <h5 class="modal-title" id="staticBackdropLabel">Blog Post</h5>
+        <small>{{post.date_of_creation}}</small>
+        {% if user.is_superadmin %}
+        <div class="col-md-5 float-right">
+          <a id="delete{{post.pk}}" class="btn float-right delete_btn" data-toggle="modal" data-target="#deletemodal"><i
+              class="fas fa-trash fa-lg"></i></a>
+
+          <a id="edit{{post.pk}}" class="btn float-right edit_btn" data-toggle="modal" data-target="#editmodel"><i
+              class="fas fa-edit fa-lg"></i></a>
+        </div>
+        {% endif %}
+
+        <button type="button" style="position: absolute; top: 15px; right: 15px;" class="close" data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <img src="{{post.blog_img.url}}" width="100%" alt="">
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="inputTitle4">Title</label>
+          <input type="text" id="title{{post.pk}}" name="title" class="form-control" disabled value="{{post.title}}"
+            placeholder="title">
+        </div>
+        <div class="form-group">
+          <label for="inputWorkDescription">Description</label>
+          <textarea disabled id="description{{post.pk}}" class="form-control" name="description" rows="10"
+            placeholder="Description">{{post.description}}</textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+<!--end display blog Model-->
+
+<!--edit-->
+<div class="modal fade" id="editmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight:bold;color:tomato;">Edit Employee Form
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{% url 'edit_blogPost' %}">{% csrf_token %}
+        <div class="modal-body">
+          <input type="hidden" id="pk_val" name="pk_val" value="">
+          <div class="form-group">
+            <label for="inputTitle14">Title</label>
+            <input required type="text" name="title" class="form-control" id="inputTitle14" placeholder="title">
+          </div>
+          <div class="form-group">
+            <label for="inputWorkDescription">Description</label>
+            <textarea required class="form-control" name="description" id="inputWorkDescription14" rows="3"
+              placeholder="Description"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+
+<!--delete-->
+<div class="modal fade" id="deletemodal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete Blog Post
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{% url 'delete_blogPost' %}">{% csrf_token %}
+        <div class="modal-body">
+          <input type="hidden" id="foo" name="foo" />
+          <center><label for="inputDelete">Are You Sure You Want To Delete The
+              Post ? ? ?</label><br>
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </center>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+  $('.delete_btn').on('click', function () {
+
+    var idstr = this.id.slice(6,);
+
+    $('#foo').val(idstr)
+  });
+
+  $(".edit_btn").on("click", function () {
+
+    id = this.id;
+    pk = id.slice(4,);
+
+    title_id = "#title" + pk;
+    title = $(title_id).val();
+    $("#inputTitle14").val(title);
+    console.log(title_id)
+
+    des_id = "#description" + pk;
+    dec = $(des_id).text();
+    $("#inputWorkDescription14").val(dec);
+
+
+    $("#pk_val").val(pk);
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Women Entrepreneurs Awards</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'wform/assets/img/favicon.ico' %}" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'wform/css/styles.css' %}" rel="stylesheet" />
+    <style>
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(calc(-250px * 7));
+            }
+        }
+
+        .slider {
+            background: white;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, .125);
+            height: 100px;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+            width: 960px;
+        }
+
+        .slider::before,
+        .slider::after {
+            background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+            content: "";
+            height: 100px;
+            position: absolute;
+            width: 200px;
+            z-index: 2;
+        }
+
+        .slider::after {
+            right: 0;
+            top: 0;
+            transform: rotateZ(180deg);
+        }
+
+        .slider::before {
+            left: 0;
+            top: 0;
+        }
+
+        .slider .slide-track {
+            animation: scroll 40s linear infinite;
+            display: flex;
+            width: calc(250px * 14);
+        }
+
+        .slider .slide {
+            height: 100px;
+            width: 250px;
+        }
+
+        .partner{
+            font-size: 1.8rem;
+            font-weight: bold; 
+            font-style: italic;
+            color: #190001;
+        }
+    </style>
+
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="{% url 'ocf_anantya' %}"><img
+                    src="{% static 'wform/assets/img/ocflogo.png' %}" alt="ocf logo" width="100"></a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Events</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger"
+                            href="{% url 'eligibility' %}">Eligibility</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Masthead-->
+    <header class="masthead">
+        <div class="container d-flex h-100 align-items-center">
+            <div class="mx-auto text-center">
+                <!-- <h1 class="mx-auto my-0 text-uppercase">"ANANTYA"</h1>
+                <h1 class="mx-auto text-uppercase" style="font-size: 3rem;">infinite</h1> -->
+
+                <img class="mx-auto my-0" id="anantyaimg" src="{% static 'wform/assets/img/anantya.png' %}" alt=""
+                    width="1000">
+
+                <h2 class="mx-auto my-0 text-uppercase mb-2" style="color: blanchedalmond;">Apply For Nomination</h2>
+                <a class="btn btn-primary js-scroll-trigger" href="{% url 'entrepreneur_form' %}">Entrepreneur</a>
+                <a class="btn btn-primary js-scroll-trigger" id="startupbtn"
+                    href="{% url 'startup_form_app' %}">Startup</a>
+            </div>
+        </div>
+    </header>
+
+
+
+    <!-- About-->
+    <section class="about-section text-center" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="text-white mb-4">About</h2>
+                    <p class="text-white-50" style="text-align: justify;">
+                        Odisha Corporate Foundation (OCF) is an apolitical, non-profit making, non-religious society
+                        dedicated to social service, keeping the development of Odisha in perspective. We strive to
+                        organize and undertake activities to promote the social, economic and educational advancement of
+                        Odisha and its people including natives and people of Odisha origin or associated with Odisha
+                        residing in India and abroad. OCF is a registered society born out of collective commitment of
+                        eminent industry veterans and experts from diverse industries & geography to bring Entrepreneurs
+                        and Industry Professionals of Odisha origin to a single platform with an objective to leverage
+                        the collective leadership of our fraternity to support a culture of entrepreneurship in the
+                        state and re-establish Odisha as a Global Enterprise Hub. OCF is probably building the world’s
+                        1st Community Based Global Network that will create a 360° connectivity for entrepreneurs from
+                        30 districts of Odisha to 28 states & 9 UTs in India with the global fraternity and vice versa
+                        in a global to local and local to global format.
+                    </p>
+                </div>
+            </div>
+            <!-- <img class="img-fluid" src=" {% static 'wform/assets/img/ipad.png' %}" alt="" /> -->
+        </div>
+    </section>
+
+    <section class="projects-section bg-light" id="projects">
+        <div class="container">
+            <!-- Project Two Row-->
+            <center>
+                <h1> “ Anantya ” – Infinite Opportunities for Women</h1>
+                <h2> Women Entrepreneurship Awards 2021</h2>
+            </center>
+            <div class="row justify-content-center no-gutters">
+
+                <div class="col-lg-6 order-lg-first">
+
+                    <div class="text-center h-100 project">
+                        Anantya – Women Entrepreneurship Awards 2021 is part of OCF’s commitment and priority for
+                        bringing about a massive thrust on Women Entrepreneurship in Odisha and among the fraternity
+                        worldwide. An eminent jury panel of professionals and domain based experts of Odisha origin and
+                        global significance is constituted to enable the most credible selection process of awardees
+                        with due recognition to the most merit based and inspiring women entrepreneurs and startups of
+                        the state.
+                        The nominations from entrepreneurs and startups will start from 10th March, 2021 and end on 25th
+                        March, 2021. We request the aspirants to join us in this mega initiative and reach out to us for
+                        any further clarification:
+
+                    </div>
+                </div>
+            </div> <br>
+            <center>
+                <p> <b> Mr Guru Prasad Choudhury (Mob : 94371 65763)</b></p>
+                <p> <b> Mr Gautam Mohanty (Mob: 94381 74914) </b></p>
+            </center>
+
+        </div>
+    </section>
+    <center>
+        <p class="partner"> In Association With</p>
+        <img src="{% static 'wform/assets/img/AIC.jpg' %}" height="100" width="250"
+                        alt="" />
+    </center>
+
+    <section class="client">
+        <p class="partner mt-4" style="text-align: center;"> Partners </p>
+        <div class="slider">
+            
+            <div class="slide-track">
+                {% with ''|center:2 as range %}
+                {% for _ in range %}
+                {% for partner in partners %}
+                <div class="slide">
+                    <img src="{{partner.logo_img.url}}" height="80" width="200"
+                        alt="" />
+                </div>
+                {% endfor %}
+                {% endfor %}
+                {% endwith %}
+                
+                
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer bg-black small text-center text-white-50">
+        <div class="container">Copyright © OCF 2021</div>
+    </footer>
+
+
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Third party plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="{% static 'wform/js/scripts.js' %}"></script>
+    
+</body>
+
+</html>

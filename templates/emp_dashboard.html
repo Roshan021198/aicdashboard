@@ -1,0 +1,3080 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Employee Dashboard</title>
+    <!-- <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}"> -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'dashboard/css/startup.css' %}">
+    <link rel="stylesheet" href="{% static 'profile/css/style.css' %}" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'assets/images/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'monitor/css/cardstyle.css' %}" />
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'dashboard/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'dashboard/css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+
+    <style>
+        .glow {
+            font-size: 15px;
+            margin-left: 10px;
+            color: #fff;
+            text-align: center;
+            -webkit-animation: glow 1s ease-in-out infinite alternate;
+            -moz-animation: glow 1s ease-in-out infinite alternate;
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+            }
+
+            to {
+                text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+            }
+        }
+        .emp_message{
+            position: relative;
+            left: 370px;
+        }
+        #timein{
+            position: relative;
+            left: 400px;
+        }
+        @media only screen and (min-width: 900px) {
+            .emp_message{
+            position: relative;
+            left: 135px;
+            }
+            #timein{
+            position: relative;
+            left: 155px;
+            }
+        }
+        @media only screen and (min-width: 1200px) {
+            .emp_message{
+            position: relative;
+            left: 250px;
+            }
+            #timein{
+            position: relative;
+            left: 250px;
+            }
+        }
+        @media only screen and (min-width: 1350px) {
+            .emp_message{
+            position: relative;
+            left: 315px;
+
+            }
+            #timein{
+            position: relative;
+            left: 375px;
+            }
+        }
+        @media only screen and (max-width: 768px) {
+            .newround{
+            width: 40px; 
+            height: 30px;
+            }
+            .emp_message{
+                margin-top:10px ;
+                position: relative;
+                left: 0;
+            }
+            #generatework{
+                margin-top:10px ;
+            }
+            #timein{
+            position: relative;
+            left: 0;
+            }
+        }
+    </style>
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'index' %}">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">AIC-NITF</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li id="admin" class="nav-item check">
+                <a class="nav-link" href="{% url 'visit_startup' %}" data-target="#collapseTwo" aria-expanded="true"
+                    aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-rocket"></i>
+                    <span>StartUp Portfolio</span>
+                </a>
+            </li>
+            {% if user.is_adminstrator %}
+            <li id="admin1" class="nav-item check">
+                <a class="nav-link" href="{% url 'sanvriddhi_dashboard' %}" data-target="#collapseTwo" aria-expanded="true"
+                    aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-rocket"></i>
+                    <span>Sanvriddhi</span>
+                </a>
+            </li>
+            <li id="admin2" class="nav-item check">
+                <a class="nav-link" href="{% url 'ideanest_dashboard' %}" data-target="#collapseTwo" aria-expanded="true"
+                    aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-rocket"></i>
+                    <span>Ideanest</span>
+                </a>
+            </li>
+            {% endif %}
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item check">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+                        aria-controls="v-pills-profile" aria-selected="true"><i class="fas fa-fw fa-user-circle"></i>
+                        Profile</a>
+                    <hr class="sidebar-divider">
+                    <div class="sidebar-heading">
+                        Report
+                    </div>
+
+
+                    <a class="nav-link active" id="v-pills-monitor-tab" data-toggle="pill" href="#v-pills-monitor"
+                        role="tab" aria-controls="v-pills-monitor" aria-selected="false"><i
+                            class="fas fa-fw fa-briefcase"></i> Work
+                        Status</a>
+
+                    <a class="nav-link" id="v-pills-leave-tab" data-toggle="pill" href="#v-pills-leave" role="tab"
+                        aria-controls="v-pills-leave" aria-selected="false"><i class="fas fa-fw fa-diagnoses"></i>Leave
+                        Application</a>
+                    <a class="nav-link" id="v-pills-message-tab" data-toggle="pill" href="#v-pills-message" role="tab"
+                        aria-controls="v-pills-message" aria-selected="false"><i class="fas fa-fw fa-envelope-open-text"></i>Message</a>
+
+                    {% if user.is_adminstrator %}
+                    <a class="nav-link" id="v-pills-attendence-tab" data-toggle="pill" href="#v-pills-attendence" role="tab"
+                        aria-controls="v-pills-attendence" aria-selected="false"><i class="fas fa-fw fa-address-book"></i>Attendance</a>
+                    {% endif %}
+                   
+                </div>
+            </li>
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+
+
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                {% if total_notifications %}
+                                <span id="total_notification"
+                                    class="badge badge-danger badge-counter">{{total_notifications}}</span>
+                                {% endif %}
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Alerts Center
+                                </h6>
+                                {% if work_notifications %}<h6 style="font-weight: bold;color: gray;margin-left:10px;">
+                                    New work</h6>{% endif %}
+                                {% for notification in work_notifications %}
+                                <div class="dropdown-item d-flex align-items-center">
+                                    <div class="mr-3" id="work_circle{{notification.pk}}">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div id="work_text{{notification.pk}}">
+                                        <a class="work_link" id="work1{{notification.pk}}" href="" data-toggle="modal"
+                                            data-target="#DisplayModel{{notification.pk}}"
+                                            style="text-decoration: none;">
+
+                                            <div class="small text-gray-500">{{notification.date_of_creation}}</div>
+                                            <span class="font-weight-bold">{{notification.title}}</span>
+                                            <div class="small text-gray-500">status:-My Work</div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% if forward_notifications %} <h6
+                                    style="font-weight: bold;color: gray;margin-left:10px;">Forwarded work</h6>
+                                {% endif %}
+                                {% for notification in forward_notifications %}
+                                <div class="dropdown-item d-flex align-items-center">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fas fa-copy text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div id="forward_text{{notification.pk}}">
+                                        <a class="ford_work_link {{notification.pk}}" id="work2{{notification.pk}}"
+                                            href="" data-toggle="modal" data-workpk="{{notification.forward_work.pk}}"
+                                            data-target="#DisplayMode2{{notification.pk}}"
+                                            style="text-decoration: none; color: #6f6f70; font-weight: bold;">
+                                            <div class="small text-gray-500">{{notification.date_of_forward}}</div>
+                                            <span class="font-weight-bold">{{notification.forward_work.title}}</span>
+                                            <div class="small text-gray-500">status:-forwarded-></div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% if return_notifications %} <h6
+                                    style="font-weight: bold;color: gray;margin-left:10px;">Return work</h6> {% endif %}
+                                {% for notification in return_notifications %}
+                                <div class="dropdown-item d-flex align-items-center">
+                                    <div class="mr-3" id="return_circle{{notification.pk}}">
+                                        <div class="icon-circle bg-danger">
+                                            <i class="fas fa-undo-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <a class="return_work_link" id="work8{{notification.pk}}" href=""
+                                        data-toggle="modal" data-pk="{{notification.work.pk}}"
+                                        data-target="#ReturnModel{{notification.pk}}"
+                                        style="text-decoration: none; color: #6f6f70; font-weight: bold;">
+                                        <div id="return_text{{notification.pk}}">
+                                            <div class="small text-gray-500">{{notification.return_date}}</div>
+                                            <span class="font-weight-bold">{{notification.work.title}}</span>
+                                            <div class="small text-gray-500">status:- returned</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                {% endfor %}
+
+                                {% if leave_notifications %} <h6
+                                    style="font-weight: bold;color: gray;margin-left:10px;">Leave Application</h6>
+                                {% endif %}
+                                {% for notification in leave_notifications %}
+                                <div class="dropdown-item d-flex align-items-center">
+                                    <div class="mr-3" id="leave_circle{{notification.pk}}">
+                                        <div class="icon-circle bg-dark">
+                                            <i class="fas fa-diagnoses text-white"></i>
+                                        </div>
+                                    </div>
+                                    <a class="leave_app leave_app1" id="leaveapp{{notification.pk}}" href="" data-toggle="modal"
+                                        data-pk="{{notification.pk}}"
+                                        data-target="#applydisplayLeave{{notification.pk}}"
+                                        style="text-decoration: none; color: #9191b6; font-weight: bold;">
+                                        <div id="leave_text{{notification.pk}}">
+                                            <div class="small text-gray-500">{{notification.applied_date}}</div>
+                                            <span class="font-weight-bold">{{notification.subject}}</span>
+                                            <div class="small text-gray-500">status:-{{notification.status}}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                {% endfor %}
+                                {% for notification in leave_noti %}
+                                <div class="dropdown-item d-flex align-items-center">
+                                    <div class="mr-3" id="leave_circle1{{notification.pk}}">
+                                        <div class="icon-circle bg-dark">
+                                            <i class="fas fa-diagnoses text-white"></i>
+                                        </div>
+                                    </div>
+                                    <a class="leave_app1" id="leaveapx{{notification.pk}}" href="" data-toggle="modal"
+                                        data-pk="{{notification.pk}}"
+                                        data-target="#applydisplayLeave{{notification.pk}}"
+                                        style="text-decoration: none; color: #9191b6; font-weight: bold;">
+                                        <div id="leave_text1{{notification.pk}}">
+                                            <div class="small text-gray-500">{{notification.applied_date}}</div>
+                                            <span class="font-weight-bold">{{notification.subject}}</span>
+                                            <div class="small text-gray-500">status:-{{notification.status}}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                {% endfor %}
+
+                            </div>
+                        </li>
+
+
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow float-right ">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.username}}</span>
+                                {% if user.is_admin %}
+                                {% for imgsrc in  user.admin_set.all %}
+                                <img class="img-profile rounded-circle" src="{{imgsrc.admin_img.url}}">
+                                {% endfor %}
+                                {% else %}
+                                <img class="img-profile rounded-circle" src="{{value.startup_img.url}}">
+                                {% endif %}
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <!-- <a class="dropdown-item" href="{% url 'userprofile' pk=user.pk %}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a> 
+                                <div class="dropdown-divider"></div>-->
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                            aria-labelledby="v-pills-profile-tab">
+                            <!-- content   -->
+                            <!-- <div id="preloder">
+                                <div class="loader"></div>
+                            </div> -->
+
+                            <div class="home-five-style">
+                                <!-- Header section start -->
+                                <header class="header-section">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="site-logo">
+                                                    <h2><a href="#">Profile</a></h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </header>
+                                <!-- Header section end -->
+
+                                <!-- Hero section start -->
+                                <section class="hero-section">
+                                    <div class="container-fluid text-center">
+                                        <img class="rounded-circle" width="250" height="250"
+                                            src="{{value.admin_img.url}}" alt="">
+                                        <div class="hero-text">
+                                            <h2>{{value.account.fullname}}</h2>
+                                        </div>
+                                    </div>
+                                </section>
+                                <!-- Hero section end -->
+
+                                <!-- Resume section start -->
+                                <section class="resume-section with-bg spad">
+                                    <div class="container-fluid">
+                                        <center>
+                                            <h2 style="margin-bottom: 50px;">General Info</h2>
+                                        </center>
+                                        <div class="row">
+
+                                            <div class="col-md-5" style="margin:auto">
+
+                                                <div class="hero-info">
+                                                    <ul>
+                                                        <li><span>Username : </span>{{value.account.username}}</li>
+                                                        <li><span>Designation : </span>{{value.designation}}</li>
+                                                        <li><span>Employee ID : </span>{{value.employee_id}}</li>
+                                                        <li><span>E-mail : </span>{{value.email}}</li>
+                                                        <li><span>Phone : </span>{{value.contact_no}}</li>
+                                                        <li><span>CL : </span>{{value.cl}}</li>
+                                                        <li><span>SL : </span>{{value.sl}}</li>
+                                                        <li><span>AdharCard/PAN Card : </span>{{value.identity_proof}}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <!-- Resume section start -->
+                            </div>
+                        </div>
+                        <!--work status sheet -->
+                        <div class="tab-pane fade show active" id="v-pills-monitor" role="tabpanel"
+                            aria-labelledby="v-pills-monitor-tab">
+                            {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{{message}}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            {% endfor %}
+
+
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <h1>Work Status</h1>
+                                {% if user.is_adminstrator %}
+
+                                <a href="#" id="message_emp" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm emp_message"
+                                    data-toggle="modal" data-target="#employee_message"><i
+                                        class="fas fa-paper-plane fa-sm text-white-50 pr-1"></i>Message</a>
+
+                                <a href="#" id="generatework" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                                    data-toggle="modal" data-target="#staticBackdrop"><i
+                                        class="fas fa-download fa-sm text-white-50"></i> Generate Work/Job</a>
+                                
+                            
+                                
+                                {% else %}
+                                    {% if timeout_val == None %}
+                                    <button type="button" class="btn" id="timeinid">
+                                    <a href="{% url 'timein' %}" id="timein" class="btn btn-sm btn-primary shadow-sm"
+                                        ><i
+                                            class="fas fa-download fa-sm text-white-50"></i> Time IN</a>
+                                    </button>
+                                    <button disabled type="button" class="btn" id="timeoutid">
+                                        <a href="#" id="timeout" disabled class="btn btn-sm btn-primary shadow-sm" style="pointer-events: none;"
+                                                ><i
+                                                    class="fas fa-download fa-sm text-white-50"></i> Time Out</a>
+                                    </button>
+                                    {% else %}
+                                        {% if timeout_val.date == today and timeout_val.time_status == True %}
+                                            <button disabled type="button" class="btn" id="timeinid">
+                                                <a href="#" id="timein" style="pointer-events: none;" class="btn btn-sm btn-primary shadow-sm"
+                                                    ><i
+                                                        class="fas fa-download fa-sm text-white-50"></i> Time IN</a>
+                                            <button disabled type="button" class="btn" id="timeoutid">
+                                                <a href="#" id="timeout" disabled class="btn btn-sm btn-primary shadow-sm" style="pointer-events: none;"
+                                                    ><i
+                                                        class="fas fa-download fa-sm text-white-50"></i> Time Out</a>
+                                    
+                                        {% elif timeout_val.time_status %}
+                                        <button type="button" class="btn" id="timeinid">
+                                            <a href="{% url 'timein' %}" id="timein" class="btn btn-sm btn-primary shadow-sm"
+                                                ><i
+                                                    class="fas fa-download fa-sm text-white-50"></i> Time IN</a>
+                                        </button>
+                                        <button disabled type="button" class="btn" id="timeoutid">
+                                            <a href="#" id="timeout" class="btn btn-sm btn-primary shadow-sm" style="pointer-events: none;"
+                                                    ><i
+                                                        class="fas fa-download fa-sm text-white-50"></i> Time Out</a>
+                                        </button>
+                                        {% else %}
+                                        <button disabled type="button" class="btn" id="timeinid">
+                                            <a href="#" id="timein" style="pointer-events: none;" class="btn btn-sm btn-primary shadow-sm"
+                                                ><i
+                                                    class="fas fa-download fa-sm text-white-50"></i> Time IN</a>
+                                        </button>
+                                        <button type="button" class="btn" id="timeoutid">
+                                            <a href="{% url 'timeout' pk=timeout_val.pk %}" id="timeout" disabled class="btn btn-sm btn-primary shadow-sm"
+                                                    ><i
+                                                        class="fas fa-download fa-sm text-white-50"></i> Time Out</a>
+                                        </button>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            <!-- content -->
+
+                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="pills-all-tab" data-toggle="pill" href="#pills-all"
+                                        role="tab" aria-controls="pills-all" aria-selected="true">
+                                        {% if user.is_adminstrator %}Generated Work{% else %} My Work {% endif %} </a>
+                                </li>
+
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="pills-assigned-tab" data-toggle="pill"
+                                        href="#pills-assigned" role="tab" aria-controls="pills-assigned"
+                                        aria-selected="false">Assigned</a>
+                                </li>
+
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="pills-forwarded-tab" data-toggle="pill"
+                                        href="#pills-forwarded" role="tab" aria-controls="pills-forwarded"
+                                        aria-selected="false">Forwarded</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="pills-returned-tab" data-toggle="pill"
+                                        href="#pills-returned" role="tab" aria-controls="pills-returned"
+                                        aria-selected="false">Returned <span id="returned_total"></span></a>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                        aria-haspopup="true" aria-expanded="false">Filter</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item nav-link" id="pills-pending-tab" data-toggle="pill"
+                                            href="#pills-pending" role="tab" aria-controls="pills-pending"
+                                            aria-selected="false">Pending</a>
+                                        <a class="dropdown-item nav-link" id="pills-closed-tab" data-toggle="pill"
+                                            href="#pills-closed" role="tab" aria-controls="pills-closed"
+                                            aria-selected="false">Completed</a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-all" role="tabpanel"
+                                    aria-labelledby="pills-all-tab">
+                                    <div class="table-responsive-lg">
+                                        <table class="table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">SLNO</th>
+                                                    <th scope="col">Work Title</th>
+                                                    <th scope="col">From</th>
+                                                    <th scope="col">To</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for work in works %}
+                                                <tr>
+                                                    <th scope="row">{{forloop.counter}}</th>
+                                                    {% if not user.is_adminstrator %}
+                                                    <td class="new_work"><a class="work_link " id="work1{{work.pk}}"
+                                                            href="" data-toggle="modal"
+                                                            data-target="#DisplayModel{{work.pk}}"
+                                                            style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{work.title}}
+                                                            {% if work.new_work %}{% if not user.is_adminstrator %}
+                                                            <span id="new_work{{work.pk}}"><b style="color: red;"
+                                                                    class="glow"> New</b></span>{% endif %}
+                                                            {% endif %}
+                                                            {% if work.alert %}{% if not user.is_adminstrator %}
+                                                            <span id="reminder{{work.pk}}"><b style="color: red;"
+                                                                    class="glow"> Alert<i style="margin-left: 10px;"
+                                                                        class="fas fa-stopwatch fa-lg"></i></b></span>
+                                                            {% endif %}{% endif %}
+                                                        </a>
+                                                    </td>
+                                                    {% else %}
+                                                    <td><a href="" data-toggle="modal"
+                                                            data-target="#DisplayModel{{work.pk}}"
+                                                            style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{work.title}}
+                                                        </a>
+                                                    </td>
+                                                    {% endif %}
+                                                    {% if user.is_adminstrator %}
+                                                    <td>{{user.fullname}}</td>
+                                                    {% else %}
+                                                    <td>{{work.from_user}}</td>
+                                                    {% endif %}
+                                                    <td>{{work.to.account.fullname}} ({{work.to}})</td>
+                                                    <td>{{work.date_of_creation}}</td>
+                                                    <td>{{work.status}} <br>
+                                                        {% if work.date_of_complition %}
+                                                        {{work.date_of_complition}}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-pending" role="tabpanel"
+                                    aria-labelledby="pills-pending-tab">
+                                    <div class="table-responsive-lg">
+                                        <h3>My Work Status</h3>
+                                        <h6>pending..</h6>
+                                        <table class="table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">SLNO</th>
+                                                    <th scope="col">Work Title</th>
+                                                    <th scope="col">From</th>
+                                                    <th scope="col">To</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for pending in pending_status %}
+                                                <tr>
+                                                    <th scope="row">{{forloop.counter}}</th>
+                                                    <td>
+                                                        <a class="pending_link" id="work4{{pending.pk}}" href=""
+                                                            data-toggle="modal"
+                                                            data-target="#PendingModel1{{pending.pk}}"
+                                                            style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{pending.title}}
+                                                        </a>
+                                                    </td>
+                                                    <td>{{pending.from_user}}</td>
+                                                    <td>{{pending.to.account.fullname}}</td>
+                                                    <td>{{pending.date_of_creation}}</td>
+                                                    <td>{{pending.status}} <br>
+                                                        {% if pending.date_of_complition %}
+                                                        {{pending.date_of_complition}}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    {% if user.is_adminstrator != True %}
+                                    <div class="table-responsive-lg">
+                                        <h3>Assigned Work Status</h3>
+                                        <table class="table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">SLNO</th>
+                                                    <th scope="col">Work Title</th>
+                                                    <th scope="col">From</th>
+                                                    <th scope="col">To</th>
+                                                    <th scope="col">Receved Date</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for pending in assign_pending_status %}
+                                                <tr>
+                                                    <th scope="row">{{forloop.counter}}</th>
+                                                    <td>
+                                                        <a class="pending_link" id="work5{{pending.forward_work.pk}}"
+                                                            href="" data-toggle="modal"
+                                                            data-target="#PendingModel2{{pending.forward_work.pk}}"
+                                                            style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{pending.forward_work.title}}</a>
+                                                    </td>
+                                                    <td>{{pending.from_user}}</td>
+                                                    <td>{{pending.to.account.fullname}}</td>
+                                                    <td>{{pending.date_of_forward}}</td>
+                                                    <td>{{pending.forward_work.status}}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="tab-pane fade" id="pills-closed" role="tabpanel"
+                                    aria-labelledby="pills-closed-tab">
+                                    <div class="table-responsive-lg">
+                                        <h3>My Work Status</h3>
+                                        <table class="table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">SLNO</th>
+                                                    <th scope="col">Work Title</th>
+                                                    <th scope="col">From</th>
+                                                    <th scope="col">To</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for completed in completed_status %}
+                                                <tr>
+                                                    <th scope="row">{{forloop.counter}}</th>
+                                                    <td>
+                                                        <a class="pending_link" id="work6{{completed.pk}}" href=""
+                                                            data-toggle="modal"
+                                                            data-target="#CompleteModel1{{completed.pk}}"
+                                                            style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{completed.title}}</a>
+                                                    </td>
+                                                    <td>{{completed.from_user}}</td>
+                                                    <td>{{completed.to.account.fullname}}</td>
+                                                    <td>{{completed.date_of_creation}}</td>
+                                                    <td>{{completed.status}} <br>
+                                                        {% if completed.date_of_complition %}
+                                                        {{completed.date_of_complition}}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    {% if user.is_adminstrator != True %}
+                                    <div class="table-responsive-lg">
+                                        <h3>Assigned Work Status</h3>
+                                        <table class="table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">SLNO</th>
+                                                    <th scope="col">Work Title</th>
+                                                    <th scope="col">From</th>
+                                                    <th scope="col">To</th>
+                                                    <th scope="col">Assigned Date</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for completed in assign_completed_status %}
+                                                <tr>
+                                                    <th scope="row">{{forloop.counter}}</th>
+                                                    <td>
+                                                        <a class="pending_link" id="work7{{completed.forward_work.pk}}"
+                                                            href="" data-toggle="modal"
+                                                            data-target="#CompleteModel2{{completed.forward_work.pk}}"
+                                                            style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{completed.forward_work.title}}
+                                                        </a>
+                                                    </td>
+                                                    <td>{{completed.from_user}}</td>
+                                                    <td>{{completed.to.account.fullname}}</td>
+                                                    <td>{{completed.date_of_forward}}</td>
+                                                    <td>{{completed.forward_work.status}} <br>
+                                                        {% if completed.forward_work.date_of_complition %}
+                                                        {{completed.forward_work.date_of_complition}}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {% endif %}
+
+                                </div>
+
+
+
+                                <!-- <div class="tab-pane fade" id="action2" role="tabpanel" aria-labelledby="action2-tab">
+                                    <h1>action2</h1>
+                                </div> -->
+
+                                <div class="tab-pane fade" id="pills-returned" role="tabpanel"
+                                    aria-labelledby="pills-returned-tab">
+                                    <div class="table-responsive-lg">
+                                        <table class="table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">SLNO</th>
+                                                    <th scope="col">Work Title</th>
+                                                    <th scope="col">From</th>
+                                                    <th scope="col">To</th>
+                                                    <th scope="col">Return Date</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for ret_obj in return_obj %}
+                                                <tr>
+                                                    <th scope="row">{{forloop.counter}}</th>
+                                                    <td>
+                                                        <a class="return_work_link" id="work8{{ret_obj.pk}}" href=""
+                                                            data-pk="{{ret_obj.work.pk}}" data-toggle="modal"
+                                                            data-target="#ReturnModel{{ret_obj.pk}}"
+                                                            style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{ret_obj.work.title}}
+                                                            {% if ret_obj.new_return %}<span
+                                                                id="new_return{{ret_obj.pk}}"><b style="color: red;"
+                                                                    class="glow"> New</b></span>{% endif %}</a>
+                                                    </td>
+                                                    <td>{{ret_obj.from_user}}</td>
+                                                    <td>{{ret_obj.to.account.fullname}}</td>
+                                                    <td>{{ret_obj.return_date}}</td>
+                                                    <td>{{ret_obj.work.status}}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-assigned" role="tabpanel"
+                                    aria-labelledby="pills-assigned-tab">
+                                    <div class="table-responsive-lg">
+                                        <table class="table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">SLNO</th>
+                                                    <th scope="col">Work Title</th>
+                                                    <th scope="col">From</th>
+                                                    <th scope="col">To</th>
+                                                    <th scope="col">Receved Date</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for assigned_msg in assigned_work %}
+                                                <tr>
+                                                    <th scope="row">{{forloop.counter}}</th>
+                                                    <td><a class="ford_work_link {{assigned_msg.pk}}"
+                                                            id="work2{{assigned_msg.pk}}" href="" data-toggle="modal"
+                                                            data-workpk="{{assigned_msg.forward_work.pk}}"
+                                                            data-target="#DisplayMode2{{assigned_msg.pk}}"
+                                                            style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{assigned_msg.forward_work.title}}
+                                                            {% if assigned_msg.new_forward %}<span
+                                                                id="new_assigned{{assigned_msg.pk}}"><b
+                                                                    style="color: red;" class="glow">
+                                                                    New</b></span>{% endif %}
+
+                                                            {% if assigned_msg.alert %}<span
+                                                                id="reminder1{{assigned_msg.pk}}"><b style="color: red;"
+                                                                    class="glow">
+                                                                    Alert<i style="margin-left: 10px;"
+                                                                        class="fas fa-stopwatch fa-lg"></i></b></span>{% endif %}
+                                                        </a>
+                                                    </td>
+                                                    <td>{{assigned_msg.from_user}}</td>
+                                                    <td>{{assigned_msg.to.account.fullname}}</td>
+                                                    <td>{{assigned_msg.date_of_forward}}</td>
+                                                    <td>{{assigned_msg.forward_work.status}} <br>
+                                                        {% if assigned_msg.forward_work.date_of_complition %}
+                                                        {{assigned_msg.forward_work.date_of_complition}}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-forwarded" role="tabpanel"
+                                    aria-labelledby="pills-forwarded-tab">
+                                    <div class="table-responsive-lg">
+                                        <table class="table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">SLNO</th>
+                                                    <th scope="col">Work Title</th>
+                                                    <th scope="col">From</th>
+                                                    <th scope="col">To</th>
+                                                    <th scope="col">Forwarded Date</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for from_work in from_works %}
+                                                <tr>
+                                                    <th scope="row">{{forloop.counter}}</th>
+                                                    <td><a class="ford_work_link"
+                                                            id="work3{{from_work.forward_work.pk}}" href=""
+                                                            data-toggle="modal"
+                                                            data-target="#DisplayMode3{{from_work.forward_work.pk}}"
+                                                            style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{from_work.forward_work.title}}
+                                                        </a>
+                                                    </td>
+                                                    <td>{{from_work.from_user}}</td>
+                                                    <td>{{from_work.to.account.fullname}}</td>
+                                                    <td>{{from_work.date_of_forward}}</td>
+                                                    <td>{{from_work.forward_work.status}} <br>
+                                                        {% if from_work.forward_work.date_of_complition %}
+                                                        {{from_work.forward_work.date_of_complition}}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- workstatus Sheet End -->
+                        <!--leave application -->
+                        <div class="tab-pane fade show" id="v-pills-leave" role="tabpanel"
+                            aria-labelledby="v-pills-leave-tab">
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <h1>Leave Application</h1>
+                                {% if user.is_adminstrator != True %}
+                                <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                                    data-toggle="modal" data-target="#applyLeave"><i
+                                        class="fas fa-download fa-sm text-white-50"></i> Apply Leave </a>
+                                {% endif %}
+                            </div>
+                            <div class="table-responsive-lg">
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">#SLNO</th>
+                                            <th scope="col">Subject</th>
+                                            <th scope="col">From</th>
+                                            <th scope="col">To</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Statue</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for leaves in leave_obj %}
+                                        <tr>
+                                            <th scope="row">{{forloop.counter}}</th>
+                                            <td>
+                                                {% if user.is_adminstrator %}
+                                                <a class="leave_app" id="leaveape{{leaves.pk}}" href="" data-toggle="modal"
+                                                    data-target="#applydisplayLeave{{leaves.pk}}"
+                                                    style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{leaves.subject}}
+                                                    {% if leaves.new_leave %}
+                                                    <span id="new_leaveapp{{leaves.pk}}"><b style="color: red;" class="glow">
+                                                            New</b></span>
+                                                    {% endif %}
+                                                </a>
+                                                {% else %}
+                                                <a class="leave_app1" id="leaveapa{{leaves.pk}}" href="" data-toggle="modal"
+                                                    data-target="#applydisplayLeave{{leaves.pk}}"
+                                                    style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{leaves.subject}}
+                                                    {% if leaves.reply %}
+                                                    <span id="new_leaveapp1{{leaves.pk}}"><b style="color: red;" class="glow">
+                                                            {{leaves.status}}</b></span>
+                                                    {% endif %}
+                                                </a>
+                                                {% endif %}
+                                                
+                                            </td>
+                                            <td>{{leaves.from_user_name}}</td>
+                                            <td>{{leaves.to}}</td>
+                                            <td>{{leaves.applied_date}}</td>
+                                            <td>{{leaves.status}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--leave application end -->
+                        <!--Attendence -->
+                        <div class="tab-pane fade show" id="v-pills-attendence" role="tabpanel"
+                            aria-labelledby="v-pills-attendence-tab">
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <h1>Attendance</h1>
+                                {% if attendence_obj %}
+                                <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#timeout_all_emp"><i
+                                        class="fas fa-download fa-sm text-white-50"></i> Time Out All </a>
+                                {% else %}
+                                <button disabled type="button" class="btn">
+                                    <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" style="pointer-events: none;"><i
+                                        class="fas fa-download fa-sm text-white-50"></i> Time Out All </a>
+                                </button>
+                                {% endif %}
+                            </div>
+                            <div class="table-responsive-lg">
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">#SLNO</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Today's Time-IN</th>
+                                            <th scope="col">Today's Time-OUT</th>
+                                            <th scope="col">Total Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for admin in admin_lis %}
+                                        <tr>
+                                            <th scope="row">{{forloop.counter}}</th>
+                                            <td>
+                                                <a class="attendence_app" href="" data-toggle="modal"
+                                                    data-target="#attendence{{admin.pk}}"
+                                                    style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{admin.account.fullname}}
+                                                </a>
+                                            </td>
+                                            {% for val in admin.attendence_set.all|dictsortreversed:"date"|slice:":1" %}
+                                                <td>{{val.date}}</td>
+                                                <td>{{val.timein}}</td>
+                                                <td>{{val.timeout}}</td>
+                                                <td>{{val.total_time}}</td>
+                                            {% endfor %}
+                                            <!--<td><span><img class="rounded-circle newround" src="{{admin.admin_img.url}}" width="50" height="50" alt=""></span></td>
+                                             <td>{{leaves.status}}</td> -->
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--end Attendence -->
+
+                        <!--Emp Message -->
+                        <div class="tab-pane fade show" id="v-pills-message" role="tabpanel"
+                            aria-labelledby="v-pills-message-tab">
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <h1>Message</h1>
+                            </div>
+                            <div class="table-responsive-lg">
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">#SLNO</th>
+                                            <th scope="col">Message</th>
+                                            <th scope="col">Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for message in emp_messages %}
+                                        <tr>
+                                            <th scope="row">{{forloop.counter}}</th>
+                                            <td>
+                                                <a class="emp_message_app" href="" data-toggle="modal"
+                                                    data-target="#emp_message{{message.pk}}"
+                                                    style="text-decoration: none; color: #6f6f70; font-weight: bold;">{{message.message|slice:":10"}}...
+                                                </a>
+                                            </td>
+                                            <td>{{message.created_date}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--end message -->
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!--Time out all Employees-->
+    <div class="modal fade" id="timeout_all_emp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Time Out All Employees</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="modal-body">
+                        <p>DO YOU WANT TO TIME-OUT ALL EMPLOYEES??</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{% url 'timeoutall' %}" class="btn btn-primary">Time Out All </a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Employee Message-->
+    <div class="modal fade" id="employee_message" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Employee Message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{% url 'employee_message' %}">{% csrf_token %}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="empmessage12">Message</label>
+                            <textarea class="form-control" name="message" id="empmessage12" rows="12"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Send</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Attendence display-->
+    {% for lis in admin_lis %}
+    <div class="modal fade" id="attendence{{lis.pk}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Attendance</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="modal-body">
+                        <div class="table-responsive-lg">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">#SLNO</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Time IN</th>
+                                        <th scope="col">Time OUT</th>
+                                        <th scope="col">Total Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for val in lis.attendence_set.all|dictsortreversed:"date" %}
+                                    <tr>
+                                        <th scope="row">{{forloop.counter}}</th>
+                                        <td>{{val.date}}</td>
+                                        <td>{{val.timein}}</td>
+                                        <td>{{val.timeout}}</td>
+                                        <td>{{val.total_time}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+
+    <!-- leave application Modal -->
+    <div class="modal fade" id="applyLeave" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="display: inline-block; padding-bottom: 0; ">
+                    <h5 class="modal-title" style="margin-bottom: 0; font-weight:bold;color:tomato;"
+                        id="exampleModalLabel">Leave Application</h5>
+                    <h6 class="mb-2" style="margin-bottom: 0;">cl = {{value.cl}} and sl = {{value.sl}}</h6>
+                    
+                    <button type="button" style="position: absolute; top: 15px; right: 15px;" class="close"
+                        data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{% url 'apply_leave' %}" method="POST">{% csrf_token %}
+                    <div class="modal-body">
+                        <input type="hidden" id="from_value" name="from_value" value="{{user.pk}}">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="cl_or_sl" id="inlineRadio1" value="CL" required>
+                            <label class="form-check-label" for="inlineRadio1">CL</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="cl_or_sl" id="inlineRadio2" value="SL">
+                            <label class="form-check-label" for="inlineRadio2">SL</label>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="subject123">Subject</label>
+                            <input required type="text" name="subject" class="form-control" id="subject123"
+                                aria-describedby="emailHelp">
+                        </div> -->
+                        <div class="form-group">
+                            <label for="body123">Body</label>
+                            <textarea required class="form-control" name="body" id="body123" rows="12"></textarea>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1">Day/s</span>
+                            </div>
+                            <input required type="text" id="leavedays" name="days" class="form-control" placeholder="No. of Days" title="Enter number of days according to your CL or SL" aria-label="Days" aria-describedby="basic-addon1">
+                          </div>
+                          <div id="showError"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="leavebtn" type="submit" class="btn btn-primary">Apply</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emp Message display Modal -->
+    {% for message in emp_messages %}
+    <div class="modal fade" id="emp_message{{message.pk}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        Date:-{{message.created_date}}
+                        <div class="form-group">
+                            <label for="subject123">Message</label>
+                            <textarea disabled class="form-control" name="body" id="empmessage123" rows="12">{{message.message}}</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- leave application display Modal -->
+    {% for leaves in leave_obj %}
+    <div class="modal fade" id="applydisplayLeave{{leaves.pk}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Leave Application</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <input type="hidden" id="from_value" name="from_value" value="{{user.pk}}">
+                        <div class="form-group">
+                            <label for="subject123">From</label>
+                            <input disabled type="text" name="from" class="form-control" id="from123"
+                                aria-describedby="fromHelp" value="{{leaves.from_user_name}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject123">Subject</label>
+                            <input disabled type="text" name="subject" class="form-control" id="subject123"
+                                aria-describedby="emailHelp" value="{{leaves.subject}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="body123">Body</label>
+                            <textarea disabled class="form-control" name="body" id="body123"
+                                rows="12">{{leaves.body}}</textarea>
+                        </div>
+                        {% if user.is_admin == True %}
+                        {% if leaves.message %}
+                        <div class="form-group">
+                            <label for="body123">Message by Administrator</label>
+                            <textarea disabled class="form-control" name="body" id="body123"
+                                rows="3">{{leaves.message}}</textarea>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        {% if user.is_adminstrator == True %}
+                        {% if leaves.status == "pending" %}
+                        <a href="" id="accepted{{leaves.pk}}" class="btn btn-success leavestatus1" data-toggle="modal"
+                            data-target="#accept">Accept</a>
+                        <a href="" id="rejected{{leaves.pk}}" class="btn btn-danger leavestatus2" data-toggle="modal"
+                            data-target="#reject">Reject</a>
+                        {% endif %}
+                        {% endif %}
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!--Accept-->
+    <div class="modal fade" id="accept" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Accept</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{% url 'accept_or_reject' %}">{% csrf_token %}
+                    <div class="modal-body">
+                        <input type="hidden" id="leave_pk" name="leave_pk" value="{{user.pk}}">
+                        <input type="hidden" id="status_value" name="status_value" value="Accepted">
+                        <div class="form-group">
+                            <label for="message12">Message</label>
+                            <textarea class="form-control" name="message" id="message12" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Accept</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--reject-->
+    <div class="modal fade" id="reject" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reject</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{% url 'accept_or_reject' %}">{% csrf_token %}
+                    <div class="modal-body">
+                        <input type="hidden" id="leave_pk1" name="leave_pk" value="{{user.pk}}">
+                        <input type="hidden" id="status_value1" name="status_value" value="Rejected">
+                        <div class="form-group">
+                            <label for="message12">Message</label>
+                            <textarea class="form-control" name="message" id="message12" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Reject</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel" style="font-weight:bold;color:tomato;">
+                        Generate Work/Job</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form method="POST" action="{% url 'generate_work' %}" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="inputFrom">From</label>
+                            <select id="inputFrom" name="from" class="form-control">
+                                <option selected value="{{user.pk}}">{{user.fullname}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTo">To</label>
+                            <select id="inputTo" name="to" class="form-control">
+                                <!-- <option required>Choose...</option> -->
+                                {% for account in accounts %}
+                                {% if account.is_superadmin == False and account.pk != user.pk %}
+                                {% for val in account.admin_set.all %}
+                                <option value="{{val.pk}}">
+                                    <pre>{{account.fullname}} ({{val.designation}})</pre>
+                                </option>
+                                {% endfor %}
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTitle4">Work Title</label>
+                            <input required type="text" name="title" class="form-control" id="inputTitle4"
+                                placeholder="Work title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputWorkDescription">Work Description</label>
+                            <textarea required class="form-control" name="work_description" id="inputWorkDescription"
+                                rows="3" placeholder="Work Description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputSuggestions">Suggestions</label>
+                            <textarea class="form-control" name="suggestions" id="inputSuggestions" rows="3"
+                                placeholder="suggestions"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputRemarks">Remarks/Comments</label>
+                            <input type="text" name="remarks" class="form-control" id="inputRemarks"
+                                placeholder="Remarks/Comments">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="switch">
+                                <input type="checkbox" id="upload_chkbox" name="upload_checkbox">
+                                <span class="slider round"> Check the box to attach file</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group" id="file_upload_div">
+                            <label for="exampleFormDocument">Choose File To Upload</label>
+                            <input type="file" name="document" class="form-control-file" id="file_upload" required>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Display all Modal -->
+    {% for work in works %}
+    <div class="modal fade" id="DisplayModel{{work.pk}}" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="display: inline-block; padding-bottom: 0; ">
+                    <h5 style="margin-bottom: 0; font-weight:bold;color:tomato;" id="staticBackdropLabel">My Work</h5>
+                    {% if work.forwarded %}
+                    <h6 style="color: rgb(146, 146, 146);">forwarded from {{work.forwarded_from}} to
+                        {{work.forwarded_to}} </h6>
+                    {% else %}
+                    <h6 style="color: rgb(146, 146, 146);"> generated by {{work.from_user}} </h6>
+                    {% endif %}
+                    <button type="button" style="position: absolute; top: 15px; right: 15px;" class="close"
+                        data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    {% if user.is_adminstrator %}
+                    <div class="col-md-5 float-right">
+                        {% if work.status != "completed" %}
+                        {% if work.to != None and work.alert == False %}
+                        <a href="{% url 'alert' pk=work.pk %}" style="color: tomato;" class="float-right work_edit"><i
+                                class="fas fa-business-time fa-lg"></i></a>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if work.status != "pending..." and work.status != "completed" and work.status != "forwarded->" and work.status != "returned" %}
+
+                        <a href="#" style="margin-right: 15px;" class="float-right work_edit" data-toggle="modal"
+                            data-target="#EditModel" id="work{{work.pk}}"><i class="fas fa-edit fa-lg"></i></a>
+                        {% endif %}
+                    </div>
+
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="inputTitle4">Work Title</label>
+                        <label hidden id="workingtitle{{work.pk}}">{{work.title}} </label>
+                        <input type="text" name="title" disabled value="{{work.title}}" class="form-control"
+                            placeholder="Work title">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputWorkDescription">Work Description</label>
+                        <textarea class="form-control" name="work_description" disabled id="WorkDescription{{work.pk}}"
+                            rows="3" placeholder="Work Description">{{work.work_description}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSuggestions">Suggestions</label>
+                        <textarea class="form-control" disabled name="suggestions" value="" id="Suggestions{{work.pk}}"
+                            rows="3" placeholder="suggestions">{{work.suggestions}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRemarks">Remarks/Comments</label>
+                        <label hidden id="Remarks{{work.pk}}">{{work.remarks}}</label>
+                        <input type="text" name="remarks" disabled value="{{work.remarks}}" class="form-control"
+                            placeholder="Remarks/Comments">
+                    </div>
+                    {% if work.document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{work.document.url}}</label><br>
+                        <a href="{{work.document.url}}" class="btn btn-primary"
+                            download="{{work.document.url}}">download</a>
+                    </div>
+                    {% endif %}
+
+                    {% if work.end_statement %}
+                    <div class="form-group">
+                        <label for="inputRemarks" style="font-weight: bold; color: #63F700;">Work Completed on
+                            {{work.date_of_complition}}</label>
+                        <textarea class="form-control" type="text" name="end_statement" disabled
+                            rows="3">{{work.end_statement}}</textarea>
+
+                    </div>
+                    {% if work.end_document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{work.end_document.url}}</label><br>
+                        <a href="{{work.end_document.url}}" class="btn btn-primary"
+                            download="{{work.end_document.url}}">download</a>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+
+                    {% if user.is_superadmin == False and user.is_adminstrator == False %}
+                    {% if work.status != "completed" and work.forwarded != True %}
+                    {% if work.status != "pending..." %}
+                    <a href="{% url 'start' pk=work.pk %}" class="btn btn-primary">Start</a>
+                    <a href="" class="btn btn-danger return" id="GW{{work.from_user_pk}}" data-toggle="modal"
+                        data-target="#reply">Return</a>
+                    <a href="" class="btn btn-warning" data-toggle="modal" data-target="#forward">Forward</a>
+                    {% else %}
+                    <a class="btn btn-success workcomplete" id="complete{{work.pk}}" href="" data-toggle="modal"
+                        data-target="#endStatement">Completed</a>
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <!--end of Display all Modal -->
+
+
+    <!-- assigned work display Modal -->
+    {% for assigned_msg in assigned_work %}
+    <div class="modal fade" id="DisplayMode2{{assigned_msg.pk}}" data-backdrop="static" data-keyboard="false"
+        tabindex="-2" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="display: inline-block; padding-bottom: 0; ">
+                    <h5 style="margin-bottom: 0; font-weight:bold;color:tomato;" id="staticBackdropLabel">Assigned Work
+                    </h5>
+                    {% if assigned_msg.forward_work.forwarded %}
+                    <h6 style="color: rgb(146, 146, 146);">forwarded from {{assigned_msg.from_user}} to
+                        {{assigned_msg.to.account.fullname}} </h6>
+                    {% else %}
+                    <h6 style="color: rgb(146, 146, 146);"> generated by {{assigned_msg.forward_work.from_user}} </h6>
+                    {% endif %}
+                    <button type="button" style="position: absolute; top: 15px; right: 15px;" class="close"
+                        data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputTitle4">Work Title</label>
+                        <label hidden
+                            id="workingtitle{{assigned_msg.forward_work.pk}}">{{assigned_msg.forward_work.title}}</label>
+                        <input type="text" name="title" disabled value="{{assigned_msg.forward_work.title}}"
+                            class="form-control" placeholder="Work title">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputWorkDescription">Work Description</label>
+                        <textarea class="form-control" name="work_description" disabled
+                            id="WorkDescription{{assigned_msg.forward_work.pk}}" rows="3"
+                            placeholder="Work Description">{{assigned_msg.forward_work.work_description}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSuggestions">Suggestions</label>
+                        <textarea class="form-control" disabled name="suggestions" value=""
+                            id="Suggestions{{assigned_msg.forward_work.pk}}" rows="3"
+                            placeholder="suggestions">{{assigned_msg.forward_work.suggestions}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRemarks">Remarks/Comments</label>
+                        <label hidden
+                            id="Remarks{{assigned_msg.forward_work.pk}}">{{assigned_msg.forward_work.remarks}}</label>
+                        <input type="text" name="remarks" disabled value="{{assigned_msg.forward_work.remarks}}"
+                            class="form-control" placeholder="Remarks/Comments">
+                    </div>
+                    {% if assigned_msg.forward_work.document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{assigned_msg.forward_work.document.url}}</label><br>
+                        <a href="{{assigned_msg.forward_work.document.url}}" class="btn btn-primary"
+                            download="{{assigned_msg.forward_work.document.url}}">download</a>
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="inputSuggestions">Suggestions by {{assigned_msg.from_user}}</label>
+                        <textarea class="form-control" disabled name="suggestions" value=""
+                            id="Suggestions{{assigned_msg.pk}}" rows="3"
+                            placeholder="suggestions">{{assigned_msg.suggestions}}</textarea>
+                    </div>
+                    {% if assigned_msg.ford_document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{assigned_msg.ford_document.url}}</label><br>
+                        <a href="{{assigned_msg.ford_document.url}}" class="btn btn-primary"
+                            download="{{assigned_msg.ford_document.url}}">download</a>
+                    </div>
+                    {% endif %}
+
+                    {% if assigned_msg.forward_work.end_statement %}
+                    <div class="form-group">
+                        <label for="inputRemarks" style="font-weight: bold; color: #63F700;">Work Completed on
+                            {{assigned_msg.forward_work.date_of_complition}}</label>
+                        <textarea class="form-control" type="text" name="end_statement" disabled
+                            rows="3">{{assigned_msg.forward_work.end_statement}}</textarea>
+                    </div>
+                    {% if assigned_msg.forward_work.end_document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{assigned_msg.forward_work.end_document.url}}</label><br>
+                        <a href="{{assigned_msg.forward_work.end_document.url}}" class="btn btn-primary"
+                            download="{{assigned_msg.forward_work.end_document.url}}">download</a>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+
+                    {% if user.is_superadmin == False %}
+                    {% if user.fullname != assigned_msg.from_user %}
+                    {% if assigned_msg.forward_work.status != "completed" and assigned_msg.forwarded != True %}
+                    {% if assigned_msg.forward_work.status != "pending..." %}
+                    <a href="{% url 'start' pk=assigned_msg.forward_work.pk %}" class="btn btn-primary">Start</a>
+                    <a href="" class="btn btn-danger return" id="AW{{assigned_msg.from_user_pk}}" data-toggle="modal"
+                        data-target="#reply">Return</a>
+                    <a href="" class="btn btn-warning forward_key" id="forwardval{{assigned_msg.pk}}"
+                        data-toggle="modal" data-target="#forward">Forward</a>
+                    {% else %}
+                    <a class="btn btn-success workcomplete wo{{assigned_msg.pk}}" id="complete{{work.pk}}" href=""
+                        data-toggle="modal" data-target="#endStatement">Completed</a>
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <!--end of assigned work display Modal -->
+
+    <!-- send/forwarded display Modal -->
+    {% for from_work in from_works %}
+    <div class="modal fade" id="DisplayMode3{{from_work.forward_work.pk}}" data-backdrop="static" data-keyboard="false"
+        tabindex="-2" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="display: inline-block; padding-bottom: 0; ">
+                    <h5 style="margin-bottom: 0; font-weight:bold;color:tomato;" id="staticBackdropLabel">Forward Work
+                    </h5>
+                    <!-- {% if assigned_msg.forward_work.forwarded %}
+                    <h6 style="color: rgb(146, 146, 146);">forwarded from {{assigned_msg.from_user}} to {{assigned_msg.to.account.fullname}} </h6>
+                    {% else %}
+                    <h6 style="color: rgb(146, 146, 146);"> generated by {{assigned_msg.forward_work.from_user}} </h6>
+                    {% endif %} -->
+                    <button type="button" style="position: absolute; top: 15px; right: 15px;" class="close"
+                        data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    {% if from_work.forward_work.status != "completed" %}
+                    {% if from_work.alert == False %}
+                    <div class="col-md-5 float-right">
+                        <a href="{% url 'forward_alert' pk=from_work.pk %}" style="color: tomato;"
+                            class="float-right work_edit"><i class="fas fa-business-time fa-lg"></i></a>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="inputTitle4">Work Title</label>
+                        <label hidden
+                            id="workingtitle12{{from_work.forward_work.pk}}">{{from_work.forward_work.title}}</label>
+                        <input type="text" name="title" disabled value="{{from_work.forward_work.title}}"
+                            class="form-control" placeholder="Work title">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputWorkDescription">Work Description</label>
+                        <textarea class="form-control" name="work_description" disabled
+                            id="WorkDescription12{{from_work.forward_work.pk}}" rows="3"
+                            placeholder="Work Description">{{from_work.forward_work.work_description}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSuggestions">Suggestions</label>
+                        <textarea class="form-control" disabled name="suggestions" value=""
+                            id="Suggestions12{{from_work.forward_work.pk}}" rows="3"
+                            placeholder="suggestions">{{from_work.forward_work.suggestions}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRemarks">Remarks/Comments</label>
+                        <label hidden
+                            id="Remarks12{{from_work.forward_work.pk}}">{{from_work.forward_work.remarks}}</label>
+                        <input type="text" name="remarks" disabled value="{{from_work.forward_work.remarks}}"
+                            class="form-control" placeholder="Remarks/Comments">
+                    </div>
+                    {% if from_work.forward_work.document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{from_work.forward_work.document.url}}</label><br>
+                        <a href="{{from_work.forward_work.document.url}}" class="btn btn-primary"
+                            download="{{from_work.forward_work.document.url}}">download</a>
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="inputSuggestions">Suggestions by {{from_work.from_user}}</label>
+                        <textarea class="form-control" disabled name="suggestions" value=""
+                            id="Suggestions{{from_work.pk}}" rows="3"
+                            placeholder="suggestions">{{from_work.suggestions}}</textarea>
+                    </div>
+                    {% if from_work.ford_document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{from_work.ford_document.url}}</label><br>
+                        <a href="{{from_work.ford_document.url}}" class="btn btn-primary"
+                            download="{{from_work.ford_document.url}}">download</a>
+                    </div>
+                    {% endif %}
+                    {% if from_work.forward_work.end_statement %}
+                    <div class="form-group">
+                        <label for="inputRemarks" style="font-weight: bold; color: #63F700;">Work Completed on
+                            {{from_work.forward_work.date_of_complition}}</label>
+                        <textarea class="form-control" type="text" name="end_statement" disabled
+                            rows="3">{{from_work.forward_work.end_statement}}</textarea>
+                    </div>
+                    {% if from_work.forward_work.end_document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{from_work.forward_work.end_document.url}}</label><br>
+                        <a href="{{from_work.forward_work.end_document.url}}" class="btn btn-primary"
+                            download="{{from_work.forward_work.end_document.url}}">download</a>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    <!-- {% if user.is_superadmin == False and user.is_adminstrator == False %}
+                    {% if user.fullname != assigned_msg.from_user %}
+                    {% if assigned_msg.forward_work.status != "completed" and assigned_msg.forwarded != True %}
+                    {% if assigned_msg.forward_work.status != "pending..." %}
+                    <a href="" class="btn btn-primary">Start</a>
+                    <a href="" class="btn btn-danger" data-toggle="modal" data-target="#reply">Return</a>
+                    <a href="" class="btn btn-warning forward_key" id="forwardval{{assigned_msg.pk}}" data-toggle="modal" data-target="#forward">Forward</a>
+                    {% endif %}
+                    <a href="" class="btn btn-success">Completed</a>
+                    {% endif %}
+                    {% endif %}
+                    {% endif %} -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <!-- end of send/forwarded display Modal -->
+
+    <!-- Pending of my work display Modal -->
+    {% for pending in pending_status %}
+    <div class="modal fade" id="PendingModel1{{pending.pk}}" data-backdrop="static" data-keyboard="false" tabindex="-2"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="display: inline-block; padding-bottom: 0;">
+                    <h5 style="margin-bottom: 0; font-weight:bold;color:tomato;" id="staticBackdropLabel">Pending...My
+                        Work</h5>
+                    {% if pending.forwarded %}
+                    <h6 style="color: rgb(146, 146, 146);">forwarded from {{pending.from_user}} to
+                        {{pending.to.account.fullname}} </h6>
+                    {% else %}
+                    <h6 style="color: rgb(146, 146, 146);"> generated by {{pending.from_user}} </h6>
+                    {% endif %}
+                    <button type="button" style="position: absolute; top: 15px; right: 15px;" class="close"
+                        data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputTitle4">Work Title</label>
+                        <label hidden id="workingtitle4{{pending.pk}}">{{pendingtitle}}</label>
+                        <input type="text" name="title" disabled value="{{pending.title}}" class="form-control"
+                            placeholder="Work title">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputWorkDescription">Work Description</label>
+                        <textarea class="form-control" name="work_description" disabled
+                            id="WorkDescription4{{pending.pk}}" rows="3"
+                            placeholder="Work Description">{{pending.work_description}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSuggestions">Suggestions</label>
+                        <textarea class="form-control" disabled name="suggestions" value=""
+                            id="Suggestions4{{pending.pk}}" rows="3"
+                            placeholder="suggestions">{{pending.suggestions}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRemarks">Remarks/Comments</label>
+                        <label hidden id="Remarks4{{pending.pk}}">{{pending.remarks}}</label>
+                        <input type="text" name="remarks" disabled value="{{pending.remarks}}" class="form-control"
+                            placeholder="Remarks/Comments">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{pending.document}}</label><br>
+                        <a href="{{pending.document}}" class="btn btn-primary"
+                            download="{{pending.document}}">download</a>
+                    </div>
+                    {% if user.is_superadmin == False and user.is_adminstrator == False %}
+                    {% if pending.status != "completed" and pending.forwarded != True %}
+                    {% if pending.status != "pending..." %}
+                    <a href="{% url 'start' pk=pending.pk %}" class="btn btn-primary">Start</a>
+                    <a href="" class="btn btn-danger" data-toggle="modal" data-target="#reply">Return</a>
+                    <a href="" class="btn btn-warning" data-toggle="modal" data-target="#forward">Forward</a>
+                    {% else %}
+                    <a class="btn btn-success workcomplete" id="complete{{pending.pk}}" href="" data-toggle="modal"
+                        data-target="#endStatement"">Completed</a>
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+                </div>
+                <div class=" modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <!--end of pending of my work display Modal -->
+
+    <!--Pending of ASSIGNED work display Modal-->
+    {% for pending in assign_pending_status %}
+    <div class="modal fade" id="PendingModel2{{pending.forward_work.pk}}" data-backdrop="static" data-keyboard="false"
+        tabindex="-2" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="display: inline-block; padding-bottom: 0">
+                    <h5 style="margin-bottom: 0; font-weight:bold;color:tomato;" id="staticBackdropLabel">Pending...
+                        Assigned Work
+                    </h5>
+                    {% if pending.forward_work.forwarded %}
+                    <h6 style="color: rgb(146, 146, 146);">forwarded from {{pending.from_user}} to
+                        {{pending.to.account.fullname}} </h6>
+                    {% else %}
+                    <h6 style="color: rgb(146, 146, 146);"> generated by {{pending.forward_work.from_user}} </h6>
+                    {% endif %}
+                    <button type="button" style="position: absolute; top: 15px; right: 15px;" class="close"
+                        data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputTitle4">Work Title</label>
+                        <label hidden
+                            id="workingtitle5{{assigned_msg.forward_work.pk}}">{{pending.forward_work.title}}</label>
+                        <input type="text" name="title" disabled value="{{assignpendinged_msg.forward_work.title}}"
+                            class="form-control" placeholder="Work title">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputWorkDescription">Work Description</label>
+                        <textarea class="form-control" name="work_description" disabled
+                            id="WorkDescription5{{pending.forward_work.pk}}" rows="3"
+                            placeholder="Work Description">{{pending.forward_work.work_description}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSuggestions">Suggestions</label>
+                        <textarea class="form-control" disabled name="suggestions" value=""
+                            id="Suggestions5{{pending.forward_work.pk}}" rows="3"
+                            placeholder="suggestions">{{pending.forward_work.suggestions}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRemarks">Remarks/Comments</label>
+                        <label hidden id="Remarks5{{pending.forward_work.pk}}">{{pending.forward_work.remarks}}</label>
+                        <input type="text" name="remarks" disabled value="{{pending.forward_work.remarks}}"
+                            class="form-control" placeholder="Remarks/Comments">
+                    </div>
+                    {% if pending.forward_work.document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{pending.forward_work.document.url}}</label><br>
+                        <a href="{{pending.forward_work.document.url}}" class="btn btn-primary"
+                            download="{{pending.forward_work.document.url}}">download</a>
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="inputSuggestions">Suggestions by {{pending.from_user}}</label>
+                        <textarea class="form-control" disabled name="suggestions" value=""
+                            id="Suggestions5{{pending.pk}}" rows="3"
+                            placeholder="suggestions">{{pending.suggestions}}</textarea>
+                    </div>
+                    {% if pending.ford_document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{pending.ford_document.url}}</label><br>
+                        <a href="{{pending.ford_document.url}}" class="btn btn-primary"
+                            download="{{pending.ford_document.url}}">download</a>
+                    </div>
+                    {% endif %}
+                    {% if user.is_superadmin == False %}
+                    {% if user.fullname != assigned_msg.from_user %}
+                    {% if pending.forward_work.status != "completed" and pending.forwarded != True %}
+                    {% if pending.forward_work.status != "pending..." %}
+                    <a href="{% url 'start' pk=pending.forward_work.pk %}" class="btn btn-primary">Start</a>
+                    <a href="" class="btn btn-danger" data-toggle="modal" data-target="#reply">Return</a>
+                    <a href="" class="btn btn-warning forward_key" id="forwardval{{assigned_msg.pk}}"
+                        data-toggle="modal" data-target="#forward">Forward</a>
+                    {% else %}
+                    <a class="btn btn-success workcomplete wo{{pending.pk}}" id="complete{{work.pk}}" href=""
+                        data-toggle="modal" data-target="#endStatement">Completed</a>
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <!--end of assigned work display Modal -->
+
+
+    <!-- completed_status of my work display Modal -->
+    {% for completed in completed_status %}
+    <div class="modal fade" id="CompleteModel1{{completed.pk}}" data-backdrop="static" data-keyboard="false"
+        tabindex="-2" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="display: inline-block; padding-bottom: 0;">
+                    <h5 style="margin-bottom: 0; font-weight:bold;color:tomato;" id="staticBackdropLabel">Completed My
+                        Work</h5>
+                    {% if completed.forwarded %}
+                    <h6 style="color: rgb(146, 146, 146);">forwarded from {{completed.forwarded_from}} to
+                        {{completed.forwarded_to}} </h6>
+                    {% else %}
+                    <h6 style="color: rgb(146, 146, 146);"> generated by {{completed.from_user}} </h6>
+                    {% endif %}
+                    <button type="button" style="position: absolute; top: 15px; right: 15px;" class="close"
+                        data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputTitle4">Work Title</label>
+                        <label hidden id="workingtitle6{{pending.pk}}">{{completed.title}}</label>
+                        <input type="text" name="title" disabled value="{{completed.title}}" class="form-control"
+                            placeholder="Work title">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputWorkDescription">Work Description</label>
+                        <textarea class="form-control" name="work_description" disabled
+                            id="WorkDescription6{{completed.pk}}" rows="3"
+                            placeholder="Work Description">{{completed.work_description}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSuggestions">Suggestions</label>
+                        <textarea class="form-control" disabled name="suggestions" value=""
+                            id="Suggestions6{{completed.pk}}" rows="3"
+                            placeholder="suggestions">{{completed.suggestions}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRemarks">Remarks/Comments</label>
+                        <label hidden id="Remarks6{{completed.pk}}">{{completed.remarks}}</label>
+                        <input type="text" name="remarks" disabled value="{{completed.remarks}}" class="form-control"
+                            placeholder="Remarks/Comments">
+                    </div>
+                    {% if completed.document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{completed.document}}</label><br>
+                        <a href="{{completed.document.url}}" class="btn btn-primary"
+                            download="{{completed.document.url}}">download</a>
+                    </div>
+                    {% endif %}
+                    {% if completed.end_statement %}
+                    <div class="form-group">
+                        <label for="inputRemarks" style="font-weight: bold; color: #63F700;">Work Completed on
+                            {{completed.date_of_complition}}</label>
+                        <textarea class="form-control" type="text" name="end_statement" disabled
+                            rows="3">{{completed.end_statement}}</textarea>
+                    </div>
+                    {% if completed.end_document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{completed.end_document.url}}</label><br>
+                        <a href="{{completed.end_document.url}}" class="btn btn-primary"
+                            download="{{completed.end_document.url}}">download</a>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <!--end of completed_status of my work display Modal -->
+
+    <!--completed_status of ASSIGNED work display Modal-->
+    {% for completed in assign_completed_status %}
+    <div class="modal fade" id="CompleteModel2{{completed.forward_work.pk}}" data-backdrop="static"
+        data-keyboard="false" tabindex="-2" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="display: inline-block; padding-bottom: 0;">
+                    <h5 style="margin-bottom: 0; font-weight:bold;color:tomato;" id="staticBackdropLabel">Completed
+                        Assigned Work
+                    </h5>
+                    {% if completed.forward_work.forwarded %}
+                    <h6 style="color: rgb(146, 146, 146);">forwarded from {{completed.from_user}} to
+                        {{completed.to.account.fullname}} </h6>
+                    {% else %}
+                    <h6 style="color: rgb(146, 146, 146);"> generated by {{completed.forward_work.from_user}} </h6>
+                    {% endif %}
+                    <button type="button" style="position: absolute; top: 15px; right: 15px;" class="close"
+                        data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputTitle4">Work Title</label>
+                        <label hidden
+                            id="workingtitle7{{completed.forward_work.pk}}">{{completed.forward_work.title}}</label>
+                        <input type="text" name="title" disabled value="{{completed.forward_work.title}}"
+                            class="form-control" placeholder="Work title">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputWorkDescription">Work Description</label>
+                        <textarea class="form-control" name="work_description" disabled
+                            id="WorkDescription7{{completed.forward_work.pk}}" rows="3"
+                            placeholder="Work Description">{{completed.forward_work.work_description}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSuggestions">Suggestions</label>
+                        <textarea class="form-control" disabled name="suggestions" value=""
+                            id="Suggestions7{{completed.forward_work.pk}}" rows="3"
+                            placeholder="suggestions">{{completed.forward_work.suggestions}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRemarks">Remarks/Comments</label>
+                        <label hidden
+                            id="Remarks7{{completed.forward_work.pk}}">{{completed.forward_work.remarks}}</label>
+                        <input type="text" name="remarks" disabled value="{{completed.forward_work.remarks}}"
+                            class="form-control" placeholder="Remarks/Comments">
+                    </div>
+                    {% if completed.forward_work.document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{completed.forward_work.document.url}}</label><br>
+                        <a href="{{completed.forward_work.document.url}}" class="btn btn-primary"
+                            download="{{completed.forward_work.document.url}}">download</a>
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="inputSuggestions">Suggestions by {{completed.from_user}}</label>
+                        <textarea class="form-control" disabled name="suggestions" value=""
+                            id="Suggestions7{{completed.pk}}" rows="3"
+                            placeholder="suggestions">{{completed.suggestions}}</textarea>
+                    </div>
+                    {% if completed.ford_document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{completed.ford_document.url}}</label><br>
+                        <a href="{{completed.ford_document.url}}" class="btn btn-primary"
+                            download="{{completed.ford_document.url}}">download</a>
+                    </div>
+                    {% endif %}
+                    {% if completed.forward_work.end_statement %}
+                    <div class="form-group">
+                        <label for="inputRemarks" style="font-weight: bold; color: #63F700;">Work Completed on
+                            {{completed.forward_work.date_of_complition}}</label>
+                        <textarea class="form-control" type="text" name="end_statement" disabled
+                            rows="3">{{completed.forward_work.end_statement}}</textarea>
+
+                    </div>
+                    {% if completed.forward_work.end_document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{completed.forward_work.end_document.url}}</label><br>
+                        <a href="{{completed.forward_work.end_document.url}}" class="btn btn-primary"
+                            download="{{completed.forward_work.end_document.url}}">download</a>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <!--end of completed_status work display Modal -->
+
+
+
+    <!--Return display Modal-->
+    {% for ret_obj in return_obj %}
+    <div class="modal fade" id="ReturnModel{{ret_obj.pk}}" data-backdrop="static" data-keyboard="false" tabindex="-2"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="display: inline-block; padding-bottom: 0;">
+                    <h5 style="margin-bottom: 0; font-weight:bold;color:tomato;" id="staticBackdropLabel">Returned
+                    </h5>
+                    <button type="button" style="position: absolute; top: 15px; right: 15px;" class="close"
+                        data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputTitle4">Work Title</label>
+                        <label hidden id="workingtitle8{{assigned_msg.forward_work.pk}}">{{ret_obj.work.title}}</label>
+                        <input type="text" name="title" disabled
+                            value="{{ret_obj.work.title}}{{ret_obj.work.forwarded}}" class="form-control"
+                            placeholder="Work title">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputWorkDescription">Work Description</label>
+                        <textarea class="form-control" name="work_description" disabled
+                            id="WorkDescription8{{ret_obj.work.pk}}" rows="3"
+                            placeholder="Work Description">{{ret_obj.work.work_description}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSuggestions">Suggestions</label>
+                        <textarea class="form-control" disabled name="suggestions" value=""
+                            id="Suggestions8{{ret_obj.work.pk}}" rows="3"
+                            placeholder="suggestions">{{ret_obj.work.suggestions}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRemarks">Remarks/Comments</label>
+                        <label hidden id="Remarks8{{ret_obj.work.pk}}">{{ret_obj.work.remarks}}</label>
+                        <input type="text" name="remarks" disabled value="{{ret_obj.work.remarks}}" class="form-control"
+                            placeholder="Remarks/Comments">
+                    </div>
+                    {% if ret_obj.work.document %}
+                    <div class="form-group">
+                        <label for="exampleFormDocument">{{ret_obj.work.document.url}}</label><br>
+                        <a href="{{ret_obj.work.document.url}}" class="btn btn-primary"
+                            download="{{ret_obj.work.document.url}}">download</a>
+                    </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label for="inputSuggestions">Message by {{ret_obj.from_user}}</label>
+                        <textarea class="form-control" disabled name="suggestions" value=""
+                            id="Suggestions8{{ret_obj.pk}}" rows="3"
+                            placeholder="return message">{{ret_obj.message}}</textarea>
+                    </div>
+                    {% if user.is_adminstrator and ret_obj.work.forwarded == False %}
+                    <a href="" class="btn btn-warning return_class" id="RA{{ret_obj.pk}}" data-toggle="modal"
+                        data-target="#forward1">ReAssign</a>
+                    <a href="" data-toggle="modal" data-target="#deleteModal{{ret_obj.pk}}"
+                        class="btn btn-primary">Delete Work</a>
+                    {% else %}
+                    <a href="" data-toggle="modal" data-target="#deleteModal{{ret_obj.pk}}"
+                        class="btn btn-primary">Delete Work</a>
+                    <!-- <a href="{% url 'return_start' pk=ret_obj.pk %}" class="btn btn-primary">Start</a>
+                    <a href="" class="btn btn-warning forward_key" id="forwardval{{ret_obj.pk}}" data-toggle="modal" data-target="#forward">Forward</a>
+                    <a href="" class="btn btn-danger return" id="RW{{ret_obj.work.from_user_pk}}" data-toggle="modal"
+                        data-target="#reply">Return</a> -->
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <!--end of Return display Modal -->
+
+    <!--edit model-->
+    <div class="modal fade" id="EditModel" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel" style="font-weight:bold;color:tomato;">
+                        Update Work/Job</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form method="POST" action="{% url 'edit_work' %}" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="modal-body">
+                        <input type="hidden" id="pk_val" name="pk_val" value="">
+                        <div class="form-group">
+                            <label for="inputTitle4">Work Title</label>
+                            <input type="text" name="title" class="form-control" id="updateTitle1"
+                                placeholder="Work title">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputWorkDescription">Work Description</label>
+                            <textarea class="form-control" name="work_description" id="updateWorkDescription1" rows="3"
+                                placeholder="Work Description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputSuggestions">Suggestions</label>
+                            <textarea class="form-control" name="suggestions" id="updateSuggestions1" rows="3"
+                                placeholder="suggestions"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputRemarks">Remarks/Comments</label>
+                            <input type="text" name="remarks" class="form-control" id="updateRemarks1"
+                                placeholder="Remarks/Comments">
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="exampleFormDocument">Choose File To Upload</label>
+                            <input type="file" name="document" class="form-control-file" id="exampleFormDocument">
+                        </div> -->
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Forward Modal -->
+    <div class="modal fade" id="forward" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-weight:bold;color:tomato;" id="staticBackdropLabel">Forward</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{% url 'forward_work' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" id="pk_val1" name="pk_val" value="">
+                        <input type="hidden" id="pk_val2" name="pk_val2" value="">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="inputFrom2">From</label>
+                                <select id="inputFrom2" name="from" class="form-control">
+                                    <option selected value="{{user.pk}}">{{user.fullname}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputTo2">To</label>
+                                <select required id="inputTo2" name="to" class="form-control">
+                                    <option selected>Choose...</option>
+                                    {% for account in accounts %}
+                                    {% if account.is_superadmin == False and account.pk != user.pk%}
+                                    {% for val in account.admin_set.all %}
+                                    <option value="{{val.pk}}">
+                                        <pre>{{account.fullname}} ({{val.designation}})</pre>
+                                    </option>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputsuggestions2">Remarks/suggations</label>
+                                <textarea required class="form-control" name="suggestions" id="inputsuggestions2"
+                                    rows="3" placeholder="Work Description"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="switch">
+                                    <input type="checkbox" id="upload_chkbox" name="upload_checkbox">
+                                    <span class="slider round"> Check the box to attach file</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group" id="file_upload_div3">
+                                <label for="exampleFormDocument">Choose File To Upload</label>
+                                <input type="file" name="ford_document" class="form-control-file" id="file_upload3"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Retuen Modal -->
+    <div class="modal fade" id="reply" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-weight:bold;color:tomato;" id="staticBackdropLabel">Return</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{% url 'return_work' %}">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <input type="text" hidden id="work_pk" name="work_pk" value="">
+                            <input type="text" hidden id="ford_work_pk" name="ford_work_pk" value="">
+                            <div class="form-group">
+                                <input type="text" name="from" hidden value="{{user.pk}}">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="inputTo12" name="to" hidden value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputSuggestions12">Message</label>
+                                <textarea required class="form-control" name="suggestions" id="inputSuggestions12"
+                                    rows="3" placeholder="Message"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Reassign Modal -->
+    <div class="modal fade" id="forward1" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-weight:bold;color:tomato;" id="staticBackdropLabel">ReAssign
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{% url 'reassign' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" id="work_id" name="pk_val" value="">
+                        <input type="hidden" id="return_id" name="rk_val" value="">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="inputFrom18">From</label>
+                                <select id="inputFrom18" name="from" class="form-control">
+                                    <option selected value="{{user.pk}}">{{user.fullname}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputto2">To</label>
+                                <select id="inputto2" name="to" class="form-control">
+                                    <option selected>Choose...</option>
+                                    {% for account in accounts %}
+                                    {% if account.is_superadmin == False and account.pk != user.pk%}
+                                    {% for val in account.admin_set.all %}
+                                    <option value="{{val.pk}}">
+                                        <pre>{{account.fullname}} ({{val.designation}})</pre>
+                                    </option>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label for="inputsuggestions8">Remarks/suggations</label>
+                                <textarea class="form-control" name="suggestions" id="inputsuggestions8" rows="3"
+                                    placeholder="Work Description"></textarea>
+                            </div> -->
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- reassign end-->
+
+    <!-- delete work model-->
+    {% for ret_obj in return_obj %}
+    <div class="modal fade" id="deleteModal{{ret_obj.pk}}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-weight:bold;color:tomato;" id="exampleModalLabel">Delete</h5>
+                </div>
+                <div class="modal-body">
+                    {% if user.is_adminstrator and ret_obj.work.forwarded == False %}
+                    <h5>Are you sure That you want to delete the generated work??</h5>
+                    {% else %}
+                    <h5>Detele the return work</h5>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="{% url 'delete_work' pk=ret_obj.pk %}">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <!-- end delete work  -->
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current
+                    session.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--end statement of employee -->
+    <!--complete model -->
+    <div class="modal fade" id="endStatement" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-weight:bold;color:tomato;" id="staticBackdropLabel">End
+                        Statement</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{% url 'completed' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <input type="text" hidden id="complete_pk" name="complete_pk" value="">
+                            <input type="text" hidden id="ford_complete_pk" name="ford_complete_pk" value="">
+
+                            <div class="form-group">
+                                <label for="inputend_statement">Complete Message</label>
+                                <textarea required class="form-control" name="end_statement" id="inputend_statement"
+                                    rows="3" placeholder="Message"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="switch">
+                                    <input type="checkbox" id="upload_chkbox" name="upload_checkbox">
+                                    <span class="slider round"> Check the box to attach file</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group" id="file_upload_div2">
+                                <label for="exampleFormDocument">Choose File To Upload</label>
+                                <input type="file" name="end_document" class="form-control-file" id="file_upload2"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Completed</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'dashboard/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'dashboard/js/sb-admin-2.min.js' %}"></script>
+
+
+    <script src="{% static 'profile/js/main.js' %}"></script>
+
+    <script>
+        $('#file_upload_div').hide();
+        $('#file_upload').prop('disabled', true);
+        $('input[type="checkbox"]').click(function () {
+            if ($(this).prop("checked") == true) {
+
+                $('#file_upload_div').show();
+                $('#file_upload').prop('disabled', false);
+            }
+            else if ($(this).prop("checked") == false) {
+
+                $('#file_upload_div').hide();
+                $('#file_upload').prop('disabled', true);
+            }
+        });
+
+        $('#file_upload_div2').hide();
+        $('#file_upload2').prop('disabled', true);
+        $('input[type="checkbox"]').click(function () {
+            if ($(this).prop("checked") == true) {
+
+                $('#file_upload_div2').show();
+                $('#file_upload2').prop('disabled', false);
+            }
+            else if ($(this).prop("checked") == false) {
+
+                $('#file_upload_div2').hide();
+                $('#file_upload2').prop('disabled', true);
+            }
+        });
+
+        $('#file_upload_div3').hide();
+        $('#file_upload3').prop('disabled', true);
+        $('input[type="checkbox"]').click(function () {
+            if ($(this).prop("checked") == true) {
+
+                $('#file_upload_div3').show();
+                $('#file_upload3').prop('disabled', false);
+            }
+            else if ($(this).prop("checked") == false) {
+
+                $('#file_upload_div3').hide();
+                $('#file_upload3').prop('disabled', true);
+            }
+        });
+    </script>
+
+
+
+    <script>
+
+        $(".work_edit").on("click", function () {
+
+            id = this.id;
+            pk = id.slice(4,);
+
+            title_id = "#workingtitle" + pk;
+
+            updateTitle = $(title_id).text();
+
+            $("#updateTitle1").val(updateTitle);
+
+            description_id = "#WorkDescription" + pk;
+            updateWorkDescription = $(description_id).text();
+
+            $("#updateWorkDescription1").val(updateWorkDescription);
+
+            suggestion_id = "#Suggestions" + pk;
+            updateSuggestions = $(suggestion_id).text();
+            $("#updateSuggestions1").val(updateSuggestions);
+
+            remarks_id = "#Remarks" + pk;
+            updateRemarks = $(remarks_id).text();
+            $("#updateRemarks1").val(updateRemarks);
+
+            $("#pk_val").val(pk);
+        });
+
+        $(".workcomplete").on("click", function () {
+            id = this.id;
+            pk = id.slice(8,);
+
+            $("#complete_pk").val(pk);
+            cls = this.className;
+            cls_pk = cls.slice(31,);
+
+            $("#ford_complete_pk").val(cls_pk);
+
+        });
+
+        $(".work_link").on("click", function () {
+
+            id = this.id;
+            pk = id.slice(5,);
+
+            $("#pk_val1").val(pk);
+            $("#work_pk").val(pk);
+
+            $.ajax({
+                url: '{% url "new_work_status" %}',
+                data: {
+                    'pk': pk
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.new_work) {
+                        $.ajax({
+                            url: '{% url "new_work_clicked" %}',
+                            data: {
+                                'pk': pk
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.new_work) {
+                                    console.log('I am clicked.. pk');
+                                }
+                                else {
+                                    id = '#new_work' + pk;
+                                    work_circle = '#work_circle' + pk;
+                                    work_text = '#work_text' + pk;
+                                    $(id).hide();
+                                    $(work_circle).hide();
+                                    $(work_text).hide();
+                                    total = document.getElementById('total_notification').innerText;
+
+                                    new_total = parseInt(total) - 1;
+                                    if (new_total < 0) {
+                                        new_total = 0
+                                    }
+
+                                    document.getElementById('total_notification').innerText = new_total;
+                                }
+                            }
+                        })
+                    }
+                    if (data.alert) {
+                        $.ajax({
+                            url: '{% url "new_work_clicked" %}',
+                            data: {
+                                'pk': pk
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.alert) {
+                                    console.log('I am clicked.. pk');
+                                }
+                                else {
+                                    id = '#reminder' + pk;
+                                    $(id).hide();
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+
+
+        });
+
+
+        $('.return_work_link').on('click', function () {
+            id = this.id;
+            pk = id.slice(5,);
+
+            $("#pk_val1").val(pk);
+            $("#work_pk").val(pk);
+
+            $.ajax({
+                url: '{% url "return_work_status" %}',
+                data: {
+                    'pk': pk
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.new_work) {
+                        $.ajax({
+                            url: '{% url "return_work_clicked" %}',
+                            data: {
+                                'pk': pk
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.new_work) {
+                                    console.log('I am clicked.. pk');
+                                }
+                                else {
+                                    id = '#new_return' + pk;
+                                    return_circle = '#return_circle' + pk;
+                                    return_text = '#return_text' + pk;
+                                    $(id).hide();
+                                    $(return_circle).hide();
+                                    $(return_text).hide();
+                                    total = document.getElementById('total_notification').innerText;
+
+                                    new_total = parseInt(total) - 1;
+                                    if (new_total < 0) {
+                                        new_total = 0
+                                    }
+
+                                    document.getElementById('total_notification').innerText = new_total;
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+
+        });
+
+
+
+
+
+
+        $(document).ready(function () {
+            $.ajax({
+                url: '{% url "count_values" %}',
+                dataType: 'json',
+                success: function (data) {
+                    $('#returned_total').val(data.returns);
+
+                }
+
+            })
+        });
+
+
+
+        $(".ford_work_link").on("click", function () {
+            
+
+
+            id = this.id;
+            pk = id.slice(5,);
+            var workpk = $(this).data('workpk');
+            cls = this.className;
+            cls_pk = cls.slice(15,);
+            $("#ford_work_pk").val(cls_pk);
+            $("#pk_val1").val(workpk);
+            $("#work_pk").val(workpk);
+
+
+            $.ajax({
+                url: '{% url "forward_work_status" %}',
+                data: {
+                    'pk': pk
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.new_work) {
+                        $.ajax({
+                            url: '{% url "forward_work_clicked" %}',
+                            data: {
+                                'pk': pk
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.new_work) {
+                                    console.log('I am clicked.. pk');
+                                }
+                                else {
+
+                                    id = '#new_assigned' + pk;
+                                    work_circle = '#forward_circle' + pk;
+                                    work_text = '#forward_text' + pk;
+                                    $(id).hide();
+                                    $(work_circle).hide();
+                                    $(work_text).hide();
+                                    total = document.getElementById('total_notification').innerText;
+
+                                    new_total = parseInt(total) - 1;
+                                    if (new_total < 0) {
+                                        new_total = 0
+                                    }
+
+                                    document.getElementById('total_notification').innerText = new_total;
+                                }
+                            }
+                        })
+                    }
+                    if (data.alert) {
+                        $.ajax({
+                            url: '{% url "forward_work_clicked" %}',
+                            data: {
+                                'pk': pk
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.alert) {
+                                    console.log('I am clicked.. pk');
+                                }
+                                else {
+                                    id = '#reminder1' + pk;
+                                    $(id).hide();
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+
+
+
+        });
+        $(".forward_key").on("click", function () {
+            id = this.id;
+            pk = id.slice(10,);
+
+            $("#pk_val2").val(pk);
+        });
+        $(".return").on("click", function () {
+            id = this.id;
+            pk = id.slice(2,);
+
+            $("#inputTo12").val(pk);
+
+        });
+
+        $(".return_work_link").on("click", function () {
+
+            // id = this.id;
+
+            // pk = id.slice(5,);
+            var pk = $(this).data('pk');
+
+
+            $("#work_id").val(pk);
+            $("#pk_val1").val(pk);
+            $("#work_pk").val(pk);
+        });
+
+        $(".return_class").on("click", function () {
+            id = this.id;
+            pk = id.slice(2,);
+
+            $("#return_id").val(pk);
+        });
+
+        $('.leavestatus1').on('click', function () {
+
+            id = this.id;
+            pk = id.slice(8,);
+
+            $("#leave_pk").val(pk);
+
+        });
+
+        $('.leavestatus2').on('click', function () {
+
+            id = this.id;
+            pk = id.slice(8,);
+
+            $("#leave_pk1").val(pk);
+
+        });
+
+        $('.leave_app').on('click',function () {
+
+            id = this.id;
+            pk = id.slice(8,);
+
+            $.ajax({
+                url: '{% url "leave_app_status" %}',
+                data: {
+                    'pk': pk
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.new_leave) {
+                        $.ajax({
+                            url: '{% url "leave_app_clicked" %}',
+                            data: {
+                                'pk': pk
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.new_leave) {
+                                    console.log('I am clicked.. pk');
+                                }
+                                else {
+                                    id = '#new_leaveapp' + pk;
+                                    leave_circle = '#leave_circle' + pk;
+                                    leave_text = '#leave_text' + pk;
+                                    $(id).hide();
+                                    $(leave_circle).hide();
+                                    $(leave_text).hide();
+                                    total = document.getElementById('total_notification').innerText;
+
+                                    new_total = parseInt(total) - 1;
+                                    if (new_total < 0) {
+                                        new_total = 0
+                                    }
+
+                                    document.getElementById('total_notification').innerText = new_total;
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+        });
+
+
+        $('.leave_app1').on('click',function () {
+
+            id = this.id;
+            pk = id.slice(8,);
+
+            $.ajax({
+                url: '{% url "leave_app_status" %}',
+                data: {
+                    'pk': pk
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.reply) {
+                        $.ajax({
+                            url: '{% url "leave_app_clicked" %}',
+                            data: {
+                                'pk': pk
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.reply) {
+                                    console.log('I am clicked.. pk');
+                                }
+                                else {
+                                    id = '#new_leaveapp1' + pk;
+                                    leave_circle = '#leave_circle1' + pk;
+                                    leave_text = '#leave_text1' + pk;
+                                    $(id).hide();
+                                    $(leave_circle).hide();
+                                    $(leave_text).hide();
+                                    total = document.getElementById('total_notification').innerText;
+
+                                    new_total = parseInt(total) - 1;
+                                    if (new_total < 0) {
+                                        new_total = 0
+                                    }
+
+                                    document.getElementById('total_notification').innerText = new_total;
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+        });
+
+        $(function(){
+            var cl_val = "{{value.cl}}";
+            var sl_val = "{{value.sl}}";
+            if ( parseInt(cl_val) <= 0 && parseInt(sl_val) <=0 ){
+                $('#leavebtn').prop('disabled', true);
+            }
+            else if(parseInt(cl_val) <= 0){
+                $('#inlineRadio1').prop('disabled', true);
+                
+            }
+            else if(parseInt(sl_val) <= 0){
+                $('#inlineRadio2').prop('disabled', true);
+            }
+        $('input[type="radio"]').click(function(){
+            
+        if ($(this).is(':checked'))
+        {
+            var abc = $(this).val();
+            
+            $('#leavedays').keyup(function(){
+
+                var day_val = $('#leavedays').val()
+                if (abc === "CL"){
+                    if (parseInt(day_val) > parseInt(cl_val)){
+                        $('#showError').html('you have to enter with in the range.');
+                        $('#showError').css('color','red');
+                        $('#leavebtn').prop('disabled', true);
+                        return false;
+                    }
+                    else if (parseInt(day_val) === 0){
+                        $('#showError').html('Correct your entry.');
+                        $('#showError').css('color','red');
+                        $('#leavebtn').prop('disabled', true);
+                        return false;
+                    }
+                    else{
+                        $('#showError').html('');
+                        $('#leavebtn').prop('disabled', false);
+                        return true;
+                    }
+                    
+                }
+                else if (abc === "SL"){
+
+                    if (parseInt(day_val) > parseInt(sl_val)){
+                        $('#showError').html('you have to enter with in the range.');
+                        $('#showError').css('color','red');
+                        $('#leavebtn').prop('disabled', true);
+                        return false;
+                    }
+                    else if (parseInt(day_val) === 0){
+                        $('#showError').html('Correct your entry.');
+                        $('#showError').css('color','red');
+                        $('#leavebtn').prop('disabled', true);
+                        return false;
+                    }
+                    else{
+                        $('#showError').html('');
+                        $('#leavebtn').prop('disabled', false);
+                        return true;
+                    }
+
+
+                }
+                
+
+            });
+            
+
+            
+        }
+        
+    });
+    });
+
+    $('#timeinid').on('click', function(){
+        $('#timeinid').prop('disabled', true);
+        $('#timein').css('pointer-events','none');
+        console.log("hello")
+
+        $('#timeoutid').prop('disabled', false);
+    });
+
+    </script>
+
+
+</body>
+
+</html>

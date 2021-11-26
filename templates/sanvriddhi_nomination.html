@@ -1,0 +1,221 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+
+<h1>Sanvriddhi Account Creation</h1>
+
+<form id="admin_form" class="admin_form" method="POST" action="{% url 'sanvriddhi_register' %}" enctype="multipart/form-data">{% csrf_token %}
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label for="inputStartUpName4">Name Of Start-Up :</label>
+      <input type="text" name="startup_name" class="form-control" id="inputStartUpName4" placeholder="Name Of Start-Up">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="exampleFormControlFile1">Choose Image For startup</label>
+      <input type="file" name="startup_img" class="form-control-file" id="exampleFormControlFile1">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputTeamHead4">Head Of the Team/Founder :</label>
+      <input type="text" name="full_name" class="form-control" id="inputTeamHead4" placeholder="Team head/Founder">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="exampleFormControlFile2">Choose Image For Founder</label>
+      <input  type="file" name="founder_img" class="form-control-file" id="exampleFormControlFile2">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputFoundersDesignation4">Designation of Founder :</label>
+      <input  type="text" name="founders_designation" class="form-control" id="inputFoundersDesignation4"
+        placeholder="Founders's Designation">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputCIN4">Company Identification Number (CIN) :</label>
+      <input  type="text" name="comp_identification_no" class="form-control" id="inputCIN4" placeholder="CIN">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputIncubateeLevel4">Current level of Incubatee :</label>
+        <select name="inubatee_level" class="custom-select col-md-12" >
+          <option selected="selected" value="none" >Choose From below:</option>
+          <option value="Ideation">Ideation</option>
+          <option value="POC">POC</option>
+          <option value="Prototype">Prototype</option>
+          <option value="Minimum Viable product">Minimum Viable product</option>
+          <option value="Commercialized">Commercialized</option>
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputOperationalModel4">Operational Model : </label>
+        <select name="operational_model" class="custom-select col-md-12" >
+          <option selected="selected" value="none" >Choose From below:</option>
+          <option value="Product Manufacturing">Product Manufacturing</option>
+          <option value="Service Delivery">Service Delivery</option>
+          <option value="Aggregation Platform">Aggregation Platform</option>
+          <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputLegalEntity4">Name Of Legal Entity :</label>
+      <input  type="text" name="legal_entity" class="form-control" id="inputLegalEntity4"
+        placeholder="Name Of Legal Entity">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputDateofRegistration4">Date of Registration of the legal entity of the startup :</label>
+      <input  type="date" name="registrationdate" class="form-control" id="inputDateofRegistration4"
+        placeholder="Registration date">
+    </div>
+    
+    <div class="form-group col-md-6">
+      <label for="inputCity4">Belong to Which City :</label>
+      <input  type="text" name="city" class="form-control" id="inputCity4" placeholder="City">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputWebsiteAddress4">Website Address :</label>
+      <input  type="text" name="website" class="form-control" id="inputWebsiteAddress4" placeholder="website address">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputSector4">Sector :</label>
+      <select name="sector" id="inputSector4" class="custom-select col-md-12" >
+        <option selected="selected" value="none" >Choose From below:</option>
+        <option value="Agriculture and Allied Fields">Agriculture and Allied Fields</option>
+        <option value="Electricity, New and Renewable energy and Environment sustainability">Electricity, New and Renewable energy and Environment sustainability</option>
+        <option value="Education">Education</option>
+        <option value="Health and Pharmaceuticals">Health and Pharmaceuticals</option>
+        <option value="Water Sanitation and Solid waste management">Water Sanitation and Solid waste management</option>
+      </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputDateofJoin4">Start Date of the Incubation :</label>
+      <input  type="date" name="joindate" class="form-control" id="inputDateofJoin4" placeholder="joined date">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputTypeOfIncubatee4" style="margin-right: 5%;">Type of Incubatee :</label><br>
+      <select name="type_of_incubatee" class="custom-select col-md-12" >
+        <option selected="selected" value="none" >Choose From below:</option>
+        <option value="Physical">Physical</option>
+        <option value="Virtual">Virtual</option>
+      </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputTeamMembers4">No. of employees existing at the time of joining the incubator:</label>
+      <input  type="text" name="team_members" class="form-control" id="inputTeamMembers4" placeholder="team members">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="inputTypeOfIncubatee4" style="margin-right: 5%;">Women Led Startup : (Yes/No) </label><br>
+      <select name="women_led_startup"  class="custom-select col-md-12" >
+        <option selected="selected" value="none" >Choose From below:</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="inputLocation4">Registered Address of Startup :</label>
+      <input  type="text" name="location" class="form-control" id="inputLocation4"
+        placeholder="location They are Working">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="inputGovtProgram4">Startup working towards any of the flagship government programmes :</label>
+        <select name="gov_program" class="custom-select col-md-12" >
+          <option selected="selected" value="none" >Choose From below:</option>
+          <option value="Women Empowerment ">Women Empowerment </option>
+          <option value="Make In India">Make In India</option>
+          <option value="Swachh Bharat ">Swachh Bharat </option>
+          <option value="Startup India">Startup India</option>
+          <option value="Beti Bachao Beti padhao">Beti Bachao Beti padhao</option>
+          <option value="None the above">None the above</option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="inputMSMERegistration4" style="margin-right: 5%;">MSME registered : (Yes/No) </label><br>
+      <select name="msme_registered" class="custom-select col-md-12" >
+        <option selected="selected" value="none" >Choose From below:</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="inputDIPPRegistration4" style="margin-right: 5%;">DIPP Registered : (Yes/No) </label><br>
+      <select name="dspp_registered" class="custom-select col-md-12" >
+        <option selected="selected" value="none" >Choose From below:</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Email :</label>
+      <input  type="email" name="email" class="form-control" id="inputEmail4" placeholder="Email">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="inputContactNo4">Contact No. :</label>
+      <input  type="text" name="contact" class="form-control" id="inputContactNo4" placeholder="Contact No.">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="inputUsername4">Username :</label>
+      <input required type="text" name="username" class="form-control" id="inputUsername4" placeholder="username">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Password :</label>
+      <input type="password" name="password1" class="form-control demoInputBox" onKeyUp="checkPasswordStrength();" id="inputPassword4" placeholder="Password" required>
+      <div id="password-strength-status"></div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword41">Confirm Password :</label>
+      <input type="password" name="password2" class="form-control" id="inputPasswordCheck4"
+        placeholder="Confirm Password" required autocomplete="on">
+        <div id="showError"></div>
+    </div>
+    
+
+  </div>
+
+
+
+  <button type="submit" class="btn btn-primary">Create Account</button>
+</form>
+
+{% endblock %}
+
+{% block js %}
+  <script>
+    $(document).ready(function(){
+      $('#inputPasswordCheck4').keyup(function(){
+        var pwd = $('#inputPassword4').val()
+        var cpwd = $('#inputPasswordCheck4').val()
+
+        if(cpwd!=pwd){
+          $('#showError').html('!! password and check password are not same !!');
+          $('#showError').css('color','red');
+          return false;
+        }
+        else{
+          $('#showError').html('!! Matched !!');
+          $('#showError').css('color','green');
+          return true;
+        }
+      });
+    });
+
+    function checkPasswordStrength() {
+        var number = /([0-9])/;
+        var alphabets = /([a-zA-Z])/;
+        var special_characters = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
+        if($('#inputPassword4').val().length<6) {
+        $('#password-strength-status').html("Weak (should be atleast 6 characters with special symbol and number.)");
+        $('#password-strength-status').css('color','red');
+        } else {  	
+        if($('#inputPassword4').val().match(number) && $('#inputPassword4').val().match(alphabets) && $('#inputPassword4').val().match(special_characters)) {            
+        $('#password-strength-status').html("Strong");
+        $('#password-strength-status').css('color','green');
+        } else {
+        $('#password-strength-status').html("Medium (should include alphabets, numbers and special characters.)");
+        $('#password-strength-status').css('color','orange');
+        }}}
+  </script>
+{% endblock %}

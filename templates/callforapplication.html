@@ -1,0 +1,310 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Call For Application</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <!-- <link href="{% static 'assets1/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'assets1/img/apple-touch-icon.png' %}" rel="apple-touch-icon"> -->
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets1/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'assets1/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets1/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets1/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets1/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets1/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets1/css/style.css' %}" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}">
+
+    <!-- =======================================================
+  * Template Name: Ninestars - v4.3.0
+  * Template URL: https://bootstrapmade.com/ninestars-free-bootstrap-3-theme-for-creative/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <div class="logo">
+                <a href="https://www.aicnalanda.com/" class="d-flex align-items-center">
+                    <img src="{% static 'assets/images/AIC.jpg' %}" alt="">
+                    <!-- <img src="{% static 'assets1/img/sodisha.png' %}" alt=""> -->
+                </a>
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <!-- <a href="index.html"><img src="{% static 'assets11/img/logo.png" alt="" class="img-fluid"></a>-->
+            </div>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto" href="{% url 'index' %}">Home</a></li>
+                    <!-- <li><a class="nav-link scrollto" href="#about">About Us</a></li>
+          <li><a class="nav-link scrollto" href="#services">Services</a></li>
+          <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
+          <li><a class="nav-link scrollto" href="#team">Team</a></li> -->
+                    <!-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="#">Drop Down 1</a></li>
+              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  <li><a href="#">Deep Drop Down 1</a></li>
+                  <li><a href="#">Deep Drop Down 2</a></li>
+                  <li><a href="#">Deep Drop Down 3</a></li>
+                  <li><a href="#">Deep Drop Down 4</a></li>
+                  <li><a href="#">Deep Drop Down 5</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Drop Down 2</a></li>
+              <li><a href="#">Drop Down 3</a></li>
+              <li><a href="#">Drop Down 4</a></li>
+            </ul>
+          </li> 
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>-->
+                    <li><a class="getstarted scrollto" href="{% url 'CFA' %}">Apply</a>
+                    </li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header><!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex align-items-center">
+
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center mobile-version">
+                    
+                    <!-- <h2>Encouragement to Potential Angel Investors and an opportunity to Invest in <b>ODISHA</b> best
+                        Startups.</h2> -->
+                    <div>
+                        <h2>COHORT 2.0</h2>
+                        <h1>Call For Application</h1>
+                        <a href="{% url 'CFA' %}" class="btn-get-started scrollto">Apply</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 order-1 order-lg-2 hero-img">
+                    <img src="{% static 'assets1/img/startup.svg' %}" class="img-fluid animated" alt="">
+                </div>
+            </div>
+        </div>
+
+    </section><!-- End Hero -->
+
+    <main id="main">
+
+        <!-- ======= About Section ======= -->
+        <section id="about" class="about">
+            <div class="container">
+
+                <div class="row justify-content-between">
+                    <div class="col-lg-5 d-flex align-items-center justify-content-center about-img">
+                        <img src="{% static 'assets1/img/about-img.svg' %}" class="img-fluid" alt="" data-aos="zoom-in">
+                    </div>
+                    <div class="col-lg-6 pt-5 pt-lg-0">
+                        <h3 data-aos="fade-up">About AIC-NITF</h3>
+                        <p data-aos="fade-up" data-aos-delay="100" style="text-align: justify;">
+                            <b>AIC-Nalanda Institute of Technology Foundation, Bhubaneswar</b> is a Leading Business
+                            Incubator
+                            & Odisha’s first Atal Incubation Centre supported by Atal Innovation Mission, NITI Aayog,
+                            and Govt. of India and recognized by Startup Odisha, Govt. of Odisha. <br><br> AIC-NITF
+                            nurtures and
+                            provides support to the startups in the initial and critical stages of a new startup venture
+                            through customized and focused incubation support, mentoring, marketing network & investors
+                            connect.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </section><!-- End About Section -->
+
+        <section id="services" class="about services section-bg">
+            <div class="container">
+
+                <div class="row justify-content-between">
+
+                    <div class="col-lg-6 pt-5 pt-lg-0">
+                        <h3 data-aos="fade-up">What AIC-NITF Offers:</h3>
+                        <p data-aos="fade-up" data-aos-delay="100" style="text-align: justify;">
+                        <ul>
+                            <li>Seed Fund of up to Rs.25 lakhs from Govt. Grants accessible by eligible startups</li>
+                            <li>Furnished Office Space</li>
+                            <li>Access to Meeting Room and Conference Room</li>
+                            <li>Hosting an Event at the Conference Room</li>
+                            <li>High speed internet facility</li>
+                            <li>Experience-based training covering live examples by experts </li>
+                            <li>Capacity Building Training by Experts & Networking Events</li>
+                            <li>Use of Fabrication Lab for development of Prototype on Payment basis</li>
+                            <li>Access to Angel Investors and Venture Capitalist Companies.</li>
+                            <li>Market Connect Facilitation to startups.</li>
+                        </ul>
+                        </p>
+                    </div>
+                    <div class="col-lg-5 d-flex align-items-center justify-content-center about-img">
+                        <img src="{% static 'assets1/img/offer.svg' %}" class="img-fluid" alt="" data-aos="zoom-in">
+                    </div>
+                </div>
+            </div>
+        </section><!-- End Services Section -->
+
+        <section id="about" class="about">
+            <div class="container" data-aos="fade-up">
+
+                <div class="row justify-content-between">
+                    <div class="col-lg-5 d-flex align-items-center justify-content-center about-img">
+                        <img src="{% static 'assets1/img/apply.svg' %}" class="img-fluid" alt="" data-aos="zoom-in">
+                    </div>
+                    <div class="col-lg-6 pt-5 pt-lg-0">
+                        <h3 data-aos="fade-up" >Who Can Apply?</h3>
+                        <p style="text-align: justify;">Entrepreneurs with a focus towards building innovative solutions in Agriculture, IoT,
+                            Healthcare, Education, Financial Inclusion, Environment & Clean Tech and Social Impact.
+                            Preference will be given to startups that are using emerging technologies like IoT, AI,
+                            Block-chain, Robotics and Agri Tech. </p>
+                        <h4 data-aos="fade-up">Startups are invited to apply for the incubation program if you have:
+                        </h4>
+                        <p data-aos="fade-up" data-aos-delay="100" style="text-align: justify;">
+                        <ul>
+                            <li>An Idea/Early Stage Startups/ Advanced Startups</li>
+                            <li>Seeking for Mentor & Support Services</li>
+                            <li>Looking for Investment Advisory</li>
+                        </ul>
+                        </p>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+
+
+        <section id="services" class="about services section-bg">
+            <div class="container">
+                <div class="section-title">
+                    <h3 data-aos="fade-up">To Apply for Incubation Support:</h3>
+                    <h4>Apply through the link provided <a class="btn-get-started scrollto" href="#hero">above</a>.
+                    </h4>
+                    <!-- <h4>2: Upload the filled application form here <a class="btn-get-started scrollto"
+                            href="#hero">Google form Link</a>.</h4> -->
+
+                </div>
+
+            </div>
+        </section><!-- End Services Section -->
+
+
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h3>AIC-NITF</h3>
+                        <p>
+                            AIC-Nalanda Institute Of Technology<br>
+                            Foundation, Buddhist Villa, Chandaka<br>
+                            Bhubaneswar, Odisha-754005<br>
+                            Odisha, India<br><br>
+                            <strong>Phone:</strong> +91-8249585065<br>
+                            <strong>Email:</strong> incmgr@aicnalanda.com<br>
+                        </p>
+                    </div>
+
+                    <!-- <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                        </ul>
+                    </div> -->
+
+                    <!-- <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Our Services</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                        </ul>
+                    </div> -->
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Our Social Networks</h4>
+                        <!-- <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p> -->
+                        <div class="social-links mt-3">
+                            <a href="https://twitter.com/startup_odisha" target="_blank" class="twitter"><i
+                                    class="bx bxl-twitter"></i></a>
+                            <a href="https://www.facebook.com/startupodisha2016" target="_blank" class="facebook"><i
+                                    class="bx bxl-facebook"></i></a>
+                            <a href="https://www.youtube.com/channel/UCOsl72W5Pl-3a9QXQIaS0gw" class="instagram"><i
+                                    class="bx bxl-youtube"></i></a>
+                            <!-- <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a> -->
+                            <a href="https://www.linkedin.com/company/startupodisha/" target="_blank"
+                                class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container py-4">
+            <div class="copyright">
+                &copy; 2021 All Rights Reserved by <strong><span>AIC-NITF</span></strong>.
+            </div>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/ninestars-free-bootstrap-3-theme-for-creative/ -->
+                <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'assets1/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'assets1/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets1/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets1/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'assets1/vendor/php-email-form/validate.js' %}"></script>
+    <script src="{% static 'assets1/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'assets1/js/main.js' %}"></script>
+
+</body>
+
+</html>

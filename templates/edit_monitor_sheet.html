@@ -1,0 +1,160 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>monitor_form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        .heading{
+            width: 100%;
+            height: 50px;
+            background: #5A5C69;
+            border-radius: 10px;
+            margin: 20px 0 ;
+        }
+        .heading p{
+            padding:10px; 
+            font-size: 17px; 
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Monitor Sheet</h1>
+    <div class="container-fluid container">
+        
+        <form method="POST">{% csrf_token %}
+            {% if content.first_atempt %}
+            <div class="form-row">
+                <div class="heading">
+                    <p class="font-weight-bold">Past History</p>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputComp">Total Numbers of IPs filled/obtained till date</label> 
+                    {{form.ips_till_date}}
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputentrepreneur">Any special recognition/awarded till date</label> 
+                    {{ form.recognisation_till_date }}
+                    
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputDesignation">Any funds/grands receved till date</label> 
+                    {{ form.funds_till_date  }}
+                    
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputurl">Number of Jobs created till date</label> 
+                    {{ form.jobs_created_till_date  }}
+                   
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Sales(units) till date in FY (2021)</label> 
+                    {{ form.sales_till_date }}
+                  
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputphoneno">Revenue(INR) till date during FY 2021</label> 
+                    {{ form.revenew_till_date }}
+                   
+                </div>
+        
+                <div class="form-group col-md-6">
+                    <label for="inputAddress">Expendecture(INR) during FY 2021</label> 
+                        {{ form.expendicture_till_date }}
+                    
+                </div>
+            </div>
+            {% endif %}
+                <div class="heading">
+                    <p class="font-weight-bold">Monthly Review Sheet</p>
+                </div>
+        
+                <div class="form-row">
+                    
+                    <div class="form-group col-md-6">
+                        <label for="inputMOU">Total Numbers of IPs filled/obtained last month</label>
+                        {{ form.ips_last_month }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputFillingDate">Any special recognition/awarded last month</label>
+                        {{ form.recognisation_last_month }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputIncubationFees">Any funds/grands receved last month</label> 
+                        {{ form.funds_last_month }}
+                       
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputChiefMentorAssign">Number of Jobs created last month</label> 
+                        {{ form.jobs_created_last_month }}
+                       
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputSSHA">Sales(units) of last month</label>
+                        {{ form.sales_last_month }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputFillingDate">Revenue(INR) of last month</label>
+                        {{ form.revenew_last_month }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputSharesTransferred">Expendecture(INR) of last month</label>
+                        {{ form.expendicture_last_month }}
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="inputShareCertificate">Problems faced last month</label>
+                        {{ form.problems }}
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="inputNoSeats">Any special gain or Opportunities or connection last month</label> 
+                        {{ form.oppertunities }}
+                        
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="inputRentForSeats">Any new outreach efforts made last month</label> 
+                        {{ form.out_reach }}
+                        
+                    </div>
+        
+                    <div class="form-group col-md-12">
+                        <label for="inputCapitalInvested">Any partnership or MOU signed last month</label> 
+                        {{ form.partnership_mou }}
+                       
+                    </div>
+        
+                    <div class="form-group col-md-12">
+                        <label for="inputRegistrationCompany">Special interventions from incubator made last month</label> 
+                        {{ form.intervention }}
+                        
+                    </div>
+                </div>
+        
+        
+                <div class="heading">
+                    <p class="font-weight-bold">Mentor Meetings</p>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputIPRStatus">Number of mentor meetings held last month</label> 
+                        {{ form.monitor_meeting }}
+                       
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="inputSales">Action Plan for next month</label> 
+                        {{ form.action_plan }}
+                        
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="inputRevenue">Any help required from incubator for next month</label> 
+                        {{ form.help_required }}
+                        
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
