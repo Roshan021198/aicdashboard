@@ -97,8 +97,15 @@ class Admin(models.Model):
 		self.sl = sl
 		self.save()
 
+class StartupCategory(models.Model):
+	startupHub 				= models.CharField(max_length=100,null=True,blank=True)
+
+	def __str__(self):
+		return self.startupHub
+
 class StartUp(models.Model):
 	account 				= models.ForeignKey(Account, on_delete=models.CASCADE)
+	startup_group 			= models.ForeignKey(StartupCategory, on_delete=models.SET_NULL, null=True,blank=True)
 	email 					= models.EmailField(verbose_name="email", max_length=60,null=True,blank=True)
 	startup_name			= models.CharField(max_length=100,null=True,blank=True)
 	legal_entity			= models.CharField(max_length=100,null=True,blank=True)
@@ -127,6 +134,10 @@ class StartUp(models.Model):
 
 	def __str__(self):
 		return self.startup_name
+
+	def startupUpdate(self,team_members):
+		self.team_members = team_members
+		self.save()
     
 
 class TeamMembers(models.Model):
@@ -515,7 +526,7 @@ class Viewer(models.Model):
 	def __str__(self):
 		return self.email
 
-class Ideanestcheck(models.Model):
+class Ideanestchecking(models.Model):
 	account 				= models.ForeignKey(Account, on_delete=models.CASCADE)
 	email 					= models.EmailField(verbose_name="email", max_length=60,null=True,blank=True)
 	startup_name			= models.CharField(max_length=100,null=True,blank=True)
@@ -565,7 +576,7 @@ class Ideanestfeedback(models.Model):
 
 
 
-class Sessionideanest(models.Model):
+class Sessionideanesting(models.Model):
 	week 				=models.ForeignKey(Ideanestweek, on_delete=models.CASCADE)
 	session_name		= models.CharField(max_length=100,null=True,blank=True)
 	session_details     = models.CharField(max_length=1000,null=True,blank=True)
@@ -592,8 +603,8 @@ class Sessionideanest(models.Model):
 		self.recording_pw	= recording_pw
 		self.save()
 
-class Submissionideanest(models.Model):
-	connect_sanvriddhi	= models.ForeignKey(Ideanestcheck, on_delete=models.CASCADE)
+class Submissionideanesting(models.Model):
+	connect_sanvriddhi	= models.ForeignKey(Ideanestchecking, on_delete=models.CASCADE)
 	session_topic		= models.CharField(max_length=100,null=True,blank=True)
 	attachment			= models.FileField(upload_to='files',null=True,blank=True)
 	submitted_date		= models.DateTimeField(verbose_name='date submitted', auto_now_add=True)
@@ -601,7 +612,7 @@ class Submissionideanest(models.Model):
 
 
 
-class Viewerideanest(models.Model):
+class Viewerideanesting(models.Model):
 	account 				= models.ForeignKey(Account, on_delete=models.CASCADE)
 	email 					= models.EmailField(verbose_name="email", max_length=60,null=True,blank=True)
 	contact_no				= models.CharField(max_length=100,null=True,blank=True)

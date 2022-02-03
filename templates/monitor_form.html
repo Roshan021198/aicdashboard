@@ -23,8 +23,9 @@
 </head>
 <body>
     <h1
-        style="text-align: center;font-weight: bold;color: bold;color:rgb(28, 17, 17);text-shadow: 3px 2px rgb(76, 113, 221);margin-top: 10px;">
+        style="text-align: center;font-weight: bold;color: bold;color:rgb(28, 17, 17);margin-top: 10px;">
         <i>Monitor Sheet</i></h1>
+        <p style="text-align: center;">Please answer all the mentioned fields. In case a field is irrelevant to you write, <b>N.A</b>.</p>
     <hr>
     <div class="container-fluid container">
         <form method="POST" action="{% url 'monitor_form' %}">{% csrf_token %}
@@ -109,9 +110,9 @@
                             placeholder="Problems faced last month"></textarea>
                     </div>
                     <div class="form-group col-md-12">
-                        <label for="inputFuturePlan">Any special Gain/Opportunities/Connection last month</label>
+                        <label for="inputFuturePlan">Any special Gains/Opportunities/Connections last month</label>
                         <textarea class="form-control" name="oppertunities" id="inputFuturePlan" rows="3"
-                            placeholder="Any special Gain/Opportunities/Connection last month"></textarea>
+                            placeholder="Any special Gains/Opportunities/Connections last month"></textarea>
                     </div>
                     <div class="form-group col-md-12">
                         <label for="inputAction">Any new outreach efforts made last month</label>
@@ -156,5 +157,3 @@
     </div>
 </body>
 </html>
-
-

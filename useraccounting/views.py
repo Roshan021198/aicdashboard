@@ -1,6 +1,8 @@
+from os import readlink
+import re
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import auth
-from .models import Account,Admin,StartUp,Sanvriddhi,Ideanestcheck,Sessionideanest,Viewerideanest,Submissionideanest
+from .models import Account,Admin,StartUp,Sanvriddhi,Ideanestchecking,Sessionideanesting,Viewerideanesting,Submissionideanesting
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -43,8 +45,8 @@ def admin_register(request):
         
         username = request.POST['username']
         password = request.POST['password1']
-        
-        user = Account.objects.create_user(fullname=full_name,username=username,is_admin=True)
+        rank     = request.POST.get('rank')
+        user = Account.objects.create_user(fullname=full_name,rank=rank,username=username,is_admin=True)
         user.set_password(password)
         user.save() 
 
@@ -53,17 +55,17 @@ def admin_register(request):
         employee_id = request.POST['employee_id']
         contact_no = request.POST['contact']
         identity_proof = request.POST['identity']
-        cl = request.POST['cl']
-        sl = request.POST['sl']
+        cl = 0
+        sl = 0
 
         admin_img = request.FILES['admin_img']
         
 
         admin = Admin.objects.create(account=user,designation=designation,email=email,employee_id=employee_id,contact_no=contact_no,identity_proof=identity_proof,cl=cl,sl=sl,admin_img=admin_img) 
         admin.save()
-        messages.add_message(request, messages.INFO, 'Employee created successfully.')
+        messages.add_message(request, messages.INFO, 'Employee added successfully.')
 
-        return redirect('dashboard')
+        return redirect('employeeinfo')
     return redirect('dashboard')
 
 @login_required
@@ -202,7 +204,7 @@ def ideanest_register(request):
             founder_img = "awardimg/blank.png"          
 
           
-        admin = Ideanestcheck.objects.create(account=user,startup_name=startup_name,email=email,legal_entity=legal_entity,founders_designation=founders_designation,city=city,website=website,sector=sector,team_members=team_members,location=location,contact_no=contact_no,comp_identification_no=comp_identification_no,inubatee_level=inubatee_level,operational_model=operational_model,type_of_incubatee=type_of_incubatee,women_led_startup=women_led_startup,gov_program=gov_program,msme_registered=msme_registered,dspp_registered=dspp_registered,legal_entity_register=legal_entity_register,start_date_incubation=start_date_incubation,founder_img=founder_img,startup_img=startup_img,team_head=full_name) 
+        admin = Ideanestchecking.objects.create(account=user,startup_name=startup_name,email=email,legal_entity=legal_entity,founders_designation=founders_designation,city=city,website=website,sector=sector,team_members=team_members,location=location,contact_no=contact_no,comp_identification_no=comp_identification_no,inubatee_level=inubatee_level,operational_model=operational_model,type_of_incubatee=type_of_incubatee,women_led_startup=women_led_startup,gov_program=gov_program,msme_registered=msme_registered,dspp_registered=dspp_registered,legal_entity_register=legal_entity_register,start_date_incubation=start_date_incubation,founder_img=founder_img,startup_img=startup_img,team_head=full_name) 
         admin.save()
         messages.add_message(request, messages.INFO, 'Ideanest Startup account created successfully.')
 

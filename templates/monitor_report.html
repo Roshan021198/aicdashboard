@@ -30,8 +30,11 @@
 
 <body>
     <h1
-        style="text-align: center;font-weight: bold;color: bold;color:rgb(28, 17, 17);text-shadow: 3px 2px rgb(76, 113, 221);margin-top: 10px;">
+        style="text-align: center;font-weight: bold;color: bold;color:rgb(28, 17, 17);margin-top: 10px;">
         <i>Monitor Report</i></h1>
+        <h4
+        style="text-align: center;font-weight: bold;color: bold;color:rgb(28, 17, 17);margin-top: 10px;">
+        <i>{{ monitor_report.date_of_filling }}</i></h4>
     <hr>
     <div class="container-fluid container">
         {% if monitor_report.first_atempt %}
@@ -40,18 +43,18 @@
                 <p class="font-weight-bold">Past History</p>
             </div>
             <div class="form-group col-md-6">
-                <label for="inputips_till_date">Total Numbers of IPs filed/obtained till date</label>
+                <label for="inputips_till_date">Total Numbers of IPs filled/obtained till date</label>
                 <input disabled value="{{monitor_report.ips_till_date}}" type="text" class="form-control"
                     name="ips_till_date" id="inputips_till_date"
                     placeholder="Total Numbers of IPs filled/obtained till date">
             </div>
             <div class="form-group col-md-6">
-                <label for="inputrecognisation_till_date">Any special recognition or award till date</label>
+                <label for="inputrecognisation_till_date">Any special recognition/awarded till date</label>
                 <input disabled value="{{monitor_report.recognisation_till_date}}" type="text" class="form-control"
                     name="recognisation_till_date" id="inputrecognisation_till_date" placeholder="lead entrepreneur">
             </div>
             <div class="form-group col-md-6">
-                <label for="inputfunds_till_date">Any funds/grants receved till date</label>
+                <label for="inputfunds_till_date">Any funds/grands receved till date</label>
                 <input disabled value="{{monitor_report.funds_till_date}}" type="text" class="form-control"
                     name="funds_till_date" id="inputfunds_till_date" placeholder="Any funds/grands receved till date">
             </div>
@@ -74,7 +77,7 @@
             </div>
 
             <div class="form-group col-md-6">
-                <label for="inputexpendicture_till_date">Expenditure(INR) during FY 2021</label>
+                <label for="inputexpendicture_till_date">Expendecture(INR) during FY 2021</label>
                 <input disabled value="{{monitor_report.expendicture_till_date}}" type="text" class="form-control"
                     name="expendicture_till_date" id="inputexpendicture_till_date"
                     placeholder="Expendecture(INR) during FY 2021">
@@ -90,19 +93,19 @@
 
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="inputips_last_month">Total Numbers of IPs filed/obtained last month</label>
+                <label for="inputips_last_month">Total Numbers of IPs filled/obtained last month</label>
                 <input disabled value="{{monitor_report.ips_last_month}}" type="text" class="form-control"
                     name="ips_last_month" id="inputips_last_month"
                     placeholder="Total Numbers of IPs filled/obtained last month">
             </div>
             <div class="form-group col-md-6">
-                <label for="inputrecognisation_last_month">Any special recognition or award last month</label>
+                <label for="inputrecognisation_last_month">Any special recognition/awarded last month</label>
                 <input disabled value="{{monitor_report.recognisation_last_month}}" type="text" class="form-control"
                     name="recognisation_last_month" id="inputrecognisation_last_month"
                     placeholder="Any special recognition/awarded last month">
             </div>
             <div class="form-group col-md-6">
-                <label for="inputfunds_last_month">Any funds/grants receved last month</label>
+                <label for="inputfunds_last_month">Any funds/grands receved last month</label>
                 <input disabled value="{{monitor_report.funds_last_month}}" type="text" class="form-control"
                     name="funds_last_month" id="inputfunds_last_month"
                     placeholder="Any funds/grands receved last month">
@@ -125,7 +128,7 @@
             </div>
 
             <div class="form-group col-md-6">
-                <label for="inputexpendicture_last_month">Expenditure(INR) of last month</label>
+                <label for="inputexpendicture_last_month">Expendecture(INR) of last month</label>
                 <input disabled value="{{monitor_report.expendicture_last_month}}" type="text" class="form-control"
                     name="expendicture_last_month" id="inputexpendicture_last_month"
                     placeholder="Expendecture(INR) of last month">
@@ -137,9 +140,9 @@
                     placeholder="Problems faced last month">{{monitor_report.problems}}</textarea>
             </div>
             <div class="form-group col-md-12">
-                <label for="inputFuturePlan">Any special Gains/Opportunities/Connections last month</label>
+                <label for="inputFuturePlan">Any special Gain or Opportunities or connection last month</label>
                 <textarea disabled class="form-control" name="oppertunities" id="inputFuturePlan" rows="3"
-                    placeholder="Any special gain or Opportunities or connection last month">{{monitor_report.oppertunities}}</textarea>
+                    placeholder="Any special Gain or Opportunities or connection last month">{{monitor_report.oppertunities}}</textarea>
             </div>
             <div class="form-group col-md-12">
                 <label for="inputAction">Any new outreach efforts made last month</label>
@@ -147,7 +150,7 @@
                     placeholder="Any new outreach efforts made last month">{{monitor_report.out_reach}}</textarea>
             </div>
             <div class="form-group col-md-12">
-                <label for="inputRequiredHelp">Any Partnership or MOU signed last month</label>
+                <label for="inputRequiredHelp">Any partnership or MOU signed last month</label>
                 <textarea disabled class="form-control" name="partnership_mou" id="inputRequiredHelp" rows="3"
                     placeholder="Any partnership or MOU signed last month">{{monitor_report.partnership_mou}}</textarea>
             </div>
@@ -193,6 +196,14 @@
 
 
     <div class="container" style="display: none;" id="priantableArea">
+        <h1
+        style="text-align: center;font-weight: bold;color: bold;color:rgb(28, 17, 17);text-shadow: 3px 2px rgb(76, 113, 221);margin-top: 10px;">
+        <i>{{ monitor_report }}</i></h1>
+        <h3
+        style="text-align: center;font-weight: bold;color: bold;color:rgb(28, 17, 17);text-shadow: 3px 2px rgb(76, 113, 221);margin-top: 10px;">
+        <i>{{ monitor_report.date_of_filling }}</i></h3>
+
+    <hr>
 
         
         {% if monitor_report.first_atempt %}
@@ -201,17 +212,17 @@
                 <p class="font-weight-bold">Past History</p>
             </div>
             <div class="form-group col-md-6">
-                <label class="bold_type" for="inputComp">Total Numbers of IPs filled/obtained till date</label>
+                <label class="bold_type" for="inputComp">Total Numbers of IPs filed/obtained till date</label>
 
             </div>
             <div class="form-group col-md-6">{{monitor_report.ips_till_date}}</div>
             <div class="form-group col-md-6">
-                <label class="bold_type" for="inputentrepreneur">Any special recognition/awarded till date</label>
+                <label class="bold_type" for="inputentrepreneur">Any special recognitions/awards till date</label>
 
             </div>
             <div class="form-group col-md-6">{{monitor_report.recognisation_till_date}}</div>
             <div class="form-group col-md-6">
-                <label class="bold_type" for="inputDesignation">Any funds/grands receved till date:</label>
+                <label class="bold_type" for="inputDesignation">Any funds/grants received till date:</label>
             </div>
             <div class="form-group col-md-6">{{monitor_report.funds_till_date}}</div>
             <div class="form-group col-md-6">
@@ -225,13 +236,13 @@
             </div>
             <div class="form-group col-md-6">{{monitor_report.sales_till_date}}</div>
             <div class="form-group col-md-6">
-                <label class="bold_type" for="inputphoneno">revenue(INR) till date during FY 2021:</label>
+                <label class="bold_type" for="inputphoneno">Revenue(INR) till date during FY 2021:</label>
 
             </div>
             <div class="form-group col-md-6">{{monitor_report.revenew_till_date}}</div>
 
             <div class="form-group col-md-6">
-                <label class="bold_type" for="inputAddress">Expendecture(INR) during FY 2021:</label>
+                <label class="bold_type" for="inputAddress">Expenditure(INR) during FY 2021:</label>
 
             </div>
             <div class="form-group col-md-6">{{monitor_report.expendicture_till_date}}</div>
@@ -244,16 +255,16 @@
 
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label class="bold_type" for="inputMOU">Total Numbers of IPs filled/obtained last month:</label>
+                <label class="bold_type" for="inputMOU">Total Numbers of IPs filed/obtained last month:</label>
 
             </div>
             <div class="form-group col-md-6">{{monitor_report.ips_last_month}}</div>
             <div class="form-group col-md-6">
-                <label class="bold_type" for="inputMouDate">Any special recognition/awarded last month:</label>
+                <label class="bold_type" for="inputMouDate">Any special recognitions/awards last month:</label>
             </div>
             <div class="form-group col-md-6">{{monitor_report.recognisation_last_month}}</div>
             <div class="form-group col-md-6">
-                <label class="bold_type" for="inputIncubationFees">Any funds/grands receved last month:</label>
+                <label class="bold_type" for="inputIncubationFees">Any funds/grants received last month:</label>
 
             </div>
             <div class="form-group col-md-6">{{monitor_report.funds_last_month}}</div>
@@ -272,7 +283,7 @@
             </div>
             <div class="form-group col-md-6">{{monitor_report.revenew_last_month}}</div>
             <div class="form-group col-md-6">
-                <label class="bold_type" for="inputSharesTransferred">Expendecture(INR) of last month:</label>
+                <label class="bold_type" for="inputSharesTransferred">Expenditure(INR) of last month:</label>
 
             </div>
 
@@ -283,7 +294,7 @@
             </div>
             <div class="form-group col-md-6">{{monitor_report.problems}}</div>
             <div class="form-group col-md-6">
-                <label class="bold_type" for="inputNoSeats">Any special gain or Opportunities or connection last
+                <label class="bold_type" for="inputNoSeats">Any special Gains/Opportunities/Connections last
                     month:</label>
 
             </div>

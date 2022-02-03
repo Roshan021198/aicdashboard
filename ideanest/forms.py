@@ -1,11 +1,11 @@
 from django import forms
-from useraccounting.models import Ideanestcheck
+from useraccounting.models import Ideanestchecking
 
 class IdeanestEditForm(forms.ModelForm):
 
             
     class Meta:
-        model = Ideanestcheck
+        model = Ideanestchecking
         exclude = ['account']
         fields = ('__all__')
         CHOICES = [

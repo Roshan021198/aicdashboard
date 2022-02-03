@@ -1,0 +1,248 @@
+{% extends 'new_dashboard/admin/admin-base.html' %}
+
+{% block css %}
+{% load static %}
+<link href="{% static 'newdash/css/profile.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block employeeinfo %} active bg-gradient-info {% endblock %}
+{% block page %}Dashboard{% endblock %}
+{% block page1 %}Employee Info{% endblock %}
+
+
+{% block content %}
+{% load static %}
+
+<div class="container-fluid py-4">
+
+    <!-- {% if message in messages %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert" style="color: #fff;">
+    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+    <span class="alert-text"><strong>Success!</strong> This is a success alert—check it out!</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endif %} -->
+
+    {% if user.is_superadmin %}
+    <div class="row">
+        <div class="col-4">
+            <a class="btn bg-gradient-info" href="#" data-bs-toggle="modal" data-bs-target="#addEmployee">Add Employee</a>
+        </div>
+    </div>
+    {% endif %}
+    <div class="row mt-2">
+        <div class="col-12">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-info shadow-primary border-radius-lg pt-4 pb-3">
+                        <h5 class="text-white text-capitalize ps-3">Employee Info</h5>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="card-body px-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table id="example" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <th>SL NO</th>
+                                    <th>Name</th>
+                                    <th>Designation</th>
+                                    <th>EMP-ID</th>
+                                    <th>Email</th>
+                                    <th>Contact</th>
+                                    <th>Img</th>
+                                    <th>Edit/Delete</th>
+                                </thead>
+                                <tbody>
+                                    {% for list in lists %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{list.fullname}}</td>
+                                        <td>{{list.admin_set.first.designation}}</td>
+                                        <td>{{list.admin_set.first.employee_id}}</td>
+                                        <td>{{list.admin_set.first.email}}</td>
+                                        <td>{{list.admin_set.first.contact_no}}</td>
+                                        <td><img src="{{list.admin_set.first.admin_img.url}}" class="avatar"></td>
+                                        <td><a href="#" class="edit_team" id="editemployee{{list.pk}}" data-bs-toggle="modal" data-bs-target="#editTeam"><i class="material-icons mr-2">edit</i></a><a href="#" class="delete_team" id="delete{{list.pk}}" data-bs-toggle="modal" data-bs-target="#deleteTeam"><i class="material-icons ml-2">delete</i></a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>SL NO</th>
+                                        <th>Name</th>
+                                        <th>Designation</th>
+                                        <th>EMP-ID</th>
+                                        <th>Email</th>
+                                        <th>Contact</th>
+                                        <th>Img</th>
+                                        <th>Edit/Delete</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="addEmployeeLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addEmployeeLabel">Add Employee</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'admin_register' %}" enctype="multipart/form-data" method="POST">{% csrf_token %}
+            <div class="row">
+              <div class="col-md-12">
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">Name</label>
+                  <input type="text" class="form-control" required name="full_name">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">Designation</label>
+                  <input type="text" class="form-control" required name="designation">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">EMP-ID</label>
+                  <input type="text" class="form-control" required name="employee_id">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" required name="email">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">Contact No</label>
+                  <input type="text" class="form-control" required name="contact">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">Identity Proof</label>
+                  <input type="text" class="form-control" required name="identity">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="input-group input-group-outline mb-5">
+                    <label class="form-label">Profile Image</label>
+                  </div>
+                <div class="input-group input-group-outline my-3">
+                 
+                  <input type="file" class="form-control" required name="admin_img" accept=".png, .jpg, .jpeg">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">Username</label>
+                  <input type="text" class="form-control" required name="username">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">Password</label>
+                  <input type="password" class="form-control" required name="password1">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">Enter Position(Rank)</label>
+                  <input type="text" class="form-control" required name="rank">
+                </div>
+              </div>
+              
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn bg-gradient-info">Add</button>
+            </div>
+          </div>
+          </form>
+        </div>
+    </div>
+  </div>
+
+  <!--delete Modal -->
+
+<div class="modal fade" id="deleteTeam" tabindex="-1" role="dialog" aria-labelledby="addNewTeamMemberLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addNewTeamMemberLabel">Delete Employee</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'delete_employee' %}" method="POST">{% csrf_token %}
+          <input type="hidden" id="foo" name="foo" />
+          <p>Are you Sure You Want To <span style="font-weight: bold; text-decoration: underline;">DELETE</span>Employee Account.</p>
+          <div class="modal-footer">
+            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn bg-gradient-danger" data-bs-dismiss="modal">Delete</button>
+          </div>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+{% load static %}
+<script>
+  $(document).ready(function () {
+    $('#example').DataTable();
+  });
+
+
+//   $(".edit_team").on("click", function () {
+
+// id = this.id;
+// pk = id.slice(4,);
+
+// des_id = "#designation" + pk;
+// designation = $(des_id).text();
+
+// $("#inputDesignation14").val(designation);
+// email_id = "#email" + pk;
+// email = $(email_id).text();
+// $("#inputEmail14").val(email);
+// contact_id = "#contact_no" + pk;
+// contact = $(contact_id).text();
+// $("#inputContactNo14").val(contact);
+
+// $("#pk_val").val(pk);
+// });
+$('.delete_team').on('click', function () {
+
+var idstr = this.id.slice(6,);
+
+$('#foo').val(idstr)
+});
+
+
+</script>
+{% endblock %}

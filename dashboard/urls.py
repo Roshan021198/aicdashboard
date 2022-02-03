@@ -85,9 +85,22 @@ urlpatterns = [
     path('employee_message',views.employee_message,name='employee_message'),
     path('timeoutall',views.timeoutall,name='timeoutall'),
 
-    path('test/',views.test,name='test')
+    #path('test/',views.test,name='test'),
 
 
+    #new dashboard admin
+    path('employeeinfo/',views.employeeinfo,name='employeeinfo'),
+
+    #new dashboard startup
+    path('team/',views.team,name='team'),
+    path('monitorsheet/',views.monitorsheet,name='monitorsheet'),
+    path('minutesofmeeting/',views.minutesofmeeting,name='minutesofmeeting'),
+
+    #---------------------
+    path('startup_profile/<int:pk>/',views.startup_profile,name='startup_profile'),
+    path('startup_team/<int:pk>/',views.startup_team,name='startup_team'),
+    path('startup_monitorsheet/<int:pk>/',views.startup_monitorsheet,name='startup_monitorsheet'),
+    path('startup_minutesofmeeting/<int:pk>/',views.startup_minutesofmeeting,name='startup_minutesofmeeting'),
 
 
 

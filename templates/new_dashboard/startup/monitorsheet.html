@@ -1,0 +1,127 @@
+{% extends 'new_dashboard/startup/startup-base.html' %}
+
+{% block css %}
+{% load static %}
+<link href="{% static 'newdash/css/profile.css' %}" rel="stylesheet" />
+{% endblock %}
+
+<!-- {% block mentorsheet %} active bg-gradient-info {% endblock %} -->
+{% block nav_bar %}
+
+<li class="nav-item">
+  <a class="nav-link text-white" href="{% url 'startup_profile' pk=pk_val %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">face</i>
+    </div>
+    <span class="nav-link-text ms-1" style="color: #fff;">Profile</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link text-white" href="{% url 'startup_team' pk=pk_val %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">groups</i>
+    </div>
+    <span class="nav-link-text ms-1" style="color: #fff;">Team</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link text-white active bg-gradient-info" href="{% url 'startup_monitorsheet' pk=pk_val %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">description</i>
+    </div>
+    <span class="nav-link-text ms-1" style="color: #fff;">Monitor Sheet</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link text-white" href="{% url 'startup_minutesofmeeting' pk=pk_val %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">description</i>
+    </div>
+    <span class="nav-link-text ms-1" style="color: #fff;">MoM</span>
+  </a>
+</li>
+
+{% endblock %}
+{% block page %}MonitorSheet{% endblock %}
+{% block page1 %}MonitorSheet{% endblock %}
+
+
+{% block content %}
+{% load static %}
+
+<div class="container-fluid py-4">
+
+    <!-- {% if message in messages %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert" style="color: #fff;">
+    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+    <span class="alert-text"><strong>Success!</strong> This is a success alert—check it out!</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endif %} -->
+
+    {% if user.is_startup %}
+    <div class="row">
+        <div class="col-4">
+            <a class="btn bg-gradient-info" href="{% url 'monitor_form' %}">Generate Monitor Report</a>
+        </div>
+    </div>
+    {% endif %}
+    <div class="row mt-2">
+        <div class="col-12">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-info shadow-primary border-radius-lg pt-4 pb-3">
+                        <h5 class="text-white text-capitalize ps-3">MonitorSheet</h5>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="card-body px-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table id="example" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <th>SL NO</th>
+                                    <th>Monitorsheet Number</th>
+                                    <th>Date Of Submission</th>
+                                    <th>View Report</th>
+                                </thead>
+                                <tbody>
+                                    {% for monitorsheet in monitersheets %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>Monitorsheet-{{forloop.revcounter}}</td>
+                                        <td>{{monitorsheet.date_of_filling}}</td>
+                                        <td><a href="{% url 'monitor_report' pk=monitorsheet.pk %}"
+                                                class="btn bg-gradient-info">Viwe Report</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>SL NO</th>
+                                        <th>Monitorsheet Number</th>
+                                        <th>Date Of Submission</th>
+                                        <th>View Report</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+{% load static %}
+<script>
+  $(document).ready(function () {
+    $('#example').DataTable();
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'new_dashboard/admin/admin-base.html' %}
+
+{% block css %}
+{% load static %}
+<link href="{% static 'newdash/css/profile.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block startupinfo %} active bg-gradient-info {% endblock %}
+{% block page %}Dashboard{% endblock %}
+{% block page1 %}Startup Info{% endblock %}
+
+
+{% block content %}
+{% load static %}
+
+<div class="container-fluid py-4">
+
+    <!-- {% if message in messages %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert" style="color: #fff;">
+    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+    <span class="alert-text"><strong>Success!</strong> This is a success alert—check it out!</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endif %} -->
+
+    {% if user.is_superadmin %}
+    <div class="row">
+        <div class="col-4">
+            <a class="btn bg-gradient-info" href="{% url 'startup_form' %}">Add Startup</a>
+        </div>
+    </div>
+    {% endif %}
+    <div class="row mt-2">
+        <div class="col-12">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-info shadow-primary border-radius-lg pt-4 pb-3">
+                        <h5 class="text-white text-capitalize ps-3">Startup Info</h5>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="card-body px-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table id="example" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <th>SL NO</th>
+                                    <th>Startup Name</th>
+                                    <th>Founder</th>
+                                    <th>Email</th>
+                                    <th>Contact</th>
+                                    <th>Img</th>
+                                    <th>View</th>
+                                </thead>
+                                <tbody>
+                                    {% for acc in accounts %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{acc.startup_name}}</td>
+                                        <td>{{acc.account.fullname}}</td>
+                                        <td>{{acc.email}}</td>
+                                        <td>{{acc.contact_no}}</td>
+                                        <td><img src="{{acc.startup_img.url}}" class="avatar"></td>
+                                        <td><a href="{% url 'profile' pk=acc.account.pk %}" class="btn bg-gradient-info">View</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>SL NO</th>
+                                        <th>Startup Name</th>
+                                        <th>Founder</th>
+                                        <th>Email</th>
+                                        <th>Contact</th>
+                                        <th>Img</th>
+                                        <th>View</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+{% load static %}
+<script>
+  $(document).ready(function () {
+    $('#example').DataTable();
+  });
+</script>
+{% endblock %}

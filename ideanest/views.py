@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from django.http import HttpResponse,Http404,JsonResponse
-from useraccounting.models import Account,Ideanestcheck,Sessionideanest,Submissionideanest,Viewerideanest,Ideanestweek
+from useraccounting.models import Account,Ideanestchecking,Sessionideanesting,Viewerideanesting,Submissionideanesting,Ideanestweek
 #,Ideanest,IdeanestSession,Ideanestsubmission,Ideanestviewer
 from .forms import IdeanestEditForm
 import datetime
@@ -28,19 +28,19 @@ def ideanest_nomination(request):
 
 def ideanest_dashboard(request):
     if request.user.is_adminstrator or request.user.is_ideanest_check or request.user.is_ideanest_viewer:
-        sessions = Sessionideanest.objects.all()
+        sessions = Sessionideanesting.objects.all()
         weeks = Ideanestweek.objects.all()
         if request.user.is_adminstrator or request.user.is_ideanest_viewer:
             participaints = Account.objects.filter(is_ideanest_check=True)
             lis = []
             for participaint in participaints:
-                lis.append(participaint.ideanestcheck_set.all()[0])
+                lis.append(participaint.ideanestchecking_set.all()[0])
             return render(request,'ideanest_dashboard.html',{'sessions':sessions,'participaints':lis,'weeks':weeks})
         else:
             account = request.user
-            ideanest_account = account.ideanestcheck_set.all()[0]
+            ideanest_account = account.ideanestchecking_set.all()[0]
 
-            attachements = ideanest_account.submissionideanest_set.all()
+            attachements = ideanest_account.submissionideanesting_set.all()
             return render(request,'ideanest_dashboard.html',{'sessions':sessions,'attachements':attachements,'ideanest_account':ideanest_account,'weeks':weeks})
     else:
         return render(request,'error.html')
@@ -70,16 +70,16 @@ def create_ideanest_session(request):
         else:
             pre_read = None
             assignment = None
-
         week = Ideanestweek.objects.filter(week_no=week)[0]
 
-        session_obj = Sessionideanest.objects.create(week=week,session_name=session_name,session_details=session_details,session_date=session_date,time=time,time_out=time_out,pm_am1=pm_am1,pm_am2=pm_am2,meeting_link=meeting_link,pre_read=pre_read,assignment=assignment,submission_link=submission_link)
+
+        session_obj = Sessionideanesting.objects.create(week=week,session_name=session_name,session_details=session_details,session_date=session_date,time=time,time_out=time_out,pm_am1=pm_am1,pm_am2=pm_am2,meeting_link=meeting_link,pre_read=pre_read,assignment=assignment,submission_link=submission_link)
         messages.add_message(request, messages.INFO, 'Ideanest Created Successfully')
         return redirect(ideanest_dashboard)
 
 def ideanest_submission(request):
     user = request.user
-    ideanest_user = user.ideanestcheck_set.all()[0]
+    ideanest_user = user.ideanestchecking_set.all()[0]
     if request.method == 'POST':
         session_topic = request.POST['session_topic']
         if len(request.FILES) != 0:
@@ -87,14 +87,14 @@ def ideanest_submission(request):
         else:
             attachment = None
         
-        submit_obj = Submissionideanest.objects.create(connect_sanvriddhi=ideanest_user,session_topic=session_topic,attachment=attachment)
+        submit_obj = Submissionideanesting.objects.create(connect_sanvriddhi=ideanest_user,session_topic=session_topic,attachment=attachment)
         return redirect(ideanest_dashboard)
 
 
 @login_required
 def ideanest_edit_form(request,pk):
     
-    content = get_object_or_404(Ideanestcheck,pk=pk)
+    content = get_object_or_404(Ideanestchecking,pk=pk)
     
     if request.method == 'POST':
         form = IdeanestEditForm(request.POST,request.FILES,instance=content)
@@ -114,7 +114,7 @@ def ideanest_excel(request):
     responce = HttpResponse(content_type='application/ms-excel')
     responce['content-Disposition'] = 'attachment; filename=Ideanest' + str(datetime.datetime.now()) + '.xls'
     wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('Ideanestcheck')
+    ws = wb.add_sheet('Ideanestchecking')
     row_num = 0
     font_style = xlwt.XFStyle()
     font_style.bold = True
@@ -124,7 +124,7 @@ def ideanest_excel(request):
     
     font_style = xlwt.XFStyle()
     
-    rows = Ideanestcheck.objects.values_list('startup_name','contact_no','email','legal_entity','team_head','founders_designation','website','city','sector','team_members','location','comp_identification_no','inubatee_level','operational_model','type_of_incubatee','women_led_startup','gov_program','msme_registered','dspp_registered','legal_entity_register','start_date_incubation','startup_img','founder_img')
+    rows = Ideanestchecking.objects.values_list('startup_name','contact_no','email','legal_entity','team_head','founders_designation','website','city','sector','team_members','location','comp_identification_no','inubatee_level','operational_model','type_of_incubatee','women_led_startup','gov_program','msme_registered','dspp_registered','legal_entity_register','start_date_incubation','startup_img','founder_img')
 
     for row in rows:
         row_num += 1
@@ -134,15 +134,19 @@ def ideanest_excel(request):
 
     wb.save(responce)
     return responce
-
+    
+    
 def ideanest_recording(request):
     if request.method == 'POST':
         sessionname = request.POST['sessionname']
         recording_link = request.POST['recording_link']
         recording_pw = request.POST['recording_pw']
 
-        obj = get_object_or_404(Sessionideanest,pk=int(sessionname))
+        obj = get_object_or_404(Sessionideanesting,pk=int(sessionname))
 
         obj.update_session(recording_link=recording_link,recording_pw=recording_pw)
         return redirect(ideanest_dashboard)
     return redirect(ideanest_dashboard)
+    
+    
+

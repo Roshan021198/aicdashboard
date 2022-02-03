@@ -1,6 +1,7 @@
+import os
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse,Http404,JsonResponse
-from useraccounting.models import Account,Admin,StartUp,TeamMembers,MonitorSheetReport,WorkGenerator,Forward,Return,MoM,BlogPost,Query,LeaveApplication,Attendence,EmpMessage,Sanvriddhi,Session,Submission,Viewer,Ideanestcheck,Sessionideanest,Submissionideanest,Viewerideanest,Sanvriddhiweek,Ideanestweek
+from useraccounting.models import Account,Admin,StartUp,TeamMembers,MonitorSheetReport,WorkGenerator,Forward,Return,MoM,BlogPost,Query,LeaveApplication,Attendence,EmpMessage,Sanvriddhi,Session,Submission,Viewer,Ideanestchecking,Sessionideanesting,Viewerideanesting,Submissionideanesting,Sanvriddhiweek,Ideanestweek
 #,Ideanest,IdeanestSession,Ideanestsubmission,Ideanestviewer
 from .forms import StartUpForm,MonitorSheetEditForm
 
@@ -10,21 +11,28 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from datetime import date
 from django.contrib.auth.decorators import login_required
+from decouple import config
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 # Create your views here.
 @login_required
 def dashboard(request):
-    accounts = Account.objects.all()
+    accounts = Account.objects.all().order_by('-pk')
     user = request.user
     admins = Admin.objects.all()
     if user.is_superadmin:
-        lis = []
-        lists = Account.objects.filter(is_admin=True).order_by('rank')
-        lists = list(lists)
-        for account in lists:
-            if account.is_superadmin == False and account.is_adminstrator == False:
-                lis.append(account)
-        return render(request,'startup.html',{'accounts':accounts,'lists':lis})
+        # lis = []
+        # lists = Account.objects.filter(is_admin=True).order_by('rank')
+        # lists = list(lists)
+        # for account in lists:
+        #     if account.is_superadmin == False and account.is_adminstrator == False:
+        #         lis.append(account)
+        #accounts = Account.objects.filter(is_startup=True).order_by('-pk')
+        accounts = StartUp.objects.all().order_by('-pk')
+        print(accounts,"----------------------")
+        return render(request,'new_dashboard/admin/dashboard.html',{'accounts':accounts})
+        #new_dashboard/admin/admin-base.html
     elif user.is_admin:
         value = user.admin_set.all()[0]
         if user.is_adminstrator:
@@ -109,15 +117,16 @@ def dashboard(request):
     elif user.is_startup:
         user = request.user
         startup_obj = user.startup_set.all()[0]
-        val2 = startup_obj.teammembers_set.all()
-        values = startup_obj.monitorsheetreport_set.all().order_by('-date_of_filling')
+        # val2 = startup_obj.teammembers_set.all()
+        # values = startup_obj.monitorsheetreport_set.all().order_by('-date_of_filling')
         # traction_values = startup_obj.tractionsheet_set.all().order_by('-generated_date')
-        account = Account.objects.filter(is_superadmin=True)[0]
-        sendings = MoM.objects.filter(from_user=user.fullname,to=account).order_by('-date_of_creation')
-        receving = MoM.objects.filter(from_user=account.fullname,to=user).order_by('-date_of_creation')
-        posts = BlogPost.objects.all().order_by('-date_of_creation')
+        # account = Account.objects.filter(is_superadmin=True)[0]
+        # sendings = MoM.objects.filter(from_user=user.fullname,to=account).order_by('-date_of_creation')
+        # receving = MoM.objects.filter(from_user=account.fullname,to=user).order_by('-date_of_creation')
+        # posts = BlogPost.objects.all().order_by('-date_of_creation')
         
-        return render(request,'demo_startup_page.html',{'value':startup_obj,'members':val2,'values':values,'account':account,'sendings':sendings,'receving':receving,'posts':posts})
+        return render(request,'new_dashboard/startup/profile.html',{'value':startup_obj,'pk_val':user.pk})
+        #return render(request,'demo_startup_page.html',{'value':startup_obj,'members':val2,'values':values,'account':account,'sendings':sendings,'receving':receving,'posts':posts})
 
     elif user.is_sanvriddhi or user.is_viewer:
         if request.user.is_adminstrator or request.user.is_sanvriddhi or request.user.is_viewer:
@@ -140,27 +149,26 @@ def dashboard(request):
 
     elif user.is_ideanest_check or user.is_ideanest_viewer:
         if request.user.is_adminstrator or request.user.is_ideanest_check or request.user.is_ideanest_viewer:
-            sessions = Sessionideanest.objects.all()
+            sessions = Sessionideanesting.objects.all()
             weeks = Ideanestweek.objects.all()
             if request.user.is_adminstrator or request.user.is_ideanest_viewer:
                 participaints = Account.objects.filter(is_ideanest_check=True)
                 lis = []
                 for participaint in participaints:
-                    lis.append(participaint.ideanestcheck_set.all()[0])
+                    lis.append(participaint.ideanestchecking_set.all()[0])
                 return render(request,'ideanest_dashboard.html',{'sessions':sessions,'participaints':lis,'weeks':weeks})
             else:
                 account = request.user
-                ideanest_account = account.ideanestcheck_set.all()[0]
+                ideanest_account = account.ideanestchecking_set.all()[0]
 
-                attachements = ideanest_account.submissionideanest_set.all()
-                
+                attachements = ideanest_account.submissionideanesting_set.all()
                 return render(request,'ideanest_dashboard.html',{'sessions':sessions,'attachements':attachements,'ideanest_account':ideanest_account,'weeks':weeks})
         else:
             return render(request,'error.html')
 
 @login_required
 def visit_startup(request):
-    accounts = Account.objects.all()
+    accounts = Account.objects.all().order_by('-pk')
     lis = []
     lists = Account.objects.filter(is_admin=True).order_by('rank')
     lists = list(lists)
@@ -184,13 +192,13 @@ def startup_form(request):
 def profile(request,pk): 
     details = get_object_or_404(Account, pk=pk)
     startup_obj = details.startup_set.all()[0]
-    val2 = startup_obj.teammembers_set.all()
-    values = startup_obj.monitorsheetreport_set.order_by('-date_of_filling')
+    # val2 = startup_obj.teammembers_set.all()
+    # values = startup_obj.monitorsheetreport_set.order_by('-date_of_filling')
     # traction_values = startup_obj.tractionsheet_set.all()
-    sendings = MoM.objects.filter(from_user=request.user.fullname,to=details).order_by('-date_of_creation')
-    receving = MoM.objects.filter(from_user=details.fullname,to=request.user).order_by('-date_of_creation')
+    # sendings = MoM.objects.filter(from_user=request.user.fullname,to=details).order_by('-date_of_creation')
+    # receving = MoM.objects.filter(from_user=details.fullname,to=request.user).order_by('-date_of_creation')
 
-    return render(request,'demo_startup_page.html',{'value':startup_obj,'members':val2,'values':values,'sendings':sendings,'receving':receving})
+    return render(request,'new_dashboard/startup/profile.html',{'value':startup_obj,'pk_val':pk})
 
 @login_required
 def startup_profile_edit(request,pk):
@@ -215,12 +223,11 @@ def delete_employee(request):
     if request.method == 'POST':
         getpk = request.POST['foo']
         
-        details = get_object_or_404(Admin,pk=int(getpk))
-        main_account = details.account
-        
-        main_account.delete()
+        details = get_object_or_404(Account,pk=int(getpk))
+    
+        details.delete()
         messages.add_message(request, messages.INFO, 'Deleted successfully.')
-        return redirect('dashboard')
+        return redirect('employeeinfo')
 
 
 @login_required
@@ -282,22 +289,24 @@ def add_new_team_member(request):
         email = request.POST['email']
         contact_no = request.POST['contact']
         designation = request.POST['designation']
-
+        startup_obj.startupUpdate(str(int(startup_obj.team_members)+1))
         team_member = TeamMembers.objects.create(startup=startup_obj,name=name,gender=gender,email=email,contact_no=contact_no,designation=designation)
         team_member.save()
         messages.add_message(request, messages.INFO, 'One team member added successfully.')
-        return redirect('profile',pk=user.pk)
+        return redirect('team')
         
 @login_required
 def delete_team_member(request):
     if request.method == 'POST':
         user = request.user
+        startup_obj = user.startup_set.all()[0]
         getpk = request.POST['foo']
         
         details = get_object_or_404(TeamMembers,pk=int(getpk))
         details.delete()
+        startup_obj.startupUpdate(str(int(startup_obj.team_members)-1))
         messages.add_message(request, messages.INFO, 'Deleted successfully.')
-        return redirect('profile',pk=user.pk)
+        return redirect('team')
 
 @login_required
 def edit_team_member(request):
@@ -328,7 +337,7 @@ def edit_team_member(request):
 
         account.update_team_member(email = email,designation = designation,contact_no = contact)
         messages.add_message(request, messages.INFO, 'Edited successfully.')
-    return redirect('profile',pk=user.pk)
+    return redirect('team')
 
 
 def monitor_report(request,pk):
@@ -438,8 +447,8 @@ def monitor_form(request):
                 [obj.email],
                 fail_silently=False,
             )
-        messages.add_message(request, messages.INFO, 'Monitor Form submitted successfully.')
-        return redirect('dashboard')
+        messages.add_message(request, messages.INFO, 'Monitor Report submitted successfully.')
+        return redirect('monitorsheet')
     else:
         return render(request,'monitor_form.html',{'empty_or_not':empty_or_not})
 
@@ -465,6 +474,7 @@ def send_mom(request):
 
         if request.user.is_superadmin:
             obj = to_obj.startup_set.all()[0]
+            print("---------------------------------------------------------")
             send_mail(
                 'Minute of Meeting',
                 'You receved a MoM by AIC-NITF',
@@ -472,8 +482,8 @@ def send_mom(request):
                 [obj.email],
                 fail_silently=False,
             )
-            messages.add_message(request, messages.INFO, 'M-o-M sended successfully.')
-            return redirect(profile,int(to))
+            messages.add_message(request, messages.INFO, 'M-o-M sent successfully.')
+            return redirect(startup_minutesofmeeting,int(to))
         else:
             name = from_obj.startup_set.all()[0]
             obj = to_obj.admin_set.all()[0]
@@ -484,8 +494,8 @@ def send_mom(request):
                 [obj.email],
                 fail_silently=False,
             )
-            messages.add_message(request, messages.INFO, 'M-o-M sended successfully.')
-            return redirect(dashboard)
+            messages.add_message(request, messages.INFO, 'M-o-M sent successfully.')
+            return redirect(minutesofmeeting)
     else:
         if request.user.is_superadmin:
             return redirect(profile,int(to))
@@ -1064,10 +1074,10 @@ def forget_username(request):
             viewer = user.viewer_set.first()
             email = viewer.email
         if user.is_ideanest_check:
-            ideanest = user.ideanestcheck_set.first()
+            ideanest = user.ideanestchecking_set.first()
             email = ideanest.email
         if user.is_ideanest_viewer:
-            viewer = user.viewerideanest_set.first()
+            viewer = user.viewerideanesting_set.first()
             email = viewer.email
     else:
         email = None
@@ -1085,14 +1095,29 @@ def forget_email_sending(request):
     num_list = ['1','2','3','4','5','6','7','8','9']
     otp = random.sample(num_list,4)
     str_otp = ''.join(otp)
-    
-    send_mail(
-    'Password Reset OTP',
-    'Your one time password to reset AICNITF account is :{0}'.format(str_otp),
-    'support@aicnalanda.com',
-    [email],
-    fail_silently=False,
-    )
+    html_content='''
+            <div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
+  <div style="margin:50px auto;width:70%;padding:20px 0">
+    <div style="border-bottom:1px solid #eee">
+      <a href="" style="font-size:1.4em;color: #FF6348;text-decoration:none;font-weight:600">AIC-NITF</a>
+    </div>
+    <p>Your one time password to reset AIC-NITF Dashboard account is:</p>
+    <h2 style="background: #FF6348;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">{0}</h2>
+    <p>OTP is valid for 5 minutes.</p>
+    <p style="font-size:0.9em;">Regards,<br />Team AIC-NITF</p>
+    <hr style="border:none;border-top:1px solid #eee" />
+  </div>
+</div>
+    '''.format(str_otp)
+
+    sendMail(email,"Password Reset OTP",html_content)
+    # send_mail(
+    # 'Password Reset OTP',
+    # 'Your one time password to reset AICNITF account is :{0}'.format(str_otp),
+    # 'support@aicnalanda.com',
+    # [email],
+    # fail_silently=False,
+    # )
     data = {
         'correct_otp':str_otp
     }
@@ -1271,9 +1296,116 @@ def employee_message(request):
             )
     messages.add_message(request, messages.INFO, 'Message send to all Employees')
     return redirect(dashboard)
-    
+
+#-------New Dashboard admin------------- 
+
+@login_required
+def employeeinfo(request):
+    if request.user.is_superadmin:
+        lists = Account.objects.filter(is_admin=True).exclude(is_superadmin=True).order_by('rank')
+        print(lists,"--------")
+        return render(request,'new_dashboard/admin/employee.html',{'lists':lists})
+    return
+
+#-------end------------------------------
+#-------New Dashboard startup-------------
+@login_required
+def team(request):
+    startup_obj = request.user.startup_set.all()[0]
+    print("==============")
+    members = startup_obj.teammembers_set.all()
+    return render(request,'new_dashboard/startup/team.html',{'members':members,'pk_val':request.user.pk})
+
+@login_required
+def monitorsheet(request):
+    startup_obj = request.user.startup_set.all()[0]
+    monitersheets = startup_obj.monitorsheetreport_set.all().order_by('-date_of_filling')
+    return render(request,'new_dashboard/startup/monitorsheet.html',{'monitersheets':monitersheets,'pk_val':request.user.pk})
+
+@login_required
+def minutesofmeeting(request):
+    admin_account = Account.objects.first()
+    sendings = MoM.objects.filter(to=admin_account).order_by('-date_of_creation')
+    receiving = MoM.objects.filter(to=request.user).order_by('-date_of_creation')
+
+    print(sendings,receiving)
+    return render(request,'new_dashboard/startup/minutesofmeeting.html',{'value':admin_account,'receiving':receiving,'sendings':sendings,'pk_val':request.user.pk})
 
 
-def test(request):
-    print("------------------")
-    return render(request,'new_dashboard/admin/admin-base.html')
+@login_required
+def startup_profile(request,pk):
+    if request.user.is_superadmin or request.user.is_admin:
+        details = get_object_or_404(Account, pk=int(pk))
+        startup_obj = details.startup_set.first()
+        return render(request,'new_dashboard/startup/profile.html',{'value':startup_obj,'pk_val':pk})
+    elif request.user.is_startup:
+        return redirect(dashboard)
+    else:
+        return render(request,'error.html')
+@login_required
+def startup_team(request,pk):
+    print(pk,"---------------")
+    if request.user.is_startup:
+        return redirect(team)
+    elif request.user.is_superadmin or request.user.is_admin:
+        startup_acc = get_object_or_404(Account,pk=int(pk))
+        startup_obj = startup_acc.startup_set.first()
+        members = startup_obj.teammembers_set.all()
+        print(members,"------------------------")
+        return render(request,'new_dashboard/startup/team.html',{'members':members,'pk_val':pk})
+    else:
+        return render(request,'error.html')
+
+@login_required
+def startup_monitorsheet(request,pk):
+    print("----------------abc")
+    if request.user.is_superadmin or request.user.is_admin:
+        details = get_object_or_404(Account, pk=int(pk))
+        startup_obj = details.startup_set.first()
+        monitersheets = startup_obj.monitorsheetreport_set.all().order_by('-date_of_filling')
+        print("----------------")
+        return render(request,'new_dashboard/startup/monitorsheet.html',{'monitersheets':monitersheets,'pk_val':pk})
+        
+    elif request.user.is_startup:
+        return redirect(monitorsheet)
+    else:
+        return render(request,'error.html')
+
+@login_required
+def startup_minutesofmeeting(request,pk):
+    if request.user.is_superadmin or request.user.is_admin:
+        details = get_object_or_404(Account, pk=int(pk))
+        admin_account = Account.objects.first()
+        sendings = MoM.objects.filter(to=details).order_by('-date_of_creation')
+        receiving = MoM.objects.filter(to=admin_account).order_by('-date_of_creation')
+
+        print(sendings,receiving)
+        return render(request,'new_dashboard/startup/minutesofmeeting.html',{'value':details,'receiving':receiving,'sendings':sendings,'pk_val':pk})
+    elif request.user.is_startup:
+        return redirect(minutesofmeeting)
+    else:
+        return render(request,'error.html')
+
+
+
+def sendMail(email,subject,html_content):
+    message = Mail(
+    from_email='support@aicnalanda.com',
+    to_emails=email,
+    subject=subject,
+    html_content = html_content,
+    )
+    try:
+        sg = SendGridAPIClient(config('SENDGRID_API_KEY'))
+        response = sg.send(message)
+    #     print(response.status_code)
+    #     print(response.body)
+    #     print(response.headers)
+    except Exception as e:
+        send_mail(
+                subject,
+                html_content,
+                'support@aicnalanda.com',
+                email,
+                fail_silently=False,
+            )

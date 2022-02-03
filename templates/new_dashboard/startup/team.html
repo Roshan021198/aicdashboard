@@ -1,0 +1,289 @@
+{% extends 'new_dashboard/startup/startup-base.html' %}
+
+<!-- {% block css %}
+{% load static %}
+<link href="{% static 'newdash/css/profile.css' %}" rel="stylesheet" />
+{% endblock %} -->
+
+<!-- {% block team %} active bg-gradient-info {% endblock %} -->
+
+{% block nav_bar %}
+
+<li class="nav-item">
+  <a class="nav-link text-white" href="{% url 'startup_profile' pk=pk_val %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">face</i>
+    </div>
+    <span class="nav-link-text ms-1" style="color: #fff;">Profile</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link text-white active bg-gradient-info " href="{% url 'startup_team' pk=pk_val %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">groups</i>
+    </div>
+    <span class="nav-link-text ms-1" style="color: #fff;">Team</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link text-white" href="{% url 'startup_monitorsheet' pk=pk_val %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">description</i>
+    </div>
+    <span class="nav-link-text ms-1" style="color: #fff;">Monitor Sheet</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link text-white" href="{% url 'startup_minutesofmeeting' pk=pk_val %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">description</i>
+    </div>
+    <span class="nav-link-text ms-1" style="color: #fff;">MoM</span>
+  </a>
+</li>
+
+{% endblock %}
+{% block page %}Team{% endblock %}
+{% block page1 %}Team{% endblock %}
+
+
+{% block content %}
+{% load static %}
+
+<div class="container-fluid py-4">
+
+    {% if user.is_startup %}
+    <div class="row">
+        <div class="col-4">
+        <a class="btn bg-gradient-info" href="#" data-bs-toggle="modal" data-bs-target="#addNewTeamMember">Add Team Member</a>
+    </div>
+    </div>
+    {% endif %}
+    <div class="row mt-2">  
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-info shadow-primary border-radius-lg pt-4 pb-3">
+                <h5 class="text-white text-capitalize ps-3">Team</h5>
+              </div>
+            </div>
+            <div class="container">
+              <div class="card-body px-0 pb-2">
+                <div class="table-responsive p-0">
+                  <table id="example" class="table table-striped" style="width:100%">
+                    <thead>
+                      <th>SL NO</th>
+                      <th>Name</th>
+                      <th>Designation</th>
+                      <th>Gender</th>
+                      <th>Email</th>
+                      <th>Contact No</th>
+                      {% if user.is_startup %}
+                      <th>Edit/Delete</th>
+                      {% endif %}
+                    </thead>
+                    <tbody>
+                      {% for member in members %}
+                      <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td id="name{{member.pk}}">{{member.name}}</td>
+                          <td id="designation{{member.pk}}">{{member.designation}}</td>
+                          <td id="gender{{member.pk}}">{{member.gender}}</td>
+                          <td id="email{{member.pk}}">{{member.email}}</td>
+                          <td id="contact_no{{member.pk}}">{{member.contact_no}}</td>
+                          {% if user.is_startup %}
+                          <td><a href="#" class="edit_team" id="edit{{member.pk}}" data-bs-toggle="modal" data-bs-target="#editTeam"><i class="material-icons mr-2">edit</i></a><a href="#" class="delete_team" id="delete{{member.pk}}" data-bs-toggle="modal" data-bs-target="#deleteTeam"><i class="material-icons ml-2">delete</i></a></td>
+                          {% endif %}
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>SL NO</th>
+                        <th>Name</th>
+                        <th>Designation</th>
+                        <th>Gender</th>
+                        <th>Email</th>
+                        <th>Contact No</th>
+                        {% if user.is_startup %}
+                        <th>Edit/Delete</th>
+                        {% endif %}
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addNewTeamMember" tabindex="-1" role="dialog" aria-labelledby="addNewTeamMemberLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addNewTeamMemberLabel">Add Team Member</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'add_new_team_member' %}" method="POST">{% csrf_token %}
+          <div class="row">
+            <div class="col-md-12">
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" required name="name">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Designation/Post</label>
+                <input type="text" class="form-control" required name="designation">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group input-group-outline my-3">
+                <select class="form-control pb-4" id="exampleFormControlSelect2" required name="gender">
+                  <option selected="selected" disabled>Gender:
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Others">Others</option>
+                  </select>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" required name="email">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Contact No</label>
+                <input type="text" class="form-control" required name="contact">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn bg-gradient-info">Add</button>
+          </div>
+        </div>
+        </form>
+      </div>
+  </div>
+</div>
+
+<!--edit Modal -->
+
+<div class="modal fade" id="editTeam" tabindex="-1" role="dialog" aria-labelledby="addNewTeamMemberLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addNewTeamMemberLabel">Edit Team Member</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'edit_team_member' %}" method="POST">{% csrf_token %}
+          <div class="row">
+            <div class="col-md-12">
+              <input type="hidden" id="pk_val" name="pk_val" value="">
+              <div class="input-group input-group-static mb-4">
+                <label>Designation/Post</label>
+                <input type="text" class="form-control" id="inputDesignation14" value="{{member.designation}}" name="designation">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group input-group-static mb-4">
+                <label>Email</label>
+                <input type="text" class="form-control" id="inputEmail14" value="{{member.email}}" name="email">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group input-group-static mb-4">
+                <label>Contact No</label>
+                <input type="text" class="form-control" id="inputContactNo14" maxlength="10" value="{{member.contact_no}}" name="contact">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn bg-gradient-info">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--delete Modal -->
+{% for member in members %}
+<div class="modal fade" id="deleteTeam" tabindex="-1" role="dialog" aria-labelledby="addNewTeamMemberLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addNewTeamMemberLabel">Delete Team Member</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'delete_team_member' %}" method="POST">{% csrf_token %}
+          <input type="hidden" id="foo" name="foo" />
+          <p>Are you Sure You Want To <span style="font-weight: bold; text-decoration: underline;">DELETE</span> it.</p>
+          <div class="modal-footer">
+            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn bg-gradient-danger" data-bs-dismiss="modal">Delete</button>
+          </div>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block js %}
+{% load static %}
+<script>
+  $(document).ready(function () {
+    $('#example').DataTable();
+  });
+</script>
+<script>
+
+  $(".edit_team").on("click", function () {
+
+      id = this.id;
+      pk = id.slice(4,);
+      
+      des_id = "#designation" + pk;
+      designation = $(des_id).text();
+      
+      $("#inputDesignation14").val(designation);
+      email_id = "#email" + pk;
+      email = $(email_id).text();
+      $("#inputEmail14").val(email);
+      contact_id = "#contact_no" + pk;
+      contact = $(contact_id).text();
+      $("#inputContactNo14").val(contact);
+
+      $("#pk_val").val(pk);
+  });
+  $('.delete_team').on('click', function () {
+      
+      var idstr = this.id.slice(6,);
+      
+      $('#foo').val(idstr)
+  });
+</script>
+
+{% endblock %}

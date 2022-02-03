@@ -1,0 +1,346 @@
+{% extends 'new_dashboard/startup/startup-base.html' %}
+
+{% block css %}
+{% load static %}
+<link href="{% static 'newdash/css/profile.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block nav_bar %}
+
+<li class="nav-item">
+  <a class="nav-link text-white" href="{% url 'startup_profile' pk=pk_val %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">face</i>
+    </div>
+    <span class="nav-link-text ms-1" style="color: #fff;">Profile</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link text-white" href="{% url 'startup_team' pk=pk_val %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">groups</i>
+    </div>
+    <span class="nav-link-text ms-1" style="color: #fff;">Team</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link text-white" href="{% url 'startup_monitorsheet' pk=pk_val %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">description</i>
+    </div>
+    <span class="nav-link-text ms-1" style="color: #fff;">Monitor Sheet</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link text-white active bg-gradient-info" href="{% url 'startup_minutesofmeeting' pk=pk_val %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">description</i>
+    </div>
+    <span class="nav-link-text ms-1" style="color: #fff;">MoM</span>
+  </a>
+</li>
+
+{% endblock %}
+{% block page %}MoM{% endblock %}
+{% block page1 %}MoM{% endblock %}
+
+
+{% block content %}
+{% load static %}
+
+<div class="container-fluid py-4">
+
+    <!-- {% if message in messages %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert" style="color: #fff;">
+    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+    <span class="alert-text"><strong>Success!</strong> This is a success alert—check it out!</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endif %} -->
+
+    {% if user.is_startup or user.is_superadmin %}
+    <div class="row">
+        <div class="col-4">
+            <a class="btn bg-gradient-info" href="{% url 'monitor_form' %}" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">Send MoM</a>
+        </div>
+    </div>
+    {% endif %}
+    <div class="row mt-2">
+        <div class="col-12">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-info shadow-primary border-radius-lg pt-4 pb-3">
+                        <h5 class="text-white text-capitalize ps-3">Received Mom</h5>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="card-body px-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table id="example" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <th>SL NO</th>
+                                    <th>Title</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Received Date</th>
+                                    <th>View</th>
+                                </thead>
+                                <tbody>
+                                    {% for receive in receiving %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{receive.title}}</td>
+                                        <td>{{receive.from_user}}</td>
+                                        <td>{{receive.to.fullname}}</td>
+                                        <td>{{receive.date_of_creation}}</td>
+                                        <td><a href="#" data-bs-toggle="modal"
+                                                data-bs-target="#receiveModal{{receive.pk}}"
+                                                class="btn bg-gradient-info">View</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>SL NO</th>
+                                        <th>Title</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Received Date</th>
+                                        <th>View</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-info shadow-primary border-radius-lg pt-4 pb-3">
+                        <h5 class="text-white text-capitalize ps-3">Sent MoM</h5>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="card-body px-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table id="example1" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <th>SL NO</th>
+                                    <th>Title</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Sent Date</th>
+                                    <th>View</th>
+                                </thead>
+                                <tbody>
+                                    {% for send in sendings %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{send.title}}</td>
+                                        <td>{{send.from_user}}</td>
+                                        <td>{{send.to.fullname}}</td>
+                                        <td>{{send.date_of_creation}}</td>
+                                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#sentModal{{send.pk}}"
+                                                class="btn bg-gradient-info">View</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>SL NO</th>
+                                        <th>Title</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Sent Date</th>
+                                        <th>View</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{% url 'send_mom' %}" enctype="multipart/form-data">{% csrf_token %}
+                        <div class="row">
+                            <!-- <div class="col-md-12">
+                    <div class="input-group input-group-static my-3">
+                      <label>From</label>
+                      <input type="text" value="{{user.fullname}}" disabled class="form-control" required>
+                      <input type="hidden" value="{{user.pk}}" required name="from">
+                    </div>
+                  </div> -->
+                            <div class="input-group input-group-static mb-3">
+                                <label for="exampleFormControlSelect1" class="ms-0">From</label>
+                                <select class="form-control" name="from" id="exampleFormControlSelect1">
+                                    <option selected value="{{user.pk}}">{{user.fullname}}</option>
+                                </select>
+                            </div>
+                            <div class="input-group input-group-static mb-3">
+                                <label for="exampleFormControlSelect1" class="ms-0">To</label>
+                                <select class="form-control" name="to" id="exampleFormControlSelect2">
+                                    <option selected value="{{value.pk}}">{{value.fullname}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group input-group-static my-3">
+                            <label>Title</label>
+                            <input type="text" class="form-control" required name="title">
+                        </div>
+
+                        <div class="input-group input-group-static mb-3">
+                            <label>Description</label>
+                            <textarea required class="form-control" name="description" id="inputWorkDescription"
+                                rows="3"></textarea>
+                        </div>
+                        <div class="input-group input-group-outline my-3">
+                            <label>File upload</label>
+                            <input required type="file" name="document" class="form-control-file"
+                                id="exampleFormDocument">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn bg-gradient-info">Send</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!-- Recieve Modal -->
+{% for receive in receiving %}
+<div class="modal fade" id="receiveModal{{receive.pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Recieved File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'send_mom' %}" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="row container">
+                        <div class="input-group input-group-static my-4">
+                            <label>Title</label>
+                            <input type="text" class="form-control" style="color: #358EED; background-color: #E4E5E7;"
+                                disabled value="{{receive.title}}">
+                        </div>
+
+                        <div class="input-group input-group-static mb-3">
+                            <label>Description</label>
+                            <textarea disabled class="form-control" style="color: #358EED; background-color: #E4E5E7;"
+                                name="description" id="inputWorkDescription" rows="3">{{receive.description}}</textarea>
+                        </div>
+                        <div class="input-group input-group-static mb-3">
+                            <label>{{receive.document}}</label>
+                        </div>
+                        <div class="input-group input-group-static mb-3">
+                            <a href="{{receive.document.url}}" download="{{receive.document.url}}"
+                                class="btn bg-gradient-info">Download</a>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endfor %}
+
+
+<!--Send Modal -->
+{% for send in sendings %}
+<div class="modal fade" id="sentModal{{send.pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Sent File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST">{% csrf_token %}
+                    <div class="row">
+
+                        <div class="input-group input-group-static my-3">
+                            <label>Title</label>
+                            <input type="text" class="form-control" style="color: #358EED; background-color: #E4E5E7;"
+                                disabled value="{{send.title}}">
+                        </div>
+
+                        <div class="input-group input-group-static mb-3">
+                            <label>Description</label>
+                            <textarea disabled class="form-control" style="color: #358EED; background-color: #E4E5E7;"
+                                name="description" id="inputWorkDescription" rows="3">{{send.description}}</textarea>
+                        </div>
+                        <div class="input-group input-group-static mb-3">
+                            <label>{{send.document}}</label>
+                        </div>
+                        <div class="input-group input-group-static mb-3">
+                            <a href="{{send.document.url}}" download="{{receive.document.url}}"
+                                class="btn bg-gradient-info">Download</a>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn bg-gradient-secondary"
+                                data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+</div>
+
+
+
+{% endblock %}
+
+{% block js %}
+{% load static %}
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+
+    $(document).ready(function () {
+        $('#example1').DataTable();
+    });
+</script>
+{% endblock %}

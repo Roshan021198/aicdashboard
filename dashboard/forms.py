@@ -39,6 +39,7 @@ class StartUpForm(forms.ModelForm):
             ('Education','Education'),
             ('Health and Pharmaceuticals','Health and Pharmaceuticals'),
             ('Water Sanitation and Solid waste management','Water Sanitation and Solid waste management'),
+            ('Others','Others'),
         ]
 
         GOVERNMENT = [
